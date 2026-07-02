@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useLeadForm, RABBITPAY_LOGO } from "@/context/LeadFormContext";
+import { trackEvent } from "@/lib/analytics";
 
 const API = process.env.REACT_APP_BACKEND_URL;
 
@@ -81,6 +82,11 @@ export function LeadFormModal() {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
+      trackEvent("lead_submit", {
+        source: prefill?.source || "landing_page",
+        brand: form.brand,
+        monthly_orders: form.monthly_orders || "n/a",
+      });
       toast.success("Thanks — we'll be in touch shortly.", {
         description:
           "A RabbitPay specialist will reach out within 1 business day.",

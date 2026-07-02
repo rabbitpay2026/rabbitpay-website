@@ -11,13 +11,13 @@ import { Globe } from "@/components/magic-ui/globe";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 
 const INDIA_CITIES = [
-  { x: 285, y: 155, label: "Delhi" },
-  { x: 275, y: 205, label: "Jaipur" },
-  { x: 260, y: 235, label: "Ahmedabad" },
-  { x: 275, y: 275, label: "Mumbai" },
-  { x: 300, y: 305, label: "Bengaluru" },
-  { x: 335, y: 275, label: "Kolkata" },
-  { x: 315, y: 315, label: "Chennai" },
+  { x: 240, y: 130, label: "Delhi" },
+  { x: 220, y: 180, label: "Jaipur" },
+  { x: 205, y: 215, label: "Ahmedabad" },
+  { x: 210, y: 265, label: "Mumbai" },
+  { x: 280, y: 260, label: "Kolkata" },
+  { x: 240, y: 300, label: "Bengaluru" },
+  { x: 260, y: 335, label: "Chennai" },
 ];
 
 /**

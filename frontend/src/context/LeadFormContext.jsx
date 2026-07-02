@@ -50,5 +50,8 @@ export function useLeadForm() {
 export const CALENDLY_URL = "https://calendly.com/avijeetdey-email/30min";
 export const SUPPORT_PHONE = "+91 62955 29286";
 export const SUPPORT_PHONE_HREF = "tel:+916295529286";
+export const SUPPORT_WHATSAPP_HREF =
+  "https://wa.me/916295529286?text=" +
+  encodeURIComponent("Hi RabbitPay team — I'd like to know more.");
 export const SUPPORT_EMAIL = "hello@rabbitpay.in";
 export const RABBITPAY_LOGO = "/rabbitpay-icon.png";

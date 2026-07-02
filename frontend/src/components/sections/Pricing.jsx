@@ -5,7 +5,8 @@ import { RainbowButton } from "@/components/magic-ui/rainbow-button";
 import { NumberTicker } from "@/components/magic-ui/number-ticker";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { BorderBeam } from "@/components/magic-ui/border-beam";
-import { useLeadForm, CALENDLY_URL } from "@/context/LeadFormContext";
+import { useLeadForm } from "@/context/LeadFormContext";
+import { openCalendly, trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 /**
@@ -130,9 +131,10 @@ export function Pricing() {
                   <RainbowButton
                     as="button"
                     type="button"
-                    onClick={() =>
-                      openLeadForm({ source: "pricing_growth" })
-                    }
+                    onClick={() => {
+                      trackEvent("cta_click", { location: "pricing_growth", label: "Start now" });
+                      openLeadForm({ source: "pricing_growth" });
+                    }}
                     data-testid="pricing-primary-cta"
                   >
                     <Sparkles className="mr-2 inline h-4 w-4" />
@@ -178,9 +180,12 @@ export function Pricing() {
                 ))}
               </ul>
               <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  trackEvent("cta_click", { location: "pricing_enterprise", label: "Talk to sales" });
+                  openCalendly("pricing_enterprise");
+                }}
                 data-testid="pricing-enterprise-cta"
                 className="mt-auto inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-ink dark:text-white transition-colors hover:border-brand hover:text-brand"
               >

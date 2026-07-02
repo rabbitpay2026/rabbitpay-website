@@ -4,7 +4,8 @@ import { WarpBackground } from "@/components/magic-ui/warp-background";
 import { Particles } from "@/components/magic-ui/particles";
 import { ShimmerButton } from "@/components/magic-ui/shimmer-button";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
-import { useLeadForm, CALENDLY_URL } from "@/context/LeadFormContext";
+import { useLeadForm } from "@/context/LeadFormContext";
+import { openCalendly, trackEvent } from "@/lib/analytics";
 
 /**
  * FINAL CTA
@@ -41,23 +42,28 @@ export function FinalCTA() {
                 <ShimmerButton
                   as="button"
                   type="button"
-                  onClick={() => openLeadForm({ source: "final_cta" })}
+                  onClick={() => {
+                    trackEvent("cta_click", { location: "final_cta", label: "Get started free" });
+                    openLeadForm({ source: "final_cta" });
+                  }}
                   background="#7C3AED"
                   data-testid="final-cta-primary"
                 >
                   Get started free
                   <ArrowRight className="ml-2 inline h-4 w-4" />
                 </ShimmerButton>
-                <a
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => {
+                    trackEvent("cta_click", { location: "final_cta_secondary", label: "Talk to us" });
+                    openCalendly("final_cta_secondary");
+                  }}
                   data-testid="final-cta-secondary"
                   className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-5 py-3 text-sm font-medium text-white backdrop-blur transition-colors hover:bg-white/10"
                 >
                   Talk to us
                   <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                </a>
+                </button>
               </div>
             </BlurFade>
 

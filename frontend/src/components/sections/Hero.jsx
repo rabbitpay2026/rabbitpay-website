@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, CheckCircle2, ShieldCheck, Zap, Sparkles, MapPin } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck, Zap, Sparkles, MapPin, QrCode, ChevronLeft, X } from "lucide-react";
 import { AuroraText } from "@/components/magic-ui/aurora-text";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { ShimmerButton } from "@/components/magic-ui/shimmer-button";
@@ -8,15 +8,25 @@ import { RetroGrid } from "@/components/magic-ui/retro-grid";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import { IPhone15Pro } from "@/components/magic-ui/iphone-15-pro";
 import { BorderBeam } from "@/components/magic-ui/border-beam";
-import { CALENDLY_URL, RABBITPAY_LOGO } from "@/context/LeadFormContext";
+import { RABBITPAY_LOGO } from "@/context/LeadFormContext";
+import { openCalendly, trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 /**
  * HERO
  * Uses: Aurora Text, Blur Fade, Shimmer Button, iPhone 15 Pro, Retro Grid + Dot Pattern, Number Ticker.
- * "Start free" and "Book a demo" open Calendly in a new tab.
+ * "Start free" and "Book a demo" open the in-page Calendly popup.
  */
 export function Hero() {
+  const onStartFree = () => {
+    trackEvent("cta_click", { location: "hero_primary", label: "Start free" });
+    openCalendly("hero_primary");
+  };
+  const onBookDemo = () => {
+    trackEvent("cta_click", { location: "hero_secondary", label: "Book a demo" });
+    openCalendly("hero_secondary");
+  };
+
   return (
     <section
       id="top"
@@ -51,25 +61,23 @@ export function Hero() {
             <BlurFade delay={0.4}>
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <ShimmerButton
-                  as="a"
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  as="button"
+                  type="button"
+                  onClick={onStartFree}
                   data-testid="hero-primary-cta"
                 >
                   Start free
                   <ArrowRight className="ml-2 inline h-4 w-4" />
                 </ShimmerButton>
-                <a
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={onBookDemo}
                   data-testid="hero-secondary-cta"
                   className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white/50 dark:bg-white/5 px-5 py-3 text-sm font-medium text-ink/80 dark:text-white/80 backdrop-blur transition-colors hover:text-brand hover:border-brand"
                 >
                   Book a demo
                   <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                </a>
+                </button>
               </div>
             </BlurFade>
 
@@ -88,7 +96,7 @@ export function Hero() {
             </BlurFade>
           </div>
 
-          {/* Right visual — iPhone with mock checkout */}
+          {/* Right visual — iPhone with mock checkout inspired by real RabbitPay flow */}
           <BlurFade delay={0.35} className="lg:col-span-5">
             <div className="relative mx-auto">
               {/* Ambient glow */}
@@ -126,7 +134,7 @@ export function Hero() {
                     UPI · Paid
                   </p>
                   <p className="text-xs font-semibold text-ink dark:text-white">
-                    ₹1,199 · 2.4s
+                    ₹1,001 · 2.4s
                   </p>
                 </div>
               </div>
@@ -198,126 +206,163 @@ function Stat({ icon, label, value, prefix, suffix, tone }) {
   );
 }
 
-/** Mock RabbitPay checkout inside the iPhone. */
+/**
+ * Mock RabbitPay checkout inside the iPhone.
+ * Visual language mirrors the real RabbitPay checkout: brand header with
+ * progress bar, order summary, delivery details, "Save X% on prepaid"
+ * pill, and multiple payment method rows.
+ */
 function MockCheckoutUI() {
   return (
-    <div className="flex h-full w-full flex-col bg-[#FAFAFF] pt-14 dark:bg-neutral-900">
-      {/* Top bar */}
-      <div className="flex items-center justify-between border-b border-black/5 px-5 pb-3 dark:border-white/5">
+    <div className="flex h-full w-full flex-col bg-[#F7F7FB] pt-10 dark:bg-neutral-900 text-[10px] leading-tight">
+      {/* Promo strip */}
+      <div className="bg-[#4C1D95] text-white text-center py-1.5 text-[9px] font-semibold tracking-wide">
+        Shop now! Sale ends in 24 hours.
+      </div>
+      {/* Header with brand + step indicator */}
+      <div className="flex items-center justify-between border-b border-black/5 bg-white dark:bg-neutral-800 dark:border-white/5 px-3.5 py-2.5">
         <div className="flex items-center gap-1.5">
+          <ChevronLeft className="h-3.5 w-3.5 text-ink dark:text-white" strokeWidth={2.5} />
           <img
             src={RABBITPAY_LOGO}
             alt="RabbitPay"
-            className="h-6 w-6 rounded-md"
+            className="h-5 w-5 rounded-md"
           />
-          <span className="text-[11px] font-semibold text-ink dark:text-white">
+          <span className="text-[10px] font-semibold text-ink dark:text-white">
             RabbitPay
           </span>
         </div>
-        <span className="text-[10px] text-black/50 dark:text-white/50">Secure</span>
+        <div className="flex items-center gap-1">
+          <StepDot done />
+          <span className="text-[8px] text-ink/30 dark:text-white/30">···</span>
+          <StepDot done />
+          <span className="text-[8px] text-ink/30 dark:text-white/30">···</span>
+          <StepDot current />
+          <span className="ml-1 text-[9px] font-semibold text-ink dark:text-white">Pay</span>
+        </div>
+        <X className="h-3.5 w-3.5 text-ink/60 dark:text-white/60" />
       </div>
 
-      <div className="flex-1 overflow-hidden px-5 py-4">
-        {/* Address — HIGHLIGHTED as prefilled */}
-        <div className="relative rounded-lg border-2 border-brand/40 bg-brand/5 p-3">
-          <div className="absolute -top-2 left-3 rounded-full bg-brand px-2 py-[2px] text-[9px] font-bold uppercase tracking-widest text-white">
+      <div className="flex-1 overflow-hidden px-3 pt-2.5 pb-2">
+        {/* Order summary row */}
+        <div className="flex items-center justify-between rounded-lg border border-black/5 bg-white dark:border-white/10 dark:bg-neutral-800 px-2.5 py-2">
+          <div className="flex items-center gap-2">
+            <span className="grid h-7 w-7 place-items-center rounded-md bg-brand/10 text-brand text-[9px] font-bold">
+              📦
+            </span>
+            <div>
+              <p className="text-[10px] font-semibold text-ink dark:text-white">
+                Order · 1 Item
+              </p>
+              <p className="text-[9px] text-black/50 dark:text-white/50">Male Vintage Watch</p>
+            </div>
+          </div>
+          <p className="text-[11px] font-bold text-ink dark:text-white">₹1,089</p>
+        </div>
+
+        {/* Delivery details — HIGHLIGHTED as prefilled */}
+        <div className="relative mt-2 rounded-lg border-2 border-brand/40 bg-brand/5 p-2.5">
+          <div className="absolute -top-1.5 left-2 rounded-full bg-brand px-1.5 py-[1px] text-[8px] font-bold uppercase tracking-widest text-white">
             Prefilled
           </div>
-          <div className="mt-1 flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-brand">
+          <div className="mt-0.5 flex items-center justify-between">
+            <span className="text-[9px] font-semibold uppercase tracking-widest text-brand inline-flex items-center gap-1">
+              <MapPin className="h-2.5 w-2.5" />
               Deliver to
             </span>
-            <span className="text-[10px] font-semibold text-brand">Change</span>
+            <span className="text-[9px] font-semibold text-brand">Change</span>
           </div>
-          <p className="mt-1 text-[11px] font-semibold text-ink dark:text-white">
-            Ananya S. · +91 98•••••420
+          <p className="mt-0.5 text-[10px] font-semibold text-ink dark:text-white">
+            Avijeet Dey · +91 62955 29286
           </p>
-          <p className="text-[10px] leading-tight text-black/60 dark:text-white/60">
-            A-14, HSR Layout, Sector 7, Bengaluru — 560102
+          <p className="text-[9px] leading-tight text-black/60 dark:text-white/60">
+            56A Savithri Nilayam, Bengaluru — 560035
           </p>
         </div>
 
-        {/* Order summary */}
-        <div className="mt-3 rounded-lg border border-black/5 bg-white p-3 dark:border-white/10 dark:bg-neutral-800">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-medium text-ink dark:text-white">
-              Sunset Cotton Tee
-            </span>
-            <span className="text-[11px] font-semibold text-ink dark:text-white">
-              ₹1,199
-            </span>
-          </div>
-          <div className="flex items-center justify-between mt-1">
-            <span className="text-[11px] text-black/60 dark:text-white/60">
-              Shipping
-            </span>
-            <span className="text-[11px] font-medium text-success">FREE</span>
-          </div>
-          <div className="mt-2 flex items-center justify-between border-t border-black/5 pt-2 dark:border-white/10">
-            <span className="text-[11px] font-semibold text-ink dark:text-white">
-              Total
-            </span>
-            <span className="text-sm font-bold text-ink dark:text-white">
-              ₹1,199
-            </span>
-          </div>
-        </div>
-
-        {/* Payment method */}
-        <div className="mt-3">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-black/50 dark:text-white/50">
-            Payment method
+        {/* Payment methods heading + prepaid save badge */}
+        <div className="mt-2.5 flex items-center justify-between">
+          <p className="text-[9px] font-semibold uppercase tracking-widest text-black/50 dark:text-white/50">
+            Payment methods
           </p>
-          <div className="mt-2 space-y-1.5">
-            <PayRow name="UPI · GPay / PhonePe" selected />
-            <PayRow name="Cards / NetBanking" />
-            <PayRow name="Cash on Delivery — verified" />
-          </div>
-        </div>
-
-        {/* Success */}
-        <div className="mt-3 flex items-center gap-2 rounded-lg bg-success/10 px-3 py-2">
-          <span className="grid h-5 w-5 place-items-center rounded-full bg-success text-white">
-            <CheckCircle2 className="h-3 w-3" />
-          </span>
-          <span className="text-[11px] font-medium text-success">
-            Payment successful · ₹1,199
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-1.5 py-[2px] text-[8px] font-semibold text-emerald-700 dark:text-emerald-300">
+            <Sparkles className="h-2.5 w-2.5" />
+            Save 8% on prepaid
           </span>
         </div>
 
-        {/* Pay button */}
+        <div className="mt-1.5 space-y-1">
+          <PayRow name="UPI · GPay / PhonePe" price="₹1,001" strike="₹1,089" selected icon={<QrCode className="h-3 w-3" />} />
+          <PayRow name="Cards / NetBanking" price="₹1,001" strike="₹1,089" />
+          <PayRow name="Wallets · Paytm, Mobikwik" price="₹1,001" strike="₹1,089" />
+          <PayRow name="Cash on Delivery · verified" price="₹1,089" />
+        </div>
+
+        {/* Success + Pay button */}
+        <div className="mt-2 flex items-center gap-1.5 rounded-lg bg-success/10 px-2 py-1.5">
+          <span className="grid h-4 w-4 place-items-center rounded-full bg-success text-white">
+            <CheckCircle2 className="h-2.5 w-2.5" />
+          </span>
+          <span className="text-[9px] font-medium text-success">
+            Payment successful · ₹1,001.88
+          </span>
+        </div>
         <button
           disabled
-          className="mt-3 w-full rounded-lg bg-brand py-3 text-[12px] font-semibold text-white shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]"
+          className="mt-2 w-full rounded-lg bg-brand py-2.5 text-[10px] font-semibold text-white shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]"
         >
-          Pay ₹1,199 via UPI
+          Pay ₹1,001.88 via UPI
         </button>
       </div>
     </div>
   );
 }
 
-function PayRow({ name, selected }) {
+function StepDot({ done, current }) {
+  return (
+    <span
+      className={cn(
+        "grid h-3 w-3 place-items-center rounded-full border text-white text-[7px]",
+        done && "bg-brand border-brand",
+        current && "bg-ink border-ink dark:bg-white dark:border-white",
+        !done && !current && "border-black/20 bg-white",
+      )}
+    >
+      {done ? "✓" : ""}
+    </span>
+  );
+}
+
+function PayRow({ name, price, strike, selected, icon }) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between rounded-md border px-2.5 py-2 text-[11px]",
+        "flex items-center justify-between rounded-md border px-2 py-1.5 text-[10px]",
         selected
-          ? "border-brand/40 bg-brand/5"
+          ? "border-brand/40 bg-brand/[0.06]"
           : "border-black/5 bg-white dark:border-white/10 dark:bg-neutral-800",
       )}
     >
-      <span className="font-medium text-ink dark:text-white">{name}</span>
-      <span
-        className={cn(
-          "grid h-3.5 w-3.5 place-items-center rounded-full border",
-          selected
-            ? "border-brand bg-brand"
-            : "border-black/20 dark:border-white/20",
+      <div className="flex items-center gap-1.5 min-w-0">
+        {icon ? (
+          <span className="grid h-4 w-4 place-items-center rounded bg-brand/10 text-brand">
+            {icon}
+          </span>
+        ) : (
+          <span className="h-4 w-4 rounded bg-ink/10 dark:bg-white/10" />
         )}
-      >
-        {selected ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}
-      </span>
+        <span className="truncate font-medium text-ink dark:text-white">{name}</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        {strike ? (
+          <span className="text-[9px] line-through text-black/40 dark:text-white/40">
+            {strike}
+          </span>
+        ) : null}
+        <span className={cn("text-[10px] font-semibold", selected ? "text-brand" : "text-ink dark:text-white")}>
+          {price}
+        </span>
+      </div>
     </div>
   );
 }
