@@ -16,6 +16,13 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+# Configure logging early so helpers/routes can use `logger` at import time.
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -26,6 +33,11 @@ EMAIL_BASE_URL = "https://integrations.emergentagent.com"
 EMAIL_KEY = os.environ.get('EMERGENT_EMAIL_KEY')
 EMAIL_FROM_NAME = os.environ.get('EMAIL_FROM_NAME', 'RabbitPay')
 SALES_INBOX = os.environ.get('SALES_INBOX', 'hello@rabbitpay.in')
+
+if not EMAIL_KEY:
+    logger.warning(
+        "EMERGENT_EMAIL_KEY is missing — /api/leads will store leads but skip email delivery."
+    )
 
 # Create the main app without a prefix
 app = FastAPI(title="RabbitPay Marketing API")
@@ -206,11 +218,6 @@ app.add_middleware(
 )
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 
 @app.on_event("shutdown")
