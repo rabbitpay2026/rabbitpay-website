@@ -1,0 +1,54 @@
+"use client";
+import { createContext, useContext, useMemo, useState, useCallback } from "react";
+
+const LeadFormContext = createContext(null);
+
+/**
+ * Provides a single global "open lead capture modal" trigger to every CTA
+ * on the landing page. Accepts a `prefill` object that seeds the modal
+ * (source label, plan, etc.).
+ */
+export function LeadFormProvider({ children }) {
+  const [open, setOpen] = useState(false);
+  const [prefill, setPrefill] = useState({ source: "landing_page" });
+
+  const openLeadForm = useCallback((next) => {
+    setPrefill({ source: "landing_page", ...(next || {}) });
+    setOpen(true);
+  }, []);
+
+  const closeLeadForm = useCallback(() => setOpen(false), []);
+
+  const value = useMemo(
+    () => ({ open, prefill, openLeadForm, closeLeadForm, setOpen }),
+    [open, prefill, openLeadForm, closeLeadForm],
+  );
+
+  return (
+    <LeadFormContext.Provider value={value}>
+      {children}
+    </LeadFormContext.Provider>
+  );
+}
+
+export function useLeadForm() {
+  const ctx = useContext(LeadFormContext);
+  if (!ctx) {
+    // graceful noop so components rendered outside provider don't crash
+    return {
+      open: false,
+      prefill: {},
+      openLeadForm: () => {},
+      closeLeadForm: () => {},
+      setOpen: () => {},
+    };
+  }
+  return ctx;
+}
+
+/** Convenience constants used across CTAs. */
+export const CALENDLY_URL = "https://calendly.com/avijeetdey-email/30min";
+export const SUPPORT_PHONE = "+91 62955 29286";
+export const SUPPORT_PHONE_HREF = "tel:+916295529286";
+export const SUPPORT_EMAIL = "hello@rabbitpay.in";
+export const RABBITPAY_LOGO = "/rabbitpay-icon.png";

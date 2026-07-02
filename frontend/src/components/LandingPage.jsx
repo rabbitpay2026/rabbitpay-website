@@ -1,5 +1,8 @@
 "use client";
+import { Toaster } from "sonner";
 import { ScrollProgress } from "@/components/magic-ui/scroll-progress";
+import { LeadFormProvider } from "@/context/LeadFormContext";
+import { LeadFormModal } from "@/components/LeadFormModal";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
@@ -9,7 +12,7 @@ import { Features } from "@/components/sections/Features";
 import { Pricing } from "@/components/sections/Pricing";
 import { Metrics } from "@/components/sections/Metrics";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { Integration } from "@/components/sections/Integration";
+import { CustomerSupport } from "@/components/sections/CustomerSupport";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
 
@@ -20,22 +23,34 @@ import { Footer } from "@/components/sections/Footer";
  */
 export default function LandingPage() {
   return (
-    <div className="relative min-h-screen bg-background text-foreground antialiased">
-      <ScrollProgress />
-      <Header />
-      <main>
-        <Hero />
-        <LogoWall />
-        <ValueProps />
-        <HowItWorks />
-        <Features />
-        <Pricing />
-        <Metrics />
-        <Testimonials />
-        <Integration />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </div>
+    <LeadFormProvider>
+      <div className="relative min-h-screen bg-background text-foreground antialiased">
+        <ScrollProgress />
+        <Header />
+        <main>
+          <Hero />
+          <LogoWall />
+          <ValueProps />
+          <HowItWorks />
+          <Features />
+          <Pricing />
+          <Metrics />
+          <Testimonials />
+          <CustomerSupport />
+          <FinalCTA />
+        </main>
+        <Footer />
+        <LeadFormModal />
+        <Toaster
+          position="bottom-right"
+          richColors
+          closeButton
+          toastOptions={{
+            className:
+              "rounded-xl border-border shadow-lg font-sans",
+          }}
+        />
+      </div>
+    </LeadFormProvider>
   );
 }

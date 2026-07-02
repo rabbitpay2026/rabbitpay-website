@@ -67,9 +67,9 @@ export function Testimonials() {
   return (
     <section
       data-testid="testimonials"
-      className="relative border-t border-border py-24 md:py-32"
+      className="relative border-t border-border py-20 md:py-24"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <BlurFade>
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-brand">
             Loved by founders

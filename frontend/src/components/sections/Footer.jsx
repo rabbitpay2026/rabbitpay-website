@@ -1,6 +1,12 @@
 "use client";
-import { Rabbit } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
+import {
+  RABBITPAY_LOGO,
+  SUPPORT_PHONE,
+  SUPPORT_PHONE_HREF,
+  SUPPORT_EMAIL,
+} from "@/context/LeadFormContext";
 
 const COLS = [
   {
@@ -15,40 +21,31 @@ const COLS = [
   {
     title: "Company",
     links: [
-      { label: "About", href: "mailto:hello@rabbitpay.in" },
-      { label: "Careers", href: "mailto:hello@rabbitpay.in?subject=Careers" },
-      { label: "Press", href: "mailto:hello@rabbitpay.in?subject=Press" },
+      { label: "About", href: "#support" },
+      { label: "Careers", href: `mailto:${"hello@rabbitpay.in"}?subject=Careers` },
+      { label: "Press", href: `mailto:${"hello@rabbitpay.in"}?subject=Press` },
     ],
   },
   {
     title: "Resources",
     links: [
-      { label: "Docs", href: "#integrations" },
-      { label: "Changelog", href: "#integrations" },
-      { label: "Status", href: "#integrations" },
+      { label: "Pricing", href: "#pricing" },
+      { label: "Support", href: "#integrations" },
+      { label: "Contact", href: "#support" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "mailto:hello@rabbitpay.in?subject=Privacy" },
-      { label: "Terms", href: "mailto:hello@rabbitpay.in?subject=Terms" },
-      { label: "Security", href: "mailto:hello@rabbitpay.in?subject=Security" },
-    ],
-  },
-  {
-    title: "Contact",
-    links: [
-      { label: "hello@rabbitpay.in", href: "mailto:hello@rabbitpay.in" },
-      { label: "Support", href: "#support" },
-      { label: "Sales", href: "mailto:hello@rabbitpay.in?subject=Sales" },
+      { label: "Privacy", href: `mailto:${"hello@rabbitpay.in"}?subject=Privacy` },
+      { label: "Terms", href: `mailto:${"hello@rabbitpay.in"}?subject=Terms` },
+      { label: "Security", href: `mailto:${"hello@rabbitpay.in"}?subject=Security` },
     ],
   },
 ];
 
 /**
- * FOOTER
- * Uses: Magic UI Dot Pattern backdrop.
+ * FOOTER — logo + phone + email + multi-column links + Dot Pattern.
  */
 export function Footer() {
   return (
@@ -57,27 +54,52 @@ export function Footer() {
       className="relative overflow-hidden border-t border-border bg-background"
     >
       <DotPattern className="opacity-40 [mask-image:linear-gradient(to_top,black,transparent_60%)]" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-10">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <a href="#top" className="inline-flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-brand to-brand-deep text-white shadow-sm">
-                <Rabbit className="h-4 w-4" strokeWidth={2.4} />
-              </span>
-              <span className="text-lg font-semibold tracking-tight text-ink dark:text-white">
-                rabbitpay
+            <a href="#top" className="inline-flex items-center gap-2.5">
+              <img
+                src={RABBITPAY_LOGO}
+                alt="RabbitPay"
+                className="h-10 w-10 rounded-xl shadow-sm"
+              />
+              <span className="text-xl font-semibold tracking-tight text-ink dark:text-white">
+                rabbit<span className="text-brand">pay</span>
               </span>
             </a>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               A 1-Click Checkout for Shopify & D2C brands — designed to improve
               conversions, reduce RTO, and deliver a faster checkout experience.
             </p>
+
+            {/* Contact block */}
+            <div className="mt-5 space-y-2">
+              <a
+                href={SUPPORT_PHONE_HREF}
+                data-testid="footer-phone"
+                className="inline-flex items-center gap-2 text-sm font-medium text-ink dark:text-white hover:text-brand transition-colors"
+              >
+                <Phone className="h-4 w-4 text-brand" />
+                {SUPPORT_PHONE}
+              </a>
+              <div>
+                <a
+                  href={`mailto:${SUPPORT_EMAIL}`}
+                  data-testid="footer-email"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-ink dark:text-white hover:text-brand transition-colors"
+                >
+                  <Mail className="h-4 w-4 text-brand" />
+                  {SUPPORT_EMAIL}
+                </a>
+              </div>
+            </div>
+
             <p className="mt-6 text-xs uppercase tracking-[0.2em] text-muted-foreground">
               Zero setup fee · No hidden charges · 1:1 support
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-5 lg:col-span-8">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
             {COLS.map((col) => (
               <div key={col.title}>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink dark:text-white">
@@ -100,7 +122,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} RabbitPay — Made in India 🇮🇳
           </p>

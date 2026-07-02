@@ -58,9 +58,9 @@ export function ValueProps() {
     <section
       id="product"
       data-testid="value-props"
-      className="relative py-24 md:py-32"
+      className="relative py-20 md:py-24"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <BlurFade>
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-brand">
             Why RabbitPay

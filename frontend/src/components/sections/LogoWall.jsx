@@ -23,9 +23,9 @@ export function LogoWall() {
   return (
     <section
       data-testid="logo-wall"
-      className="relative border-y border-border bg-background py-14 md:py-16"
+      className="relative border-y border-border bg-background py-10 md:py-12"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <p className="text-center text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">
           Trusted by fast-growing Indian D2C brands
         </p>

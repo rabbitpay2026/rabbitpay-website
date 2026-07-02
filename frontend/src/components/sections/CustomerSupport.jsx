@@ -1,0 +1,140 @@
+"use client";
+import {
+  Headphones,
+  MessageSquareText,
+  Phone,
+  Clock,
+  Mail,
+} from "lucide-react";
+import { MagicCard } from "@/components/magic-ui/magic-card";
+import { BorderBeam } from "@/components/magic-ui/border-beam";
+import { BlurFade } from "@/components/magic-ui/blur-fade";
+import {
+  SUPPORT_PHONE,
+  SUPPORT_PHONE_HREF,
+  SUPPORT_EMAIL,
+} from "@/context/LeadFormContext";
+
+/**
+ * CUSTOMER SUPPORT — new section replacing the developer terminal.
+ * Emphasises 1:1, world-class support with real contact points.
+ */
+export function CustomerSupport() {
+  return (
+    <section
+      id="integrations"
+      data-testid="customer-support"
+      className="relative py-20 md:py-24"
+    >
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-12">
+          <BlurFade className="lg:col-span-5">
+            <span className="inline-grid h-11 w-11 place-items-center rounded-xl border border-border bg-background text-brand">
+              <Headphones className="h-5 w-5" />
+            </span>
+            <p className="mt-4 text-sm font-medium uppercase tracking-[0.22em] text-brand">
+              World-class 1:1 support
+            </p>
+            <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter leading-[1.05] text-ink dark:text-white">
+              Real humans.
+              <br className="hidden sm:block" /> Ready to help — always.
+            </h2>
+            <p className="mt-4 max-w-lg text-lg text-muted-foreground">
+              Every RabbitPay merchant gets a dedicated specialist on WhatsApp and
+              email. No support portals, no ticket queues, no hold music.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm text-ink/80 dark:text-white/80">
+              <li className="flex items-start gap-2.5">
+                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
+                Median first response under 8 minutes during business hours
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
+                Ops + tech on the same channel — no handoffs
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
+                Founding team on Slack for launch week
+              </li>
+            </ul>
+          </BlurFade>
+
+          <div className="lg:col-span-7 grid gap-4 sm:grid-cols-2">
+            <BlurFade delay={0.1}>
+              <ContactCard
+                icon={<Phone className="h-5 w-5" />}
+                label="Call us"
+                value={SUPPORT_PHONE}
+                href={SUPPORT_PHONE_HREF}
+                accent
+                testid="support-phone"
+              />
+            </BlurFade>
+            <BlurFade delay={0.15}>
+              <ContactCard
+                icon={<MessageSquareText className="h-5 w-5" />}
+                label="WhatsApp"
+                value="Chat with a specialist"
+                href={`https://wa.me/916295529286?text=${encodeURIComponent(
+                  "Hi RabbitPay team — I'd like to know more.",
+                )}`}
+                testid="support-whatsapp"
+              />
+            </BlurFade>
+            <BlurFade delay={0.2}>
+              <ContactCard
+                icon={<Mail className="h-5 w-5" />}
+                label="Email"
+                value={SUPPORT_EMAIL}
+                href={`mailto:${SUPPORT_EMAIL}`}
+                testid="support-email"
+              />
+            </BlurFade>
+            <BlurFade delay={0.25}>
+              <ContactCard
+                icon={<Clock className="h-5 w-5" />}
+                label="Hours"
+                value="Mon–Sat · 09:00 – 21:00 IST"
+                testid="support-hours"
+              />
+            </BlurFade>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactCard({ icon, label, value, href, accent, testid }) {
+  const Comp = href ? "a" : "div";
+  return (
+    <Comp
+      href={href}
+      target={href && href.startsWith("http") ? "_blank" : undefined}
+      rel={href && href.startsWith("http") ? "noopener noreferrer" : undefined}
+      data-testid={testid}
+      className="group relative block overflow-hidden rounded-2xl border border-border bg-card p-5 transition-colors hover:border-brand/40"
+    >
+      <MagicCard className="rounded-2xl border-0 bg-transparent">
+        <div className="relative flex items-start gap-4 p-1">
+          <span
+            className={`grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl border border-border ${
+              accent ? "bg-brand text-white" : "bg-background text-brand"
+            }`}
+          >
+            {icon}
+          </span>
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+              {label}
+            </p>
+            <p className="mt-1 text-base font-semibold text-ink dark:text-white break-words">
+              {value}
+            </p>
+          </div>
+        </div>
+        {accent ? <BorderBeam size={140} duration={9} colorFrom="#7C3AED" colorTo="#22D3EE" /> : null}
+      </MagicCard>
+    </Comp>
+  );
+}

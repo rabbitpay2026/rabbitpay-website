@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, CheckCircle2, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck, Zap, Sparkles, MapPin } from "lucide-react";
 import { AuroraText } from "@/components/magic-ui/aurora-text";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { ShimmerButton } from "@/components/magic-ui/shimmer-button";
@@ -7,58 +7,65 @@ import { NumberTicker } from "@/components/magic-ui/number-ticker";
 import { RetroGrid } from "@/components/magic-ui/retro-grid";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import { IPhone15Pro } from "@/components/magic-ui/iphone-15-pro";
+import { BorderBeam } from "@/components/magic-ui/border-beam";
+import { CALENDLY_URL, RABBITPAY_LOGO } from "@/context/LeadFormContext";
 import { cn } from "@/lib/utils";
 
 /**
  * HERO
  * Uses: Aurora Text, Blur Fade, Shimmer Button, iPhone 15 Pro, Retro Grid + Dot Pattern, Number Ticker.
+ * "Start free" and "Book a demo" open Calendly in a new tab.
  */
 export function Hero() {
   return (
     <section
       id="top"
       data-testid="hero-section"
-      className="relative isolate overflow-hidden pt-32 md:pt-40"
+      className="relative isolate overflow-hidden pt-28 md:pt-32 pb-8 md:pb-12"
     >
       <RetroGrid />
       <DotPattern className="[mask-image:radial-gradient(600px_circle_at_center,white,transparent_75%)]" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-14 lg:grid-cols-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
           {/* Left copy */}
           <div className="lg:col-span-7">
             <BlurFade delay={0.05}>
-              <p className="text-sm font-medium uppercase tracking-[0.24em] text-brand">
+              <p className="text-xs sm:text-sm font-medium uppercase tracking-[0.24em] text-brand">
                 Made in India — for Indian D2C
               </p>
             </BlurFade>
             <BlurFade delay={0.15}>
-              <h1 className="mt-5 text-[42px] sm:text-[56px] lg:text-[72px] font-semibold leading-[1.02] tracking-tighter text-ink dark:text-white">
+              <h1 className="mt-4 text-[40px] sm:text-[56px] lg:text-[64px] font-semibold leading-[1.02] tracking-tighter text-ink dark:text-white">
                 <span className="block">1-Click Checkout,</span>
                 <AuroraText className="font-semibold">built in India.</AuroraText>
               </h1>
             </BlurFade>
             <BlurFade delay={0.28}>
-              <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
+              <p className="mt-5 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Higher conversions. Lower RTO. A checkout your Indian shoppers actually finish —
                 with prefilled addresses, UPI-first payments, and verified COD.
               </p>
             </BlurFade>
 
             <BlurFade delay={0.4}>
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-7 flex flex-wrap items-center gap-3">
                 <ShimmerButton
                   as="a"
-                  href="mailto:hello@rabbitpay.in"
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   data-testid="hero-primary-cta"
                 >
                   Start free
                   <ArrowRight className="ml-2 inline h-4 w-4" />
                 </ShimmerButton>
                 <a
-                  href="mailto:hello@rabbitpay.in?subject=Book%20a%20Demo"
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   data-testid="hero-secondary-cta"
-                  className="inline-flex items-center gap-1.5 rounded-full px-5 py-3 text-sm font-medium text-ink/80 dark:text-white/80 hover:text-brand transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white/50 dark:bg-white/5 px-5 py-3 text-sm font-medium text-ink/80 dark:text-white/80 backdrop-blur transition-colors hover:text-brand hover:border-brand"
                 >
                   Book a demo
                   <ArrowRight className="h-4 w-4" strokeWidth={2} />
@@ -67,7 +74,7 @@ export function Hero() {
             </BlurFade>
 
             <BlurFade delay={0.55}>
-              <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+              <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
                 <li className="inline-flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-success" /> Zero setup fee
                 </li>
@@ -87,9 +94,43 @@ export function Hero() {
               {/* Ambient glow */}
               <div
                 aria-hidden="true"
-                className="absolute -inset-10 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_50%_30%,rgba(124,58,237,0.35),transparent_60%)] blur-2xl"
+                className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_50%_30%,rgba(124,58,237,0.35),transparent_60%)] blur-2xl"
               />
-              <IPhone15Pro width={340}>
+              {/* Floating "prefilled" badge */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -left-6 top-24 hidden lg:flex items-center gap-2 rounded-2xl border border-border bg-white/95 dark:bg-neutral-900/95 px-3.5 py-2.5 shadow-xl backdrop-blur z-20"
+              >
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white">
+                  <MapPin className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                    Address prefilled
+                  </p>
+                  <p className="text-xs font-semibold text-ink dark:text-white">
+                    3 fields · 220&nbsp;ms
+                  </p>
+                </div>
+              </div>
+              {/* Floating "UPI paid" badge */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-4 bottom-16 hidden lg:flex items-center gap-2 rounded-2xl border border-border bg-white/95 dark:bg-neutral-900/95 px-3.5 py-2.5 shadow-xl backdrop-blur z-20"
+              >
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-success text-white">
+                  <Sparkles className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                    UPI · Paid
+                  </p>
+                  <p className="text-xs font-semibold text-ink dark:text-white">
+                    ₹1,199 · 2.4s
+                  </p>
+                </div>
+              </div>
+              <IPhone15Pro width={320}>
                 <MockCheckoutUI />
               </IPhone15Pro>
             </div>
@@ -98,29 +139,32 @@ export function Hero() {
 
         {/* Stats strip */}
         <BlurFade delay={0.6}>
-          <div className="mt-20 md:mt-24 grid grid-cols-1 gap-6 rounded-2xl border border-border bg-white/70 dark:bg-white/[0.03] p-6 backdrop-blur sm:grid-cols-3">
-            <Stat
-              icon={<Zap className="h-4 w-4" />}
-              label="Conversion uplift"
-              value={35}
-              suffix="%"
-              prefix="+"
-            />
-            <Stat
-              icon={<ShieldCheck className="h-4 w-4" />}
-              label="Return-to-Origin"
-              value={28}
-              suffix="%"
-              prefix="−"
-              tone="success"
-            />
-            <Stat
-              icon={<CheckCircle2 className="h-4 w-4" />}
-              label="Checkout time"
-              value={3}
-              suffix="s"
-              prefix="<"
-            />
+          <div className="relative mt-14 md:mt-16 rounded-2xl border border-border bg-white/70 dark:bg-white/[0.03] p-5 sm:p-6 backdrop-blur">
+            <BorderBeam size={220} duration={12} colorFrom="#7C3AED" colorTo="#22D3EE" />
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+              <Stat
+                icon={<Zap className="h-4 w-4" />}
+                label="Conversion uplift"
+                value={35}
+                suffix="%"
+                prefix="+"
+              />
+              <Stat
+                icon={<ShieldCheck className="h-4 w-4" />}
+                label="Return-to-Origin"
+                value={28}
+                suffix="%"
+                prefix="−"
+                tone="success"
+              />
+              <Stat
+                icon={<CheckCircle2 className="h-4 w-4" />}
+                label="Checkout time"
+                value={3}
+                suffix="s"
+                prefix="<"
+              />
+            </div>
           </div>
           <p className="mt-3 text-xs text-muted-foreground/80">
             Illustrative benchmarks aggregated across pilot merchants — your mileage may vary.
@@ -133,7 +177,7 @@ export function Hero() {
 
 function Stat({ icon, label, value, prefix, suffix, tone }) {
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-4">
       <span
         className={cn(
           "grid h-10 w-10 place-items-center rounded-xl border border-border bg-background text-brand",
@@ -161,9 +205,11 @@ function MockCheckoutUI() {
       {/* Top bar */}
       <div className="flex items-center justify-between border-b border-black/5 px-5 pb-3 dark:border-white/5">
         <div className="flex items-center gap-1.5">
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-brand text-white text-[10px] font-bold">
-            R
-          </span>
+          <img
+            src={RABBITPAY_LOGO}
+            alt="RabbitPay"
+            className="h-6 w-6 rounded-md"
+          />
           <span className="text-[11px] font-semibold text-ink dark:text-white">
             RabbitPay
           </span>
@@ -172,10 +218,13 @@ function MockCheckoutUI() {
       </div>
 
       <div className="flex-1 overflow-hidden px-5 py-4">
-        {/* Address */}
-        <div className="rounded-lg border border-black/5 bg-white p-3 dark:border-white/10 dark:bg-neutral-800">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-black/50 dark:text-white/50">
+        {/* Address — HIGHLIGHTED as prefilled */}
+        <div className="relative rounded-lg border-2 border-brand/40 bg-brand/5 p-3">
+          <div className="absolute -top-2 left-3 rounded-full bg-brand px-2 py-[2px] text-[9px] font-bold uppercase tracking-widest text-white">
+            Prefilled
+          </div>
+          <div className="mt-1 flex items-center justify-between">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-brand">
               Deliver to
             </span>
             <span className="text-[10px] font-semibold text-brand">Change</span>
@@ -227,7 +276,7 @@ function MockCheckoutUI() {
         </div>
 
         {/* Success */}
-        <div className="mt-4 flex items-center gap-2 rounded-lg bg-success/10 px-3 py-2">
+        <div className="mt-3 flex items-center gap-2 rounded-lg bg-success/10 px-3 py-2">
           <span className="grid h-5 w-5 place-items-center rounded-full bg-success text-white">
             <CheckCircle2 className="h-3 w-3" />
           </span>
@@ -239,7 +288,7 @@ function MockCheckoutUI() {
         {/* Pay button */}
         <button
           disabled
-          className="mt-4 w-full rounded-lg bg-brand py-3 text-[12px] font-semibold text-white shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]"
+          className="mt-3 w-full rounded-lg bg-brand py-3 text-[12px] font-semibold text-white shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]"
         >
           Pay ₹1,199 via UPI
         </button>

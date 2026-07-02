@@ -12,14 +12,14 @@ export function Metrics() {
   return (
     <section
       data-testid="metrics"
-      className="relative overflow-hidden bg-[#0B0817] py-24 text-white md:py-28"
+      className="relative overflow-hidden bg-[#0B0817] py-20 text-white md:py-24"
     >
       <DotPattern glow className="opacity-30" />
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(124,58,237,0.35),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(59,130,246,0.28),transparent_60%)]"
       />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <BlurFade>
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/60">
             The outcome
