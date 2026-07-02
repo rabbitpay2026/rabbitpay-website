@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { InteractiveHoverButton } from "@/components/magic-ui/interactive-hover-button";
 import { ThemeToggle } from "@/components/magic-ui/theme-toggle";
-import { useLeadForm, RABBITPAY_LOGO } from "@/context/LeadFormContext";
+import { RABBITPAY_LOGO } from "@/context/LeadFormContext";
+import { openCalendly, trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -14,12 +15,11 @@ const NAV_LINKS = [
 ];
 
 /**
- * Sticky header — logo image, in-page anchor nav, theme toggle, primary CTA opens LeadFormModal.
+ * Sticky header — logo image, in-page anchor nav, theme toggle, primary CTA opens Calendly.
  */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { openLeadForm } = useLeadForm();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -30,7 +30,8 @@ export function Header() {
 
   const handleGetStarted = (e) => {
     e.preventDefault();
-    openLeadForm({ source: "header_cta" });
+    trackEvent("cta_click", { location: "header_cta", label: "Get Started" });
+    openCalendly("header_cta");
   };
 
   return (

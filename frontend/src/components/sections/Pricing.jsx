@@ -5,7 +5,6 @@ import { RainbowButton } from "@/components/magic-ui/rainbow-button";
 import { NumberTicker } from "@/components/magic-ui/number-ticker";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { BorderBeam } from "@/components/magic-ui/border-beam";
-import { useLeadForm } from "@/context/LeadFormContext";
 import { openCalendly, trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +14,6 @@ import { cn } from "@/lib/utils";
  * Recommended plan gets an elevated card + BEST VALUE ribbon (typography, no badge pill).
  */
 export function Pricing() {
-  const { openLeadForm } = useLeadForm();
 
   return (
     <section

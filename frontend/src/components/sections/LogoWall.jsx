@@ -3,20 +3,32 @@ import { Marquee } from "@/components/magic-ui/marquee";
 
 /**
  * SOCIAL PROOF — Logo Wall
- * Uses: Magic UI Marquee (grayscale typographic wordmarks, pause on hover).
- * Brand names courtesy of the user (Indian D2C).
+ * Real RabbitPay client logos rendered as grayscale images inside a Magic UI Marquee.
  */
-const BRANDS = [
-  { name: "Qwerty Cases", url: "https://qwertycases.com/" },
-  { name: "Rabbit Rain", url: "https://rabbitrain.com/" },
-  { name: "Perlex", url: "https://perlex.shop/" },
-  { name: "Airy Store", url: "https://www.airystore.in/" },
-  { name: "Sundara", url: "#" },
-  { name: "Kavach", url: "#" },
-  { name: "Lume & Co.", url: "#" },
-  { name: "Moonleaf", url: "#" },
-  { name: "Otto Roasters", url: "#" },
-  { name: "Vayu Wear", url: "#" },
+const CLIENTS = [
+  {
+    name: "Qwerty Cases",
+    url: "https://www.qwertycases.com/",
+    logo:
+      "https://www.qwertycases.com/cdn/shop/files/Qwerty_Cases-01_51860609-3d39-41dc-af67-989219e2af07.png?v=1753348676&width=300",
+  },
+  {
+    name: "Perlex",
+    url: "https://perlex.shop/",
+    logo: "https://perlex.shop/cdn/shop/files/logoo.webp?v=1761931049",
+  },
+  {
+    name: "Airy Store",
+    url: "https://www.airystore.in/",
+    logo:
+      "https://www.airystore.in/cdn/shop/files/logo1.png?v=1770641802&width=330",
+  },
+  {
+    name: "Rabbit Rain",
+    url: "https://www.rabbitrain.com/",
+    logo:
+      "https://www.rabbitrain.com/cdn/shop/files/Rabbit_Rain_4.png?v=1752223707&width=500",
+  },
 ];
 
 export function LogoWall() {
@@ -30,17 +42,29 @@ export function LogoWall() {
           Trusted by fast-growing Indian D2C brands
         </p>
         <div className="mt-8 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <Marquee pauseOnHover className="[--duration:38s] [--gap:3rem]">
-            {BRANDS.map((b) => (
+          <Marquee
+            pauseOnHover
+            className="[--duration:34s] [--gap:4rem]"
+            repeat={6}
+          >
+            {CLIENTS.map((c) => (
               <a
-                key={b.name}
-                href={b.url}
+                key={c.name}
+                href={c.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="whitespace-nowrap font-mono text-xl sm:text-2xl font-semibold tracking-tight text-ink/40 dark:text-white/40 transition-colors hover:text-brand"
-                data-testid={`brand-${b.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                aria-label={c.name}
+                data-testid={`brand-${c.name
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]+/g, "-")}`}
+                className="group flex h-14 shrink-0 items-center justify-center px-2"
               >
-                {b.name}
+                <img
+                  src={c.logo}
+                  alt={c.name}
+                  loading="lazy"
+                  className="h-10 sm:h-12 w-auto max-w-[160px] object-contain opacity-70 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0 dark:brightness-0 dark:invert dark:group-hover:brightness-100 dark:group-hover:invert-0"
+                />
               </a>
             ))}
           </Marquee>

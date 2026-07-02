@@ -4,7 +4,6 @@ import { WarpBackground } from "@/components/magic-ui/warp-background";
 import { Particles } from "@/components/magic-ui/particles";
 import { ShimmerButton } from "@/components/magic-ui/shimmer-button";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
-import { useLeadForm } from "@/context/LeadFormContext";
 import { openCalendly, trackEvent } from "@/lib/analytics";
 
 /**
@@ -13,8 +12,6 @@ import { openCalendly, trackEvent } from "@/lib/analytics";
  * Primary CTA opens the lead-capture modal; secondary opens Calendly.
  */
 export function FinalCTA() {
-  const { openLeadForm } = useLeadForm();
-
   return (
     <section
       id="support"
@@ -44,7 +41,7 @@ export function FinalCTA() {
                   type="button"
                   onClick={() => {
                     trackEvent("cta_click", { location: "final_cta", label: "Get started free" });
-                    openLeadForm({ source: "final_cta" });
+                    openCalendly("final_cta");
                   }}
                   background="#7C3AED"
                   data-testid="final-cta-primary"
