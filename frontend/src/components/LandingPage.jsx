@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import { ScrollProgress } from "@/components/magic-ui/scroll-progress";
 import { LeadFormProvider } from "@/context/LeadFormContext";
 import { LeadFormModal } from "@/components/LeadFormModal";
+import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { LogoWall } from "@/components/sections/LogoWall";
@@ -41,6 +42,7 @@ export default function LandingPage() {
         </main>
         <Footer />
         <LeadFormModal />
+        <StickyMobileCTA />
         <Toaster
           position="bottom-right"
           richColors
