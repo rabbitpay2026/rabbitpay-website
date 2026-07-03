@@ -209,6 +209,19 @@ async def create_lead(input: LeadCreate):
 # Include the router in the main app
 app.include_router(api_router)
 
+
+@app.get("/health")
+async def health_root():
+    """Root-level health endpoint for Kubernetes liveness/readiness probes."""
+    return {"status": "ok"}
+
+
+@app.get("/api/health")
+async def health_api():
+    """Same health endpoint under /api for ingress-forwarded checks."""
+    return {"status": "ok"}
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
