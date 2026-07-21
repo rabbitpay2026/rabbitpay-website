@@ -6,29 +6,25 @@ import { DotPattern } from "@/components/magic-ui/dot-pattern";
 
 /**
  * METRICS BAND
- * Uses: Number Ticker + Text Animate.
  */
 export function Metrics() {
   return (
     <section
       data-testid="metrics"
-      className="relative overflow-hidden bg-[#0B0817] py-20 text-white md:py-24"
+      className="relative overflow-hidden bg-[#07111F] py-20 text-white md:py-24"
     >
       <DotPattern glow className="opacity-30" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(124,58,237,0.35),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(59,130,246,0.28),transparent_60%)]"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(25,107,245,0.35),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(74,140,250,0.22),transparent_60%)]"
       />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <BlurFade>
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/60">
             The outcome
           </p>
-          <h2 className="mt-3 max-w-3xl text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter leading-[1.05]">
-            <TextAnimate
-              text="Numbers that move a business, not a vanity slide."
-              className="block"
-            />
+          <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tighter sm:text-4xl md:text-5xl">
+            <TextAnimate text="Numbers that move a business, not a vanity slide." className="block" />
           </h2>
         </BlurFade>
 
@@ -52,7 +48,7 @@ export function Metrics() {
             decimalPlaces={1}
             suffix="s"
             label="Median checkout time"
-            body="From cart to payment success — measured across returning shoppers."
+            body="From cart to payment success - measured across returning shoppers."
           />
         </div>
         <p className="mt-8 text-xs text-white/50">
@@ -66,7 +62,7 @@ export function Metrics() {
 function Metric({ value, prefix, suffix, decimalPlaces, label, body }) {
   return (
     <div className="border-t border-white/10 pt-6 sm:border-t-0 sm:border-l sm:pl-6 sm:pt-0">
-      <div className="text-5xl sm:text-6xl font-semibold tracking-tighter">
+      <div className="text-5xl font-semibold tracking-tighter sm:text-6xl">
         <NumberTicker
           value={value}
           prefix={prefix}
@@ -77,7 +73,7 @@ function Metric({ value, prefix, suffix, decimalPlaces, label, body }) {
       <div className="mt-2 text-sm font-semibold uppercase tracking-[0.18em] text-white/60">
         {label}
       </div>
-      <p className="mt-3 max-w-xs text-sm text-white/70 leading-relaxed">{body}</p>
+      <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/70">{body}</p>
     </div>
   );
 }

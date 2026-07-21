@@ -12,26 +12,26 @@ export function ShimmerButton({
   shimmerSize = "0.06em",
   borderRadius = "9999px",
   shimmerDuration = "3s",
-  background = "#4C1D95",
-  as = "a",
-  ...props
-}) {
-  const Comp = as;
-  return (
-    <Comp
-      style={{
-        "--spread": "90deg",
-        "--shimmer-color": shimmerColor,
-        "--radius": borderRadius,
-        "--speed": shimmerDuration,
-        "--cut": shimmerSize,
-        "--bg": background,
-      }}
-      className={cn(
-        "group relative z-0 inline-flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-white/10 px-6 py-3 text-white [background:var(--bg)] [border-radius:var(--radius)]",
-        "shadow-[0_1px_2px_rgba(0,0,0,0.3),0_0_0_0_rgba(255,255,255,0.15)_inset] transition-all duration-300 hover:shadow-[0_2px_8px_rgba(76,29,149,0.45),0_0_0_1px_rgba(255,255,255,0.2)_inset] active:translate-y-[1px]",
-        className,
-      )}
+    background = "#0D4CB3",
+    as = "a",
+    ...props
+  }) {
+    const Comp = as;
+    return (
+      <Comp
+        style={{
+          "--spread": "90deg",
+          "--shimmer-color": shimmerColor,
+          "--radius": borderRadius,
+          "--speed": shimmerDuration,
+          "--cut": shimmerSize,
+          "--bg": background,
+        }}
+        className={cn(
+          "group relative z-0 inline-flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-white/10 px-6 py-3 text-white [background:var(--bg)] [border-radius:var(--radius)]",
+          "shadow-[0_1px_2px_rgba(0,0,0,0.3),0_0_0_0_rgba(255,255,255,0.15)_inset] transition-all duration-300 hover:shadow-[0_2px_8px_rgba(25,107,245,0.45),0_0_0_1px_rgba(255,255,255,0.2)_inset] active:translate-y-[1px]",
+          className,
+        )}
       {...props}
     >
       {/* Shimmer container */}

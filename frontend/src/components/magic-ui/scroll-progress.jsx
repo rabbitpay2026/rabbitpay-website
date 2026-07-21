@@ -4,8 +4,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Magic UI — Scroll Progress
- * Fixed thin bar at the top of the viewport showing scroll progress.
+ * Magic UI - Scroll Progress
  */
 export function ScrollProgress({ className }) {
   const { scrollYProgress } = useScroll();
@@ -15,15 +14,17 @@ export function ScrollProgress({ className }) {
     restDelta: 0.001,
   });
   const [visible, setVisible] = useState(false);
+
   useEffect(() => setVisible(true), []);
 
   if (!visible) return null;
+
   return (
     <motion.div
       data-testid="scroll-progress"
       style={{ scaleX }}
       className={cn(
-        "pointer-events-none fixed left-0 right-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-brand via-accent to-fuchsia-400",
+        "pointer-events-none fixed left-0 right-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-brand via-brand-accent to-brand-deep",
         className,
       )}
     />

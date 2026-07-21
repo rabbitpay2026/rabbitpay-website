@@ -4,14 +4,13 @@ import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Magic UI — Magic Card
- * Mouse-following spotlight and subtle border glow.
+ * Magic UI - Magic Card
  */
 export function MagicCard({
   children,
   className,
   gradientSize = 260,
-  gradientColor = "#7C3AED",
+  gradientColor = "#196BF5",
   gradientOpacity = 0.15,
 }) {
   const ref = useRef(null);

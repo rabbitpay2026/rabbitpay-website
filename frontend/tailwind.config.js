@@ -6,7 +6,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: [
-          "Geist",
+          "Poppins",
+          "Plus Jakarta Sans",
           "Inter",
           "ui-sans-serif",
           "system-ui",
@@ -56,14 +57,14 @@ module.exports = {
         ring: "hsl(var(--ring))",
         // RabbitPay brand tokens
         brand: {
-          DEFAULT: "#6D28D9",
-          deep: "#4C1D95",
-          accent: "#7C3AED",
-          soft: "#EDE9FE",
+          DEFAULT: "#196BF5",
+          deep: "#0D4CB3",
+          accent: "#4A8CFA",
+          soft: "#E8F1FE",
         },
         ink: "#0F172A",
         cloud: "#FAFAFF",
-        success: "#16A34A",
+        success: "#4A8CFA",
         // Rainbow tokens used by Magic UI RainbowButton
         "color-1": "hsl(var(--color-1))",
         "color-2": "hsl(var(--color-2))",

@@ -1,11 +1,5 @@
 "use client";
-import {
-  Headphones,
-  MessageSquareText,
-  Phone,
-  Clock,
-  Mail,
-} from "lucide-react";
+import { Headphones, MessageSquareText, Phone, Clock, Mail } from "lucide-react";
 import { MagicCard } from "@/components/magic-ui/magic-card";
 import { BorderBeam } from "@/components/magic-ui/border-beam";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
@@ -16,8 +10,7 @@ import {
 } from "@/context/LeadFormContext";
 
 /**
- * CUSTOMER SUPPORT — new section replacing the developer terminal.
- * Emphasises 1:1, world-class support with real contact points.
+ * CUSTOMER SUPPORT - highlights 1:1 support with direct contact points.
  */
 export function CustomerSupport() {
   return (
@@ -35,13 +28,13 @@ export function CustomerSupport() {
             <p className="mt-4 text-sm font-medium uppercase tracking-[0.22em] text-brand">
               World-class 1:1 support
             </p>
-            <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter leading-[1.05] text-ink dark:text-white">
+            <h2 className="mt-3 text-3xl font-semibold leading-[1.05] tracking-tighter text-ink dark:text-white sm:text-4xl md:text-5xl">
               Real humans.
-              <br className="hidden sm:block" /> Ready to help — always.
+              <br className="hidden sm:block" /> Ready to help - always.
             </h2>
             <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-              Every RabbitPay merchant gets a dedicated specialist on WhatsApp and
-              email. No support portals, no ticket queues, no hold music.
+              Every RabbitPay merchant gets a dedicated specialist on WhatsApp and email. No
+              support portals, no ticket queues, no hold music.
             </p>
             <ul className="mt-6 space-y-3 text-sm text-ink/80 dark:text-white/80">
               <li className="flex items-start gap-2.5">
@@ -50,7 +43,7 @@ export function CustomerSupport() {
               </li>
               <li className="flex items-start gap-2.5">
                 <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
-                Ops + tech on the same channel — no handoffs
+                Ops + tech on the same channel - no handoffs
               </li>
               <li className="flex items-start gap-2.5">
                 <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
@@ -59,7 +52,7 @@ export function CustomerSupport() {
             </ul>
           </BlurFade>
 
-          <div className="lg:col-span-7 grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 lg:col-span-7 sm:grid-cols-2">
             <BlurFade delay={0.1}>
               <ContactCard
                 icon={<Phone className="h-5 w-5" />}
@@ -76,7 +69,7 @@ export function CustomerSupport() {
                 label="WhatsApp"
                 value="Chat with a specialist"
                 href={`https://wa.me/916295529286?text=${encodeURIComponent(
-                  "Hi RabbitPay team — I'd like to know more.",
+                  "Hi RabbitPay team - I'd like to know more.",
                 )}`}
                 testid="support-whatsapp"
               />
@@ -94,7 +87,7 @@ export function CustomerSupport() {
               <ContactCard
                 icon={<Clock className="h-5 w-5" />}
                 label="Hours"
-                value="Mon–Sat · 09:00 – 21:00 IST"
+                value="Mon-Sat · 09:00 - 21:00 IST"
                 testid="support-hours"
               />
             </BlurFade>
@@ -128,12 +121,12 @@ function ContactCard({ icon, label, value, href, accent, testid }) {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
               {label}
             </p>
-            <p className="mt-1 text-base font-semibold text-ink dark:text-white break-words">
+            <p className="mt-1 break-words text-base font-semibold text-ink dark:text-white">
               {value}
             </p>
           </div>
         </div>
-        {accent ? <BorderBeam size={140} duration={9} colorFrom="#7C3AED" colorTo="#22D3EE" /> : null}
+        {accent ? <BorderBeam size={140} duration={9} colorFrom="#196BF5" colorTo="#4A8CFA" /> : null}
       </MagicCard>
     </Comp>
   );

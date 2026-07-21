@@ -8,8 +8,6 @@ import { openCalendly, trackEvent } from "@/lib/analytics";
 
 /**
  * FINAL CTA
- * Uses: Warp Background + Particles + Shimmer Button.
- * Primary CTA opens the lead-capture modal; secondary opens Calendly.
  */
 export function FinalCTA() {
   return (
@@ -20,17 +18,17 @@ export function FinalCTA() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <WarpBackground className="px-6 py-14 sm:px-12 sm:py-20">
-          <Particles quantity={70} color="#EDE9FE" />
+          <Particles quantity={70} color="#8BB8FF" />
           <div className="relative z-10 mx-auto max-w-3xl text-center">
             <BlurFade>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tighter leading-[1.02]">
+              <h2 className="text-4xl font-semibold leading-[1.02] tracking-tighter sm:text-5xl md:text-6xl">
                 Ship a checkout your <br className="hidden sm:block" /> shoppers actually finish.
               </h2>
             </BlurFade>
             <BlurFade delay={0.15}>
-              <p className="mt-5 text-base sm:text-lg text-white/70 leading-relaxed">
-                Zero setup fee. No hidden charges. 1:1 support from a team that has shipped
-                checkouts for hundreds of Indian D2C brands.
+              <p className="mt-5 text-base leading-relaxed text-white/70 sm:text-lg">
+                Zero setup fee. No hidden charges. 1:1 support from a team that has shipped checkouts
+                for hundreds of Indian D2C brands.
               </p>
             </BlurFade>
 
@@ -43,7 +41,7 @@ export function FinalCTA() {
                     trackEvent("cta_click", { location: "final_cta", label: "Get started free" });
                     openCalendly("final_cta");
                   }}
-                  background="#7C3AED"
+                  background="#196BF5"
                   data-testid="final-cta-primary"
                 >
                   Get started free
@@ -67,13 +65,13 @@ export function FinalCTA() {
             <BlurFade delay={0.35}>
               <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/70">
                 <li className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-300" /> Zero setup fee
+                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> Zero setup fee
                 </li>
                 <li className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-300" /> No hidden charges
+                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> No hidden charges
                 </li>
                 <li className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-300" /> 1:1 support
+                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> 1:1 support
                 </li>
               </ul>
             </BlurFade>

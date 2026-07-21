@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Magic UI — Animated Beam
- * SVG animated gradient beam connecting two refs on the same container.
+ * Magic UI - Animated Beam
  */
 export const AnimatedBeam = ({
   containerRef,
@@ -18,8 +17,8 @@ export const AnimatedBeam = ({
   pathColor = "rgba(15,23,42,0.12)",
   pathWidth = 2,
   pathOpacity = 0.6,
-  gradientStartColor = "#7C3AED",
-  gradientStopColor = "#22D3EE",
+  gradientStartColor = "#196BF5",
+  gradientStopColor = "#4A8CFA",
   startXOffset = 0,
   startYOffset = 0,
   endXOffset = 0,
@@ -31,18 +30,8 @@ export const AnimatedBeam = ({
   const [svgDim, setSvgDim] = useState({ w: 0, h: 0 });
 
   const gradientCoordinates = reverse
-    ? {
-        x1: ["90%", "-10%"],
-        x2: ["100%", "0%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      }
-    : {
-        x1: ["10%", "110%"],
-        x2: ["0%", "100%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      };
+    ? { x1: ["90%", "-10%"], x2: ["100%", "0%"], y1: ["0%", "0%"], y2: ["0%", "0%"] }
+    : { x1: ["10%", "110%"], x2: ["0%", "100%"], y1: ["0%", "0%"], y2: ["0%", "0%"] };
 
   useEffect(() => {
     const updatePath = () => {
@@ -59,13 +48,11 @@ export const AnimatedBeam = ({
       const endX = to.left - cont.left + to.width / 2 + endXOffset;
       const endY = to.top - cont.top + to.height / 2 + endYOffset;
       const controlY = startY - curvature;
-      const d = `M ${startX},${startY} Q ${(startX + endX) / 2},${controlY} ${endX},${endY}`;
-      setPathD(d);
+      setPathD(`M ${startX},${startY} Q ${(startX + endX) / 2},${controlY} ${endX},${endY}`);
     };
-    // Defer initial measurement until layout is complete
+
     const raf1 = requestAnimationFrame(() => {
       const raf2 = requestAnimationFrame(updatePath);
-      // stash for cleanup
       updatePath._raf2 = raf2;
     });
     const ro = new ResizeObserver(updatePath);
@@ -73,6 +60,7 @@ export const AnimatedBeam = ({
     if (fromRef?.current) ro.observe(fromRef.current);
     if (toRef?.current) ro.observe(toRef.current);
     window.addEventListener("resize", updatePath);
+
     return () => {
       cancelAnimationFrame(raf1);
       if (updatePath._raf2) cancelAnimationFrame(updatePath._raf2);
@@ -85,27 +73,12 @@ export const AnimatedBeam = ({
     <svg
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full transform-gpu stroke-2",
-        className,
-      )}
+      className={cn("pointer-events-none absolute inset-0 h-full w-full transform-gpu stroke-2", className)}
       viewBox={`0 0 ${svgDim.w || 100} ${svgDim.h || 100}`}
       preserveAspectRatio="none"
     >
-      <path
-        d={pathD}
-        stroke={pathColor}
-        strokeWidth={pathWidth}
-        strokeOpacity={pathOpacity}
-        strokeLinecap="round"
-      />
-      <path
-        d={pathD}
-        strokeWidth={pathWidth}
-        stroke={`url(#${id})`}
-        strokeOpacity={1}
-        strokeLinecap="round"
-      />
+      <path d={pathD} stroke={pathColor} strokeWidth={pathWidth} strokeOpacity={pathOpacity} strokeLinecap="round" />
+      <path d={pathD} strokeWidth={pathWidth} stroke={`url(#${id})`} strokeOpacity={1} strokeLinecap="round" />
       <defs>
         <motion.linearGradient
           id={id}
@@ -129,12 +102,11 @@ export const AnimatedBeam = ({
   );
 };
 
-/** Node circle for an Animated Beam diagram. */
 export const BeamNode = forwardRef(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "z-10 flex size-14 sm:size-16 items-center justify-center rounded-2xl border border-border bg-card shadow-sm",
+      "z-10 flex size-14 items-center justify-center rounded-2xl border border-border bg-card shadow-sm sm:size-16",
       className,
     )}
     {...props}

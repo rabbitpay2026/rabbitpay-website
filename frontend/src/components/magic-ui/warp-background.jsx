@@ -17,11 +17,11 @@ export function WarpBackground({ children, className }) {
       {/* Warp orbs */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-32 -top-32 h-[520px] w-[520px] rounded-full opacity-70 blur-3xl [background:conic-gradient(from_var(--rotate,180deg),#7C3AED,#22D3EE,#F472B6,#7C3AED)] animate-[gradient_12s_linear_infinite] [background-size:200%_200%]"
+        className="pointer-events-none absolute -left-32 -top-32 h-[520px] w-[520px] rounded-full opacity-70 blur-3xl [background:conic-gradient(from_var(--rotate,180deg),#196BF5,#22D3EE,#60a5fa,#196BF5)] animate-[gradient_12s_linear_infinite] [background-size:200%_200%]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 bottom-[-140px] h-[560px] w-[560px] rounded-full opacity-60 blur-3xl [background:conic-gradient(from_var(--rotate,20deg),#4C1D95,#7C3AED,#3B82F6,#4C1D95)] animate-[gradient_16s_linear_infinite] [background-size:200%_200%]"
+        className="pointer-events-none absolute -right-40 bottom-[-140px] h-[560px] w-[560px] rounded-full opacity-60 blur-3xl [background:conic-gradient(from_var(--rotate,20deg),#0D4CB3,#4A8CFA,#3B82F6,#0D4CB3)] animate-[gradient_16s_linear_infinite] [background-size:200%_200%]"
       />
       {/* Grid overlay */}
       <div

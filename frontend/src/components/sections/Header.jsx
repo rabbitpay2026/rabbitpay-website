@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { InteractiveHoverButton } from "@/components/magic-ui/interactive-hover-button";
 import { ThemeToggle } from "@/components/magic-ui/theme-toggle";
-import { RABBITPAY_LOGO } from "@/context/LeadFormContext";
+import {
+  RABBITPAY_LOGO,
+  RABBITPAY_WHITE_LOGO,
+  RABBITPAY_ICON,
+} from "@/context/LeadFormContext";
 import { openCalendly, trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -49,15 +53,26 @@ export function Header() {
         <a
           href="#top"
           data-testid="header-logo"
-          className="group inline-flex items-center gap-2.5"
+          className="group inline-flex items-center"
         >
-          <img
-            src={RABBITPAY_LOGO}
-            alt="RabbitPay"
-            className="h-9 w-9 rounded-xl shadow-sm"
-          />
-          <span className="text-lg font-semibold tracking-tight text-ink dark:text-white">
-            rabbit<span className="text-brand">pay</span>
+          <span className="inline-flex sm:hidden h-9 w-9 items-center justify-center rounded-xl border border-border bg-background shadow-sm">
+            <img
+              src={RABBITPAY_ICON}
+              alt="RabbitPay"
+              className="h-5 w-5"
+            />
+          </span>
+          <span className="hidden items-center sm:inline-flex">
+            <img
+              src={RABBITPAY_LOGO}
+              alt="RabbitPay"
+              className="h-7 w-auto dark:hidden"
+            />
+            <img
+              src={RABBITPAY_WHITE_LOGO}
+              alt="RabbitPay"
+              className="hidden h-7 w-auto dark:block"
+            />
           </span>
         </a>
 

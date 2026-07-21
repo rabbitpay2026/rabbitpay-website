@@ -3,8 +3,7 @@ import { useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Magic UI — Particles
- * Lightweight canvas particles field, respects reduced motion.
+ * Magic UI - Particles
  */
 export function Particles({
   className,
@@ -12,7 +11,7 @@ export function Particles({
   ease = 50,
   size = 0.5,
   staticity = 50,
-  color = "#7C3AED",
+  color = "#4A8CFA",
   refresh = false,
 }) {
   const canvasRef = useRef(null);
@@ -24,7 +23,7 @@ export function Particles({
 
   const hexToRgb = (h) => {
     const m = h.replace("#", "").match(/.{1,2}/g);
-    if (!m) return [124, 58, 237];
+    if (!m) return [74, 140, 250];
     return m.map((v) => parseInt(v, 16));
   };
   const rgb = hexToRgb(color);
@@ -42,7 +41,7 @@ export function Particles({
     contextRef.current?.scale(dpr, dpr);
   }, [dpr]);
 
-  const circleParams = () => {
+  const circleParams = useCallback(() => {
     const x = Math.random() * canvasSize.current.w;
     const y = Math.random() * canvasSize.current.h;
     const translateX = 0;
@@ -54,9 +53,9 @@ export function Particles({
     const dy = (Math.random() - 0.5) * 0.2;
     const magnetism = 0.1 + Math.random() * 4;
     return { x, y, translateX, translateY, size: s, alpha, targetAlpha, dx, dy, magnetism };
-  };
+  }, [size]);
 
-  const drawCircle = (p, update = false) => {
+  const drawCircle = useCallback((p, update = false) => {
     const ctx = contextRef.current;
     if (!ctx) return;
     const { x, y, translateX, translateY, size: s, alpha } = p;
@@ -67,15 +66,10 @@ export function Particles({
     ctx.fill();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (!update) particles.current.push(p);
-  };
+  }, [dpr, rgb]);
 
   const clear = () => {
-    contextRef.current?.clearRect(
-      0,
-      0,
-      canvasSize.current.w,
-      canvasSize.current.h,
-    );
+    contextRef.current?.clearRect(0, 0, canvasSize.current.w, canvasSize.current.h);
   };
 
   const draw = useCallback(() => {
@@ -83,7 +77,12 @@ export function Particles({
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     clear();
     particles.current.forEach((p, i) => {
-      const edge = [p.x + p.translateX - p.size, canvasSize.current.w - p.x - p.translateX - p.size, p.y + p.translateY - p.size, canvasSize.current.h - p.y - p.translateY - p.size];
+      const edge = [
+        p.x + p.translateX - p.size,
+        canvasSize.current.w - p.x - p.translateX - p.size,
+        p.y + p.translateY - p.size,
+        canvasSize.current.h - p.y - p.translateY - p.size,
+      ];
       const closest = Math.min(...edge);
       const remap = parseFloat(Math.min(Math.max(closest / 20, 0), 1).toFixed(2));
       p.alpha += 0.02;
@@ -106,7 +105,7 @@ export function Particles({
       }
     });
     window.requestAnimationFrame(draw);
-  }, [ease, staticity]);
+  }, [circleParams, drawCircle, ease, staticity]);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -120,13 +119,10 @@ export function Particles({
       window.cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, [refresh, resize, draw, quantity]);
+  }, [circleParams, drawCircle, draw, quantity, refresh, resize]);
 
   return (
-    <div
-      aria-hidden="true"
-      className={cn("pointer-events-none absolute inset-0", className)}
-    >
+    <div aria-hidden="true" className={cn("pointer-events-none absolute inset-0", className)}>
       <canvas ref={canvasRef} />
     </div>
   );

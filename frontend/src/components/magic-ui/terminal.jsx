@@ -22,7 +22,7 @@ export function Terminal({ children, className, title = "rabbitpay ~ install" })
         <span className="font-mono text-xs text-white/50">{title}</span>
         <div className="h-3 w-6" />
       </div>
-      <div className="max-h-[420px] overflow-hidden p-5 font-mono text-[13px] leading-relaxed text-emerald-200/90">
+      <div className="max-h-[420px] overflow-hidden p-5 font-mono text-[13px] leading-relaxed text-brand-accent/90">
         {children}
       </div>
     </div>

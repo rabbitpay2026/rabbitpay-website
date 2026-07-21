@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const REVIEWS = [
   {
     quote:
-      "We moved to RabbitPay in a weekend. Prepaid share went up 22% in the first month — the UPI-first flow is a game-changer.",
+      "We moved to RabbitPay in a weekend. Prepaid share went up 22% in the first month - the UPI-first flow is a game-changer.",
     name: "Ananya Sharma",
     role: "Founder, Qwerty Cases",
     avatar:
@@ -16,7 +16,7 @@ const REVIEWS = [
   },
   {
     quote:
-      "The COD verification alone paid for itself. Returns dropped from 32% to 21% in two months — no re-platforming needed.",
+      "The COD verification alone paid for itself. Returns dropped from 32% to 21% in two months - no re-platforming needed.",
     name: "Rohan Iyer",
     role: "CEO, Rabbit Rain",
     avatar:
@@ -32,7 +32,7 @@ const REVIEWS = [
   },
   {
     quote:
-      "Support that feels like a partner, not a portal. RabbitPay picks up in minutes — literally rare for a payments company.",
+      "Support that feels like a partner, not a portal. RabbitPay picks up in minutes - literally rare for a payments company.",
     name: "Karan Verma",
     role: "Founder, Airy Store",
     avatar:
@@ -58,7 +58,6 @@ const REVIEWS = [
 
 /**
  * TESTIMONIALS
- * Uses: Marquee (two rows, opposite directions) + Magic Card.
  */
 export function Testimonials() {
   const row1 = REVIEWS.slice(0, 3);
@@ -74,7 +73,7 @@ export function Testimonials() {
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-brand">
             Loved by founders
           </p>
-          <h2 className="mt-3 max-w-3xl text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter leading-[1.05] text-ink dark:text-white">
+          <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tighter text-ink dark:text-white sm:text-4xl md:text-5xl">
             Real merchants. Real numbers. Real reviews.
           </h2>
         </BlurFade>
@@ -100,17 +99,17 @@ function ReviewCard({ review, tone }) {
   return (
     <MagicCard
       className={cn(
-        "w-[340px] sm:w-[380px] flex-shrink-0 rounded-2xl border border-border bg-card p-6 shadow-sm",
+        "w-[340px] flex-shrink-0 rounded-2xl border border-border bg-card p-6 shadow-sm sm:w-[380px]",
         tone === "alt" && "bg-secondary/50",
       )}
     >
       <div className="flex items-center gap-1 text-brand">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="h-4 w-4 fill-brand" />
+          <Star key={i} className="h-4 w-4 fill-brand text-brand" />
         ))}
       </div>
-      <p className="mt-3 text-sm sm:text-[15px] text-ink dark:text-white leading-relaxed">
-        &ldquo;{review.quote}&rdquo;
+      <p className="mt-3 text-sm leading-relaxed text-ink dark:text-white sm:text-[15px]">
+        "{review.quote}"
       </p>
       <div className="mt-6 flex items-center gap-3">
         <img

@@ -3,6 +3,7 @@ import { Phone, Mail } from "lucide-react";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import {
   RABBITPAY_LOGO,
+  RABBITPAY_WHITE_LOGO,
   SUPPORT_PHONE,
   SUPPORT_PHONE_HREF,
   SUPPORT_EMAIL,
@@ -57,15 +58,17 @@ export function Footer() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <a href="#top" className="inline-flex items-center gap-2.5">
+            <a href="#top" className="inline-flex items-center">
               <img
                 src={RABBITPAY_LOGO}
                 alt="RabbitPay"
-                className="h-10 w-10 rounded-xl shadow-sm"
+                className="h-8 w-auto dark:hidden"
               />
-              <span className="text-xl font-semibold tracking-tight text-ink dark:text-white">
-                rabbit<span className="text-brand">pay</span>
-              </span>
+              <img
+                src={RABBITPAY_WHITE_LOGO}
+                alt="RabbitPay"
+                className="h-8 w-auto hidden dark:block"
+              />
             </a>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               A 1-Click Checkout for Shopify & D2C brands — designed to improve

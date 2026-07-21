@@ -1,0 +1,29 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#020617"/>
+  <circle cx="180" cy="150" r="240" fill="#196BF5" fill-opacity="0.22"/>
+  <circle cx="980" cy="520" r="260" fill="#4A8CFA" fill-opacity="0.18"/>
+  <rect x="72" y="72" width="1056" height="486" rx="36" fill="#07111F" stroke="#17325A" stroke-width="2"/>
+  <rect x="92" y="92" width="240" height="446" rx="28" fill="#0B1424" stroke="#1D4F9A" stroke-width="2"/>
+  <rect x="118" y="126" width="132" height="34" rx="10" fill="#196BF5"/>
+  <circle cx="142" cy="144" r="8" fill="#FFFFFF"/>
+  <rect x="118" y="188" width="180" height="14" rx="7" fill="#DBEAFE" fill-opacity="0.9"/>
+  <rect x="118" y="218" width="152" height="10" rx="5" fill="#9BBEFF" fill-opacity="0.7"/>
+  <rect x="118" y="272" width="176" height="72" rx="18" fill="#11233E" stroke="#2B5EA8"/>
+  <rect x="118" y="362" width="176" height="72" rx="18" fill="#11233E" stroke="#2B5EA8"/>
+  <rect x="118" y="452" width="176" height="72" rx="18" fill="#11233E" stroke="#2B5EA8"/>
+  <text x="390" y="164" fill="#A8C8FF" font-family="Poppins, Arial, sans-serif" font-size="20" letter-spacing="4">MADE IN INDIA</text>
+  <text x="390" y="252" fill="#FFFFFF" font-family="Poppins, Arial, sans-serif" font-size="70" font-weight="700">1-Click Checkout,</text>
+  <text x="390" y="332" fill="#E8F1FE" font-family="Poppins, Arial, sans-serif" font-size="70" font-weight="700">built in India.</text>
+  <text x="390" y="394" fill="#B7C8E5" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="28">Higher conversions. Lower RTO.</text>
+  <text x="390" y="438" fill="#B7C8E5" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="28">Prefilled addresses, UPI-first payments, verified COD.</text>
+  <rect x="874" y="126" width="194" height="44" rx="14" fill="#FFFFFF"/>
+  <image href="https://cdn.shopify.com/s/files/1/1000/8018/9762/files/rabbitpay-logo.svg?v=1784533882" x="896" y="137" width="150" height="22" preserveAspectRatio="xMidYMid meet"/>
+  <rect x="796" y="212" width="304" height="260" rx="28" fill="#0B1424" stroke="#17325A" stroke-width="2"/>
+  <rect x="826" y="246" width="116" height="28" rx="9" fill="#196BF5"/>
+  <text x="844" y="265" fill="#FFFFFF" font-family="Poppins, Arial, sans-serif" font-size="14" font-weight="700">PREFILLED</text>
+  <rect x="826" y="296" width="244" height="56" rx="16" fill="#11233E" stroke="#2B5EA8"/>
+  <rect x="826" y="366" width="244" height="56" rx="16" fill="#11233E" stroke="#2B5EA8"/>
+  <rect x="826" y="436" width="244" height="56" rx="16" fill="#11233E" stroke="#2B5EA8"/>
+  <circle cx="1058" cy="498" r="18" fill="#196BF5"/>
+  <path d="M1051 498L1057 504L1068 492" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

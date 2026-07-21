@@ -19,7 +19,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useLeadForm, RABBITPAY_LOGO } from "@/context/LeadFormContext";
+import {
+  useLeadForm,
+  RABBITPAY_WHITE_LOGO,
+} from "@/context/LeadFormContext";
 import { trackEvent } from "@/lib/analytics";
 
 const API = process.env.REACT_APP_BACKEND_URL;
@@ -123,7 +126,7 @@ export function LeadFormModal() {
           </button>
           <div className="flex items-center gap-3">
             <img
-              src={RABBITPAY_LOGO}
+              src={RABBITPAY_WHITE_LOGO}
               alt="RabbitPay"
               className="h-10 w-10 rounded-xl ring-1 ring-white/20"
             />

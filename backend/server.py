@@ -134,7 +134,7 @@ def _lead_email_html(lead: Lead) -> str:
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#FAFAFF; padding:24px;">
       <table role="presentation" style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #eef;border-radius:12px;overflow:hidden">
         <tr>
-          <td style="background:linear-gradient(135deg,#4C1D95,#6D28D9);padding:20px 24px;color:#fff">
+          <td style="background:linear-gradient(135deg,#0D4CB3,#196BF5);padding:20px 24px;color:#fff">
             <div style="font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.14em;opacity:.7">New lead — RabbitPay</div>
             <div style="font-weight:700;font-size:22px;margin-top:4px">{esc(lead.brand)} · {esc(lead.name)}</div>
           </td>

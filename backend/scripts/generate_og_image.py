@@ -34,16 +34,16 @@ async def main() -> None:
 
     prompt = (
         "Design a wide 1200x630 landscape social share (OpenGraph) hero card for the fintech product 'RabbitPay'. "
-        "Composition: on the left side, a modern deep indigo-violet gradient panel (#4C1D95 → #6D28D9 → #7C3AED) "
+        "Composition: on the left side, a modern deep blue gradient panel (#0D4CB3 → #196BF5 → #4A8CFA) "
         "with subtle grain, a tiny rounded-square white rabbit logo (top-left), and clean geometric sans-serif "
         "headline (large, tight tracking) reading '1-Click Checkout, built in India.' with a smaller supporting "
         "sub-headline underneath 'Higher conversions. Lower RTO. Made for Indian D2C brands.'. "
         "On the right side, show a floating iPhone-style device mockup with a mobile RabbitPay checkout on-screen: "
-        "a highlighted 'PREFILLED' delivery address (violet border), UPI payment method selected, and a green "
-        "'Payment successful' banner. Warm ambient purple bloom behind the phone. Include a tiny 'MADE IN INDIA' "
+        "a highlighted 'PREFILLED' delivery address (blue border), UPI payment method selected, and a blue "
+        "'Payment successful' banner. Warm ambient blue bloom behind the phone. Include a tiny 'MADE IN INDIA' "
         "eyebrow above the headline. Keep the composition premium, enterprise-credible, uncluttered — plenty of "
         "negative space. No random emojis, no stock icons, no watermarks, no additional text besides the specified "
-        "copy. Colors: deep indigo violet primary #6D28D9, near-white foreground text, success green #16A34A for the "
+        "copy. Colors: RabbitPay blue primary #196BF5, near-white foreground text, blue accent #4A8CFA for the "
         "'Payment successful' banner. Style: modern fintech marketing, subtle noise, soft shadows, tasteful."
     )
 
