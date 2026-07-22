@@ -9,13 +9,10 @@ import {
   SUPPORT_EMAIL,
 } from "@/context/LeadFormContext";
 
-/**
- * CUSTOMER SUPPORT - highlights 1:1 support with direct contact points.
- */
 export function CustomerSupport() {
   return (
     <section
-      id="integrations"
+      id="support"
       data-testid="customer-support"
       className="relative py-20 md:py-24"
     >
@@ -25,29 +22,29 @@ export function CustomerSupport() {
             <span className="inline-grid h-11 w-11 place-items-center rounded-xl border border-border bg-background text-brand">
               <Headphones className="h-5 w-5" />
             </span>
-            <p className="mt-4 text-sm font-medium uppercase tracking-[0.22em] text-brand">
-              World-class 1:1 support
+            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.28em] text-brand">
+              Support
             </p>
             <h2 className="mt-3 text-3xl font-semibold leading-[1.05] tracking-tighter text-ink dark:text-white sm:text-4xl md:text-5xl">
               Real humans.
-              <br className="hidden sm:block" /> Ready to help - always.
+              <br className="hidden sm:block" /> Ready to help.
             </h2>
             <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-              Every RabbitPay merchant gets a dedicated specialist on WhatsApp and email. No
-              support portals, no ticket queues, no hold music.
+              Every RabbitPay merchant gets direct access to the team. No ticket maze, no hold
+              music, no hidden handoffs.
             </p>
             <ul className="mt-6 space-y-3 text-sm text-ink/80 dark:text-white/80">
               <li className="flex items-start gap-2.5">
                 <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
-                Median first response under 8 minutes during business hours
+                Fast responses during business hours
               </li>
               <li className="flex items-start gap-2.5">
                 <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
-                Ops + tech on the same channel - no handoffs
+                Ops and tech on the same channel
               </li>
               <li className="flex items-start gap-2.5">
                 <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
-                Founding team on Slack for launch week
+                Launch help when you need a faster rollout
               </li>
             </ul>
           </BlurFade>
@@ -87,7 +84,7 @@ export function CustomerSupport() {
               <ContactCard
                 icon={<Clock className="h-5 w-5" />}
                 label="Hours"
-                value="Mon-Sat · 09:00 - 21:00 IST"
+                value="Mon-Sat - 09:00 to 21:00 IST"
                 testid="support-hours"
               />
             </BlurFade>

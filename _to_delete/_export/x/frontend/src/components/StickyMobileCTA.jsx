@@ -1,17 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { openCalendly } from "@/lib/calendly";
+import { trackEvent, scrollToLeadForm } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 /**
  * Sticky mobile CTA bar.
  * - Mobile only (< md).
  * - Slides in once the user has scrolled past the hero.
- * - Auto-hides when the Demo CTA section or footer enters the viewport, so it
- *   never competes with the on-screen closing CTA.
+ * - Auto-hides when the inline lead form or the footer enters the viewport, so
+ *   it never covers the form the visitor is filling in.
  * - Safe-area padded for iOS home indicator.
- * - "Start Free" opens the Calendly scheduling popup on the same page.
+ * - Single "Start Free" action that smooth-scrolls to the inline lead form.
  */
 export function StickyMobileCTA() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,13 +23,13 @@ export function StickyMobileCTA() {
       const vh = window.innerHeight;
       // 1) show after first viewport
       const past = y > vh * 0.7;
-      // 2) hide once the demo CTA or footer top enters the viewport
-      const demoCTA = document.querySelector('[data-testid="demo-cta"]');
+      // 2) hide once the lead form or footer top enters the viewport
+      const leadForm = document.querySelector('[data-testid="lead-capture"]');
       const footer = document.querySelector('[data-testid="footer"]');
       let reached = false;
-      if (demoCTA) {
-        const r = demoCTA.getBoundingClientRect();
-        if (r.top <= vh * 0.85) reached = true;
+      if (leadForm) {
+        const r = leadForm.getBoundingClientRect();
+        if (r.top <= vh * 0.9 && r.bottom >= 0) reached = true;
       }
       if (!reached && footer) {
         const r = footer.getBoundingClientRect();
@@ -46,7 +46,8 @@ export function StickyMobileCTA() {
   const visible = scrolled && !reachedCTA;
 
   const onStart = () => {
-    openCalendly("sticky_mobile");
+    trackEvent("cta_click", { location: "sticky_mobile", label: "Start Free" });
+    scrollToLeadForm("sticky_mobile");
   };
 
   return (

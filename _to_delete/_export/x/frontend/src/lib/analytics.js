@@ -37,5 +37,27 @@ export function trackEvent(name, props = {}) {
   }
 }
 
-// The site's primary conversion path is the global lead-capture modal,
-// opened via `useLeadForm().openLeadForm(...)` from context/LeadFormContext.
+/** The single on-page conversion target — the inline homepage lead form. */
+export const LEAD_FORM_ID = "lead-capture";
+
+/**
+ * Smoothly scroll the visitor to the inline homepage lead-capture section.
+ * This is the ONLY primary CTA behaviour on the site — no popups, no
+ * redirects, no Calendly. Falls back to a hash update if the element
+ * is not present yet.
+ */
+export function scrollToLeadForm(source = "cta") {
+  trackEvent("scroll_to_lead_form", { source });
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  const el = document.getElementById(LEAD_FORM_ID);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Move focus to the first field for accessibility, without jumping.
+    const firstInput = el.querySelector("input");
+    if (firstInput) {
+      window.setTimeout(() => firstInput.focus({ preventScroll: true }), 600);
+    }
+  } else {
+    window.location.hash = `#${LEAD_FORM_ID}`;
+  }
+}

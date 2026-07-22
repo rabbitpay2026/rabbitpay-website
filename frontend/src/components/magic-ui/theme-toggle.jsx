@@ -11,21 +11,15 @@ export function ThemeToggle({ className }) {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    const stored = localStorage.getItem("rp-theme");
-    const initial = stored
-      ? stored
-      : window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    setTheme(initial);
-    document.documentElement.classList.toggle("dark", initial === "dark");
+    // Light mode is the default experience for all visitors.
+    document.documentElement.classList.remove("dark");
+    setTheme("light");
   }, []);
 
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     document.documentElement.classList.toggle("dark", next === "dark");
-    localStorage.setItem("rp-theme", next);
   };
 
   return (

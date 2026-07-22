@@ -1,12 +1,12 @@
-// Shared brand + support constants used across the landing page.
-//
-// The site has two conversion paths and no lead-capture modal:
-//  - "Start Free"     -> Calendly popup (see lib/calendly.js).
-//  - "Give me a Demo" -> inline lead-capture card (see components/LeadCaptureCard.jsx).
-// This module is kept as the single source of truth for logo URLs and support
-// contacts (the filename is retained to avoid churn across imports).
+"use client";
 
-/** Convenience constants used across CTAs. */
+/**
+ * Shared brand + support constants used across the landing page.
+ *
+ * NOTE: The old global "open lead capture modal" context has been removed.
+ * Conversions now happen entirely on-page through the inline lead form
+ * (see components/sections/LeadCapture.jsx) — no modal, no popup, no Calendly.
+ */
 export const SUPPORT_PHONE = "+91 62955 29286";
 export const SUPPORT_PHONE_HREF = "tel:+916295529286";
 export const SUPPORT_WHATSAPP_HREF =

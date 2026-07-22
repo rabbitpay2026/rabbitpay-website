@@ -5,17 +5,13 @@ import { RainbowButton } from "@/components/magic-ui/rainbow-button";
 import { NumberTicker } from "@/components/magic-ui/number-ticker";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { BorderBeam } from "@/components/magic-ui/border-beam";
-import { openCalendly } from "@/lib/calendly";
-import { trackEvent } from "@/lib/analytics";
+import { scrollToLeadForm, trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-function scrollToDemo() {
-  trackEvent("cta_click", { location: "pricing_enterprise", label: "Talk to sales" });
-  document
-    .getElementById("demo-section")
-    ?.scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
+/**
+ * PRICING
+ * Keeps the same structure, but remaps every accent to the RabbitPay blue palette.
+ */
 export function Pricing() {
   return (
     <section
@@ -25,26 +21,27 @@ export function Pricing() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(1000px_400px_at_50%_-10%,rgba(25,107,245,0.18),transparent_60%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(1000px_400px_at_50%_-10%,rgba(25,107,245,0.20),transparent_60%)]"
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <BlurFade>
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-brand">
-            Pricing
+          <p className="text-sm font-medium uppercase tracking-[0.22em] text-brand">
+            The best pricing in India
           </p>
           <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tighter text-ink dark:text-white sm:text-4xl md:text-5xl">
-            Simple pricing that feels premium, not punitive.
+            Pay for what works.
+            <br className="hidden sm:block" /> Nothing else.
           </h2>
           <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            One clear plan for growing brands, with an enterprise path for higher volume merchants
-            that need bespoke rollout support.
+            One transparent plan. No setup fees, no lock-in, no minimums. Only pay a
+            small fee on successful prepaid orders.
           </p>
         </BlurFade>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           <div className="relative lg:col-span-2">
             <p className="absolute -top-4 left-6 z-10 text-[11px] font-bold uppercase tracking-[0.28em] text-brand">
-              <span className="mr-1.5">*</span> Best value for D2C
+              <span className="mr-1.5">★</span> Best value for D2C
             </p>
             <NeonGradientCard borderSize={2} borderRadius={22}>
               <div className="p-6 sm:p-9">
@@ -69,30 +66,47 @@ export function Pricing() {
 
                 <ul className="mt-7 grid gap-3 sm:grid-cols-2">
                   <PriceLine>
-                    Transaction Fee: <span className="font-semibold text-ink dark:text-white">Just 0.5%</span>{" "}
+                    Transaction Fee:{" "}
+                    <span className="font-semibold text-ink dark:text-white">Just 0.5%</span>{" "}
                     on successful prepaid orders only
                   </PriceLine>
                   <PriceLine>
-                    COD Verification: <span className="rounded-md bg-brand/10 px-1.5 py-0.5 font-bold text-brand">FREE</span>{" "}
+                    COD Verification:{" "}
+                    <span className="rounded-md bg-brand/10 px-1.5 py-0.5 font-bold text-brand">
+                      FREE
+                    </span>{" "}
                     <span className="font-semibold text-ink dark:text-white">Forever</span>
                   </PriceLine>
                   <PriceLine>
-                    Zero Setup Fee - <span className="font-semibold text-ink dark:text-white">No hidden charges</span>
+                    SMS OTP:{" "}
+                    <span className="font-semibold text-ink dark:text-white">₹0.30</span> / message
                   </PriceLine>
                   <PriceLine>
-                    Dedicated 1:1 <span className="font-semibold text-ink dark:text-white">Customer Support</span>
+                    WhatsApp Utility:{" "}
+                    <span className="font-semibold text-ink dark:text-white">Starting at ₹0.40</span>{" "}
+                    / message
+                  </PriceLine>
+                  <PriceLine>
+                    <span className="font-semibold text-ink dark:text-white">Zero Setup Fee</span> - No hidden charges
+                  </PriceLine>
+                  <PriceLine>
+                    <span className="font-semibold text-ink dark:text-white">Dedicated 1:1</span>{" "}
+                    Customer Support
                   </PriceLine>
                 </ul>
 
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
                   <p className="text-base font-medium text-ink dark:text-white">
-                    Faster Checkout <span className="text-muted-foreground">-></span> Lower RTO{" "}
-                    <span className="text-muted-foreground">-></span> Higher Conversions.
+                    Faster Checkout <span className="text-muted-foreground">→</span> Lower RTO{" "}
+                    <span className="text-muted-foreground">→</span> Higher Conversions.
                   </p>
                   <RainbowButton
                     as="button"
                     type="button"
-                    onClick={() => openCalendly("pricing_zero_setup")}
+                    onClick={() => {
+                      trackEvent("cta_click", { location: "pricing_growth", label: "Start now" });
+                      scrollToLeadForm("pricing_growth");
+                    }}
                     data-testid="pricing-primary-cta"
                   >
                     <Sparkles className="mr-2 inline h-4 w-4" />
@@ -122,22 +136,23 @@ export function Pricing() {
               </div>
               <ul className="mt-5 space-y-2.5">
                 {[
-                  "Discounted MDR and COD verification",
-                  "Priority ops and incident response",
-                  "Dedicated CSM and tech partner",
+                  "Discounted MDR & COD verification",
+                  "Priority ops & incident response",
+                  "Dedicated CSM & tech partner",
                   "Custom SLAs and rollout support",
-                ].map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 text-sm text-ink/80 dark:text-white/80">
+                ].map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-ink/80 dark:text-white/80">
                     <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" />
-                    {feature}
+                    {f}
                   </li>
                 ))}
               </ul>
               <a
-                href="#demo-section"
+                href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToDemo();
+                  trackEvent("cta_click", { location: "pricing_enterprise", label: "Talk to sales" });
+                  scrollToLeadForm("pricing_enterprise");
                 }}
                 data-testid="pricing-enterprise-cta"
                 className="mt-auto inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-brand hover:text-brand dark:text-white"

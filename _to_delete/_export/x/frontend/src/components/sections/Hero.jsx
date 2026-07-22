@@ -1,80 +1,76 @@
 "use client";
-import { CheckCircle2, MapPin, Sparkles } from "lucide-react";
+import { CheckCircle2, Sparkles, MapPin } from "lucide-react";
 import { AuroraText } from "@/components/magic-ui/aurora-text";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { RetroGrid } from "@/components/magic-ui/retro-grid";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import { IPhone15Pro } from "@/components/magic-ui/iphone-15-pro";
 import { RABBITPAY_ICON } from "@/context/LeadFormContext";
-import { LeadCaptureCard } from "@/components/LeadCaptureCard";
 import { cn } from "@/lib/utils";
 
+/**
+ * HERO
+ * Keeps the existing structure, but aligns all accents to the RabbitPay blue system.
+ */
 export function Hero() {
   return (
     <section
       id="top"
       data-testid="hero-section"
-      className="relative isolate overflow-hidden pb-10 pt-28 md:pb-14 md:pt-32"
+      className="relative isolate overflow-hidden pb-8 pt-28 md:pb-12 md:pt-32"
     >
       <RetroGrid />
-      <DotPattern className="[mask-image:radial-gradient(620px_circle_at_center,white,transparent_75%)]" />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(25,107,245,0.22),transparent_68%)] blur-3xl"
-      />
+      <DotPattern className="[mask-image:radial-gradient(600px_circle_at_center,white,transparent_75%)]" />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <BlurFade delay={0.05}>
-              <p className="text-xs font-medium uppercase tracking-[0.28em] text-brand sm:text-sm">
-                Built for Indian D2C brands
+              <p className="text-xs font-medium uppercase tracking-[0.24em] text-brand sm:text-sm">
+                Made in India - for Indian D2C
               </p>
             </BlurFade>
 
             <BlurFade delay={0.15}>
-              <h1 className="mt-4 max-w-3xl text-[40px] font-semibold leading-[1.02] tracking-tighter text-ink dark:text-white sm:text-[56px] lg:text-[68px]">
-                <span className="block">1-Click Checkout,</span>
+              <h1 className="mt-4 text-[40px] font-semibold leading-[1.02] tracking-tighter text-ink dark:text-white sm:text-[56px] lg:text-[64px]">
+                <span className="block">One-Click Checkout,</span>
                 <AuroraText className="font-semibold">built in India.</AuroraText>
               </h1>
             </BlurFade>
 
             <BlurFade delay={0.28}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Higher conversions. Lower RTO. A checkout your Indian shoppers actually finish with
+                Higher conversions. Lower RTO. A checkout your Indian shoppers actually finish - with
                 prefilled addresses, UPI-first payments, and verified COD.
               </p>
             </BlurFade>
 
-            <BlurFade delay={0.4}>
-              <div className="mt-8 flex flex-wrap gap-3 text-sm text-muted-foreground">
-                {["Zero setup fee", "Live in minutes", "Made in India"].map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-2 rounded-full border border-border bg-white/80 px-4 py-2 shadow-sm backdrop-blur dark:bg-white/5"
-                  >
-                    <CheckCircle2 className="h-4 w-4 text-brand" />
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </BlurFade>
 
-            <BlurFade delay={0.5} className="mt-12">
-              <LeadCaptureCard source="hero_inline" testPrefix="hero-lead" />
+
+            <BlurFade delay={0.55}>
+              <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                <li className="inline-flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> Zero setup fee
+                </li>
+                <li className="inline-flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> Live in minutes
+                </li>
+                <li className="inline-flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> 1:1 support
+                </li>
+              </ul>
             </BlurFade>
           </div>
 
           <BlurFade delay={0.35} className="lg:col-span-5">
-            <div className="relative mx-auto max-w-[360px]">
+            <div className="relative mx-auto">
               <div
                 aria-hidden="true"
-                className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_50%_30%,rgba(25,107,245,0.35),transparent_58%),radial-gradient(circle_at_70%_70%,rgba(74,140,250,0.16),transparent_52%)] blur-2xl"
+                className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_50%_30%,rgba(25,107,245,0.38),transparent_60%),radial-gradient(circle_at_70%_70%,rgba(74,140,250,0.18),transparent_55%)] blur-2xl"
               />
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -left-6 top-20 z-30 hidden items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur lg:flex dark:bg-neutral-900/95"
+                className="pointer-events-none absolute -left-6 top-24 z-30 hidden items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur lg:flex dark:bg-neutral-900/95"
               >
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white shadow-[0_10px_24px_rgba(25,107,245,0.24)]">
                   <MapPin className="h-4 w-4" />
@@ -83,7 +79,9 @@ export function Hero() {
                   <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Address prefilled
                   </p>
-                  <p className="text-xs font-semibold text-ink dark:text-white">3 fields - 220 ms</p>
+                  <p className="text-xs font-semibold text-ink dark:text-white">
+                    3 fields · 220 ms
+                  </p>
                 </div>
               </div>
               <div
@@ -95,9 +93,11 @@ export function Hero() {
                 </span>
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                    UPI - Paid
+                    UPI · Paid
                   </p>
-                  <p className="text-xs font-semibold text-ink dark:text-white">Rs 1,001 - 2.4s</p>
+                  <p className="text-xs font-semibold text-ink dark:text-white">
+                    ₹1,001 · 2.4s
+                  </p>
                 </div>
               </div>
 
@@ -109,6 +109,8 @@ export function Hero() {
             </div>
           </BlurFade>
         </div>
+
+
       </div>
     </section>
   );
@@ -139,7 +141,7 @@ function MockCheckoutUI() {
             <span className="text-[10px] font-semibold text-brand">Change</span>
           </div>
           <p className="mt-1 text-[11px] font-semibold text-ink dark:text-white">
-            Avijeet Dey - +91 62955 29286
+            Avijeet Dey · +91 62955 29286
           </p>
           <p className="text-[10px] leading-tight text-black/60 dark:text-white/60">
             56A Savithri Nilayam, Bengaluru - 560035
@@ -149,7 +151,7 @@ function MockCheckoutUI() {
         <div className="mt-3 rounded-lg border border-black/5 bg-white p-3 dark:border-white/10 dark:bg-neutral-800">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-medium text-ink dark:text-white">Male Vintage Watch</span>
-            <span className="text-[11px] font-semibold text-ink dark:text-white">Rs 1,089</span>
+            <span className="text-[11px] font-semibold text-ink dark:text-white">₹1,089</span>
           </div>
           <div className="mt-1 flex items-center justify-between">
             <span className="text-[11px] text-black/60 dark:text-white/60">Shipping</span>
@@ -157,7 +159,7 @@ function MockCheckoutUI() {
           </div>
           <div className="mt-2 flex items-center justify-between border-t border-black/5 pt-2 dark:border-white/10">
             <span className="text-[11px] font-semibold text-ink dark:text-white">Total</span>
-            <span className="text-sm font-bold text-ink dark:text-white">Rs 1,089</span>
+            <span className="text-sm font-bold text-ink dark:text-white">₹1,089</span>
           </div>
         </div>
 
@@ -172,7 +174,7 @@ function MockCheckoutUI() {
             </span>
           </div>
           <div className="mt-2 space-y-1.5">
-            <PayRow name="UPI - GPay / PhonePe" selected />
+            <PayRow name="UPI · GPay / PhonePe" selected />
             <PayRow name="Cards / NetBanking" />
             <PayRow name="Cash on Delivery - verified" />
           </div>
@@ -182,14 +184,14 @@ function MockCheckoutUI() {
           <span className="grid h-5 w-5 place-items-center rounded-full bg-brand text-white">
             <CheckCircle2 className="h-3 w-3" />
           </span>
-          <span className="text-[11px] font-medium text-brand">Payment successful - Rs 1,001.88</span>
+          <span className="text-[11px] font-medium text-brand">Payment successful · ₹1,001.88</span>
         </div>
 
         <button
           disabled
           className="mt-3 w-full rounded-lg bg-brand py-3 text-[12px] font-semibold text-white shadow-[0_18px_40px_rgba(25,107,245,0.24)]"
         >
-          Pay Rs 1,001.88 via UPI
+          Pay ₹1,001.88 via UPI
         </button>
       </div>
     </div>

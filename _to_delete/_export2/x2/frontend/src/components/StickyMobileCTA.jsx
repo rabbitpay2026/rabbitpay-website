@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { openCalendly } from "@/lib/calendly";
+import { trackEvent } from "@/lib/analytics";
+import { useLeadForm } from "@/context/LeadFormContext";
 import { cn } from "@/lib/utils";
 
 /**
@@ -11,9 +12,10 @@ import { cn } from "@/lib/utils";
  * - Auto-hides when the Demo CTA section or footer enters the viewport, so it
  *   never competes with the on-screen closing CTA.
  * - Safe-area padded for iOS home indicator.
- * - "Start Free" opens the Calendly scheduling popup on the same page.
+ * - "Start Free" opens the global lead-capture modal.
  */
 export function StickyMobileCTA() {
+  const { openLeadForm } = useLeadForm();
   const [scrolled, setScrolled] = useState(false);
   const [reachedCTA, setReachedCTA] = useState(false);
 
@@ -46,7 +48,8 @@ export function StickyMobileCTA() {
   const visible = scrolled && !reachedCTA;
 
   const onStart = () => {
-    openCalendly("sticky_mobile");
+    trackEvent("cta_click", { location: "sticky_mobile", label: "Start Free" });
+    openLeadForm({ source: "sticky_mobile" });
   };
 
   return (
