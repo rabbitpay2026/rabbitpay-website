@@ -44,12 +44,12 @@ export function Header() {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#top" data-testid="header-logo" className="inline-flex items-center">
-          <span className="inline-flex sm:hidden h-9 w-9 items-center justify-center rounded-xl border border-border bg-background shadow-sm">
-            <img src={RABBITPAY_ICON} alt="RabbitPay" className="h-5 w-5" />
+          <span className="inline-flex sm:hidden h-10 w-10 items-center justify-center rounded-xl border border-border bg-background shadow-sm">
+            <img src={RABBITPAY_ICON} alt="RabbitPay" className="h-6 w-6" />
           </span>
           <span className="hidden items-center sm:inline-flex">
-            <img src={RABBITPAY_LOGO} alt="RabbitPay" className="h-7 w-auto dark:hidden" />
-            <img src={RABBITPAY_WHITE_LOGO} alt="RabbitPay" className="hidden h-7 w-auto dark:block" />
+            <img src={RABBITPAY_LOGO} alt="RabbitPay" className="h-10 w-auto dark:hidden" />
+            <img src={RABBITPAY_WHITE_LOGO} alt="RabbitPay" className="hidden h-10 w-auto dark:block" />
           </span>
         </a>
 

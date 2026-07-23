@@ -1,19 +1,76 @@
 "use client";
-import { Check, Sparkles, Star } from "lucide-react";
-import { NeonGradientCard } from "@/components/magic-ui/neon-gradient-card";
-import { RainbowButton } from "@/components/magic-ui/rainbow-button";
-import { NumberTicker } from "@/components/magic-ui/number-ticker";
+import { Check, Minus, Sparkles, Star, ArrowRight } from "lucide-react";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
-import { BorderBeam } from "@/components/magic-ui/border-beam";
 import { openCalendly } from "@/lib/calendly";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 function scrollToDemo() {
-  trackEvent("cta_click", { location: "pricing_enterprise", label: "Talk to sales" });
+  trackEvent("cta_click", { location: "pricing_enterprise", label: "Talk to Sales" });
   document
     .getElementById("demo-section")
     ?.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+/** Plan columns. Values mirror the previous pricing cards exactly. */
+const PLANS = [
+  {
+    key: "growth",
+    name: "Growth",
+    tagline: "For growing D2C brands",
+    price: "0.5%",
+    priceNote: "on successful prepaid",
+    highlight: true,
+  },
+  {
+    key: "enterprise",
+    name: "Enterprise",
+    tagline: "For 50k+ monthly orders",
+    price: "Custom",
+    priceNote: "volume-based pricing",
+    highlight: false,
+  },
+];
+
+/** `true`/`false` render as a tick / dash; strings render as-is. */
+const ROWS = [
+  { feature: "Setup Fee", growth: "Free", enterprise: "Free" },
+  { feature: "Transaction Fee", growth: "0.5%", enterprise: "Custom" },
+  { feature: "COD Verification", growth: "Included", enterprise: "Included" },
+  { feature: "Customer Support", growth: "Standard", enterprise: "Dedicated" },
+  { feature: "SLA", growth: false, enterprise: true },
+  { feature: "Monthly Volume", growth: "Unlimited", enterprise: "50k+" },
+  { feature: "MDR Discounts", growth: false, enterprise: true },
+  { feature: "Dedicated CSM", growth: false, enterprise: true },
+];
+
+function Cell({ value, highlight }) {
+  if (value === true) {
+    return (
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand/10 text-brand">
+        <Check className="h-4 w-4" strokeWidth={2.5} />
+        <span className="sr-only">Yes</span>
+      </span>
+    );
+  }
+  if (value === false) {
+    return (
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-muted text-muted-foreground/70">
+        <Minus className="h-4 w-4" />
+        <span className="sr-only">Not included</span>
+      </span>
+    );
+  }
+  return (
+    <span
+      className={cn(
+        "text-sm font-semibold sm:text-[15px]",
+        highlight ? "text-brand" : "text-ink dark:text-white",
+      )}
+    >
+      {value}
+    </span>
+  );
 }
 
 export function Pricing() {
@@ -41,98 +98,98 @@ export function Pricing() {
           </p>
         </BlurFade>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
-          <div className="relative lg:col-span-2">
-            <p className="absolute -top-4 left-6 z-10 text-[11px] font-bold uppercase tracking-[0.28em] text-brand">
-              <span className="mr-1.5">*</span> Best value for D2C
-            </p>
-            <NeonGradientCard borderSize={2} borderRadius={22}>
-              <div className="p-6 sm:p-9">
-                <div className="flex flex-wrap items-start justify-between gap-6">
-                  <div>
-                    <h3 className="text-2xl font-semibold tracking-tight text-ink dark:text-white">
-                      RabbitPay Growth
-                    </h3>
-                    <p className="mt-1 max-w-md text-sm text-muted-foreground">
-                      Everything a modern D2C brand needs to ship a world-class checkout in India.
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-5xl font-semibold tracking-tighter text-brand sm:text-6xl">
-                      <NumberTicker value={0.5} decimalPlaces={1} suffix="%" />
-                    </div>
-                    <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                      on successful prepaid
-                    </div>
-                  </div>
-                </div>
+        {/* Comparison table */}
+        <BlurFade delay={0.12}>
+          <div className="mt-10 overflow-hidden rounded-3xl border border-border bg-card shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[560px] border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-border bg-[linear-gradient(180deg,rgba(25,107,245,0.06),transparent)]">
+                    <th scope="col" className="px-5 py-6 sm:px-7">
+                      <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                        Compare plans
+                      </span>
+                    </th>
+                    {PLANS.map((plan) => (
+                      <th
+                        key={plan.key}
+                        scope="col"
+                        className={cn(
+                          "px-5 py-6 text-center align-top sm:px-7",
+                          plan.highlight && "relative bg-brand/[0.04]",
+                        )}
+                      >
+                        {plan.highlight ? (
+                          <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-brand px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+                            <Sparkles className="h-3 w-3" />
+                            Best value
+                          </span>
+                        ) : null}
+                        <div className="text-lg font-semibold tracking-tight text-ink dark:text-white">
+                          {plan.name}
+                        </div>
+                        <div className="mt-0.5 text-xs text-muted-foreground">{plan.tagline}</div>
+                        <div
+                          className={cn(
+                            "mt-3 text-3xl font-semibold tracking-tighter sm:text-4xl",
+                            plan.highlight ? "text-brand" : "text-ink dark:text-white",
+                          )}
+                        >
+                          {plan.price}
+                        </div>
+                        <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                          {plan.priceNote}
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
 
-                <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-                  <PriceLine>
-                    Transaction Fee: <span className="font-semibold text-ink dark:text-white">Just 0.5%</span>{" "}
-                    on successful prepaid orders only
-                  </PriceLine>
-                  <PriceLine>
-                    COD Verification: <span className="rounded-md bg-brand/10 px-1.5 py-0.5 font-bold text-brand">FREE</span>{" "}
-                    <span className="font-semibold text-ink dark:text-white">Forever</span>
-                  </PriceLine>
-                  <PriceLine>
-                    Zero Setup Fee - <span className="font-semibold text-ink dark:text-white">No hidden charges</span>
-                  </PriceLine>
-                  <PriceLine>
-                    Dedicated 1:1 <span className="font-semibold text-ink dark:text-white">Customer Support</span>
-                  </PriceLine>
-                </ul>
-
-                <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-                  <p className="text-base font-medium text-ink dark:text-white">
-                    Faster Checkout <span className="text-muted-foreground">-></span> Lower RTO{" "}
-                    <span className="text-muted-foreground">-></span> Higher Conversions.
-                  </p>
-                  <RainbowButton
-                    as="button"
-                    type="button"
-                    onClick={() => openCalendly("pricing_zero_setup")}
-                    data-testid="pricing-primary-cta"
-                  >
-                    <Sparkles className="mr-2 inline h-4 w-4" />
-                    Start now - zero setup
-                  </RainbowButton>
-                </div>
-              </div>
-            </NeonGradientCard>
+                <tbody>
+                  {ROWS.map((row, index) => (
+                    <tr
+                      key={row.feature}
+                      className={cn(
+                        "group border-b border-border/70 transition-colors last:border-0 hover:bg-brand/[0.04]",
+                        index % 2 === 1 && "bg-muted/30",
+                      )}
+                    >
+                      <th
+                        scope="row"
+                        className="px-5 py-4 text-sm font-medium text-ink/80 sm:px-7 sm:text-[15px] dark:text-white/80"
+                      >
+                        {row.feature}
+                      </th>
+                      <td className="bg-brand/[0.03] px-5 py-4 text-center sm:px-7">
+                        <Cell value={row.growth} highlight />
+                      </td>
+                      <td className="px-5 py-4 text-center sm:px-7">
+                        <Cell value={row.enterprise} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
+        </BlurFade>
 
-          <BlurFade delay={0.15}>
-            <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-7">
-              <BorderBeam size={180} duration={14} colorFrom="#196BF5" colorTo="#4A8CFA" />
-              <h3 className="text-2xl font-semibold tracking-tight text-ink dark:text-white">
-                Enterprise
-              </h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                For brands doing 50k+ monthly orders across multiple stores.
-              </p>
-              <div className="mt-5">
-                <div className="text-4xl font-semibold tracking-tighter text-ink dark:text-white">
-                  Custom
-                </div>
-                <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                  volume-based pricing
-                </div>
-              </div>
-              <ul className="mt-5 space-y-2.5">
-                {[
-                  "Discounted MDR and COD verification",
-                  "Priority ops and incident response",
-                  "Dedicated CSM and tech partner",
-                  "Custom SLAs and rollout support",
-                ].map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 text-sm text-ink/80 dark:text-white/80">
-                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+        {/* CTA below the table */}
+        <BlurFade delay={0.18}>
+          <div className="mt-10 rounded-3xl border border-border bg-[linear-gradient(180deg,rgba(25,107,245,0.06),transparent)] px-6 py-10 text-center sm:px-10">
+            <h3 className="text-2xl font-semibold tracking-tighter text-ink dark:text-white sm:text-3xl">
+              Ready to start accepting payments faster?
+            </h3>
+            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => openCalendly("pricing_start_free")}
+                data-testid="pricing-primary-cta"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-7 py-3.5 text-base font-semibold text-white shadow-[0_18px_40px_rgba(25,107,245,0.28)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_22px_46px_rgba(25,107,245,0.36)] active:translate-y-0 sm:w-auto"
+              >
+                Start Free
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </button>
               <a
                 href="#demo-section"
                 onClick={(e) => {
@@ -140,15 +197,15 @@ export function Pricing() {
                   scrollToDemo();
                 }}
                 data-testid="pricing-enterprise-cta"
-                className="mt-auto inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-brand hover:text-brand dark:text-white"
+                className="inline-flex w-full items-center justify-center rounded-full border border-border bg-background px-7 py-3.5 text-base font-semibold text-ink transition-colors hover:border-brand hover:text-brand dark:text-white sm:w-auto"
               >
-                Talk to sales
+                Talk to Sales
               </a>
             </div>
-          </BlurFade>
-        </div>
+          </div>
+        </BlurFade>
 
-        <BlurFade delay={0.2}>
+        <BlurFade delay={0.24}>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.18em] text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
               <Star className="h-3.5 w-3.5 fill-brand text-brand" /> Rated 4.9/5 by 100+ merchants
@@ -160,14 +217,5 @@ export function Pricing() {
         </BlurFade>
       </div>
     </section>
-  );
-}
-
-function PriceLine({ children }) {
-  return (
-    <li className={cn("flex items-start gap-2.5 text-sm text-ink/80 dark:text-white/80")}>
-      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" />
-      <span>{children}</span>
-    </li>
   );
 }

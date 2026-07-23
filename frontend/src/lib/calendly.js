@@ -67,7 +67,14 @@ export async function openCalendly(location) {
   if (typeof location === "string" && location) {
     trackEvent("cta_click", { location, label: "Start Free" });
   }
-  if (!CALENDLY_URL) return false;
+  if (!CALENDLY_URL) {
+    // Loud, actionable message instead of a button that silently does nothing.
+    console.warn(
+      "[RabbitPay] Calendly link is not configured — the CTA cannot open. " +
+        "Set REACT_APP_CALENDLY_URL in frontend/.env and run `yarn build` again.",
+    );
+    return false;
+  }
   try {
     await loadWidget();
     if (window.Calendly && typeof window.Calendly.initPopupWidget === "function") {

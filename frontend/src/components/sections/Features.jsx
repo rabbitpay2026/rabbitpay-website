@@ -1,7 +1,9 @@
 "use client";
+import { Fragment } from "react";
 import { UserRoundCheck, ShieldCheck, Smartphone, ArrowRight } from "lucide-react";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { MagicCard } from "@/components/magic-ui/magic-card";
+import { Integrations } from "@/components/sections/Integrations";
 
 const FEATURES = [
   {
@@ -60,7 +62,11 @@ export function Features() {
 
         <div className="mt-12 space-y-6">
           {FEATURES.map((feature, index) => (
-            <FeatureRow key={feature.eyebrow} feature={feature} reverse={index % 2 === 1} />
+            <Fragment key={feature.eyebrow}>
+              {/* Integrations strip sits immediately above the UPI-first feature. */}
+              {feature.eyebrow === "UPI-first" ? <Integrations /> : null}
+              <FeatureRow feature={feature} reverse={index % 2 === 1} />
+            </Fragment>
           ))}
         </div>
       </div>
@@ -135,16 +141,65 @@ function RiskVisual() {
   );
 }
 
+/** Small brand-coloured badge with a white monogram. */
+function AppBadge({ bg, children }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-lg text-[11px] font-bold leading-none text-white shadow-sm"
+      style={{ backgroundColor: bg }}
+    >
+      {children}
+    </span>
+  );
+}
+
+/**
+ * Official brand mark (single-path SVG in public/logos), tinted with the brand's
+ * own hex via a CSS mask. Self-hosted, so there are no external image requests.
+ */
+function BrandMark({ file, color, label }) {
+  const src = `${process.env.PUBLIC_URL}/logos/${file}`;
+  return (
+    <span
+      role="img"
+      aria-label={label}
+      className="h-5 w-5 flex-shrink-0"
+      style={{
+        backgroundColor: color,
+        WebkitMaskImage: `url(${src})`,
+        maskImage: `url(${src})`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+      }}
+    />
+  );
+}
+
+const UPI_APPS = [
+  { name: "GPay", icon: <BrandMark file="googlepay.svg" color="#4285F4" label="Google Pay" /> },
+  { name: "PhonePe", icon: <BrandMark file="phonepe.svg" color="#5F259F" label="PhonePe" /> },
+  { name: "Paytm", icon: <BrandMark file="paytm.svg" color="#20336B" label="Paytm" /> },
+  // No official open-source mark available for BHIM / CRED — brand-coloured badge.
+  { name: "BHIM", icon: <AppBadge bg="#F26522">B</AppBadge> },
+  { name: "Amazon Pay", icon: <BrandMark file="amazonpay.svg" color="#FF9900" label="Amazon Pay" /> },
+  { name: "CRED", icon: <AppBadge bg="#0B0B0B">C</AppBadge> },
+];
+
 function UpiVisual() {
-  const apps = ["GPay", "PhonePe", "Paytm", "BHIM", "Amazon Pay", "CRED"];
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {apps.map((app) => (
+      {UPI_APPS.map((app) => (
         <div
-          key={app}
-          className="flex items-center justify-center rounded-2xl border border-border bg-background py-4 text-sm font-semibold text-ink shadow-sm dark:bg-neutral-900/70 dark:text-white"
+          key={app.name}
+          className="flex items-center justify-center gap-2 rounded-2xl border border-border bg-background px-2.5 py-3.5 text-[13px] font-semibold text-ink shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/35 hover:shadow-md dark:bg-neutral-900/70 dark:text-white"
         >
-          {app}
+          {app.icon}
+          <span className="whitespace-nowrap">{app.name}</span>
         </div>
       ))}
     </div>

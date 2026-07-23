@@ -15,7 +15,7 @@ import { Footer } from "@/components/sections/Footer";
 /**
  * RabbitPay landing page.
  *
- * Order: Header -> Hero -> Metrics -> Logo Wall -> Features -> Pricing ->
+ * Order: Header -> Hero -> Metrics -> Logo Wall -> Pricing -> Features ->
  * Support -> Demo CTA -> Footer.
  *
  * Two separate conversion paths, no modal:
@@ -31,8 +31,8 @@ export default function LandingPage() {
         <Hero />
         <Metrics />
         <LogoWall />
-        <Features />
         <Pricing />
+        <Features />
         <CustomerSupport />
         <DemoCTA />
       </main>
