@@ -7,16 +7,76 @@ import { BlurFade } from "@/components/magic-ui/blur-fade";
  * is in this array, so no JSX changes are needed to update the FAQs.
  */
 const FAQS = [
-  { question: "What is the rabbitpay checkout and how does it help my business?", answer: "Answer Placeholder 1" },
-  { question: "How much time does it take to set up rabbitpay?", answer: "Answer Placeholder 2" },
-  { question: "What are the required documents to get on-boarded?", answer: "Answer Placeholder 3" },
-  { question: "How much does the checkout cost?", answer: "Answer Placeholder 4" },
-  { question: "Can I bring my own PG partner?", answer: "Answer Placeholder 5" },
-  { question: "Can I enable multiple payment gateways on this checkout?", answer: "Answer Placeholder 6" },
-  { question: "is my data is secure?", answer: "Answer Placeholder 6" },
-  { question: "What is the role of Flipkart and Juspay in rabbitpay?", answer: "Answer Placeholder 6" },
-  { question: "How is rabbitpay checkout different from other checkout solutions?", answer: "Answer Placeholder 6" },
-  { question: "How can I get a demo?", answer: "Answer Placeholder 6" },
+  {
+    question: "What is RabbitPay Checkout and how does it help my business?",
+    answer:
+      "RabbitPay Checkout is a fast one-click checkout built for Shopify brands. It helps improve conversions, reduce checkout abandonment, lower payment costs, and deliver a smoother buying experience.",
+  },
+  {
+    question: "How long does it take to set up RabbitPay?",
+    answer:
+      "Your RabbitPay Checkout can be live on your Shopify store within 1 hour. Our team takes care of the complete setup for you.",
+  },
+  {
+    question: "Do I need to submit any documents?",
+    answer:
+      "No. There are no documents, paperwork, or lengthy verification processes required to get started with RabbitPay.",
+  },
+  {
+    question: "How much does RabbitPay cost?",
+    answer:
+      "Choose the pricing that suits your business. Pay just 0.5% per successful prepaid order with no setup fee or monthly commitment, or opt for our monthly plans starting at just ₹999.",
+  },
+  {
+    question: "Can I continue using my existing payment gateway?",
+    answer:
+      "Yes. RabbitPay works with your existing payment gateway, so there's no need to switch providers.",
+  },
+  {
+    question: "Can I enable multiple payment gateways?",
+    answer:
+      "Yes. RabbitPay supports multiple payment gateways, giving you the flexibility to choose how payments are processed.",
+  },
+  {
+    question: "Can my customers get their address pre-filled during checkout?",
+    answer:
+      "Yes. RabbitPay intelligently pre-fills customer addresses with up to a 95% fill rate, enabling faster checkouts, fewer address errors, and higher conversion rates.",
+  },
+  {
+    question: "Can I add a COD transaction fee?",
+    answer:
+      "Yes. You can easily add a COD convenience fee to encourage prepaid orders and reduce unnecessary COD purchases.",
+  },
+  {
+    question: "Does RabbitPay support part payment or split payment?",
+    answer:
+      "Yes. Collect a partial payment online and the remaining amount on delivery. This helps reduce RTO, improve customer commitment, and increase prepaid conversions.",
+  },
+  {
+    question: "Can I customize the checkout to match my brand?",
+    answer:
+      "Yes. RabbitPay Checkout can be customized with your brand logo, colors, and styling to provide a seamless shopping experience.",
+  },
+  {
+    question: "Will RabbitPay work with my Shopify store?",
+    answer:
+      "Yes. RabbitPay is built specifically for Shopify stores and can be integrated without disrupting your existing operations.",
+  },
+  {
+    question: "Will my payment settlements change?",
+    answer:
+      "No. Your existing payment gateway continues to handle settlements, so your settlement process remains exactly the same.",
+  },
+  {
+    question: "How can I get a demo?",
+    answer:
+      "Book a free demo with our team, and we'll walk you through the checkout, features, pricing, and answer any questions specific to your business.",
+  },
+  {
+    question: "Is my data secure?",
+    answer:
+      "Yes. RabbitPay follows industry-standard security practices to protect your customer and transaction data.",
+  },
   {
     question: "Is RabbitPay powered by COD King?",
     answer:

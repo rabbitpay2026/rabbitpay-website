@@ -10,14 +10,6 @@ const TRUST_POINTS = [
   "Proven Checkout Infrastructure",
 ];
 
-/** Qualitative only — no invented figures. */
-const TRUST_METRICS = [
-  "Thousands of Orders Processed",
-  "Reduced RTO Rates",
-  "Shopify Ecosystem Expertise",
-  "Built in India",
-];
-
 /**
  * "Powered by COD King" trust badge — the RabbitPay message stays dominant;
  * COD King appears as the supporting infrastructure, not a competing product.
@@ -41,21 +33,25 @@ export function PoweredBy() {
           </div>
         </BlurFade>
 
-        {/* COD King logo */}
+        {/* COD King logo — no card or border, just a soft premium glow. */}
         <BlurFade delay={0.12}>
-          <div className="mt-10 flex justify-center">
-            <div className="group inline-flex items-center justify-center rounded-3xl border border-[#E5E7EB] bg-white px-10 py-7 shadow-[0_10px_30px_rgba(17,24,39,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(25,107,245,0.14)] sm:px-14 sm:py-8">
+          <div className="mt-12 flex justify-center">
+            <div className="group relative inline-flex items-center justify-center px-10 py-8">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(25,107,245,0.20),rgba(25,107,245,0.06)_55%,transparent_78%)] blur-2xl transition-transform duration-500 group-hover:scale-110 sm:w-[26rem]"
+              />
               <img
                 src={COD_KING_ICON}
                 alt="COD King"
                 loading="lazy"
-                className="h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] sm:hidden"
+                className="relative h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.04] sm:hidden"
               />
               <img
                 src={COD_KING_LOGO}
                 alt="COD King"
                 loading="lazy"
-                className="hidden h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] sm:block"
+                className="relative hidden h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.04] sm:block"
               />
             </div>
           </div>
@@ -74,20 +70,6 @@ export function PoweredBy() {
                 </span>
                 <span className="text-sm font-medium leading-snug text-[#111827]">{point}</span>
               </div>
-            ))}
-          </div>
-        </BlurFade>
-
-        {/* Qualitative metrics */}
-        <BlurFade delay={0.28}>
-          <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-[#E5E7EB] pt-8 lg:grid-cols-4">
-            {TRUST_METRICS.map((metric) => (
-              <p
-                key={metric}
-                className="text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-[#6B7280] transition-colors duration-300 hover:text-brand"
-              >
-                {metric}
-              </p>
             ))}
           </div>
         </BlurFade>

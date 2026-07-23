@@ -4,6 +4,7 @@ import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import {
   RABBITPAY_LOGO,
   RABBITPAY_WHITE_LOGO,
+  COD_KING_ICON,
   SUPPORT_PHONE,
   SUPPORT_PHONE_HREF,
   SUPPORT_EMAIL,
@@ -47,9 +48,15 @@ export function Footer() {
       <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <a href="#top" className="inline-flex items-center">
-              <img src={RABBITPAY_LOGO} alt="RabbitPay" className="h-8 w-auto dark:hidden" />
-              <img src={RABBITPAY_WHITE_LOGO} alt="RabbitPay" className="hidden h-8 w-auto dark:block" />
+            <a href="#top" className="inline-flex flex-col items-start gap-0.5">
+              <span className="inline-flex items-center">
+                <img src={RABBITPAY_LOGO} alt="RabbitPay" className="h-8 w-auto dark:hidden" />
+                <img src={RABBITPAY_WHITE_LOGO} alt="RabbitPay" className="hidden h-8 w-auto dark:block" />
+              </span>
+              <span className="inline-flex items-center gap-1 pl-0.5 text-[11px] font-medium leading-none text-[#6B7280]">
+                <img src={COD_KING_ICON} alt="" aria-hidden="true" className="h-3 w-3 rounded-[3px] object-contain" />
+                Powered by COD King
+              </span>
             </a>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               A premium 1-Click Checkout for Indian D2C brands, designed to improve conversions,

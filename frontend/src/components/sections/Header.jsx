@@ -80,7 +80,7 @@ export function Header() {
             data-testid="header-cta"
             className="group hidden items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(25,107,245,0.22)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_18px_34px_rgba(25,107,245,0.3)] active:translate-y-0 sm:inline-flex"
           >
-            Start Free
+            Book a Demo
           </button>
           <button
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-ink dark:text-white md:hidden"
@@ -116,7 +116,7 @@ export function Header() {
               className="mt-1 inline-flex items-center justify-center rounded-full bg-brand px-3 py-2 text-sm font-semibold text-white transition-all hover:bg-brand-deep"
               data-testid="mobile-header-cta"
             >
-              Start Free
+              Book a Demo
             </button>
           </div>
         </div>
