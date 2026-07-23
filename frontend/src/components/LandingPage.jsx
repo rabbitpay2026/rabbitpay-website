@@ -10,13 +10,15 @@ import { Features } from "@/components/sections/Features";
 import { Pricing } from "@/components/sections/Pricing";
 import { CustomerSupport } from "@/components/sections/CustomerSupport";
 import { DemoCTA } from "@/components/sections/DemoCTA";
+import { FAQ } from "@/components/sections/FAQ";
+import { PoweredBy } from "@/components/sections/PoweredBy";
 import { Footer } from "@/components/sections/Footer";
 
 /**
  * RabbitPay landing page.
  *
  * Order: Header -> Hero -> Metrics -> Logo Wall -> Pricing -> Features ->
- * Support -> Demo CTA -> Footer.
+ * Support -> Demo CTA -> FAQ -> Powered By -> Footer.
  *
  * Two separate conversion paths, no modal:
  *  - "Start Free"     -> Calendly popup (scheduling).
@@ -35,6 +37,8 @@ export default function LandingPage() {
         <Features />
         <CustomerSupport />
         <DemoCTA />
+        <FAQ />
+        <PoweredBy />
       </main>
       <Footer />
       <StickyMobileCTA />

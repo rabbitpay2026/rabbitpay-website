@@ -19,3 +19,9 @@ export const RABBITPAY_WHITE_LOGO =
   "https://cdn.shopify.com/s/files/1/1000/8018/9762/files/rabbitpay-white-logo-no-bg.svg?v=1784539339";
 export const RABBITPAY_ICON =
   "https://cdn.shopify.com/s/files/1/1000/8018/9762/files/rabbitpay-icon-black.svg?v=1784533881";
+
+/** COD King — infrastructure/trust partner. Always secondary to RabbitPay branding. */
+export const COD_KING_LOGO =
+  "https://cdn.shopify.com/s/files/1/0743/3119/3628/files/with_bg_logo2.png?v=1757062726";
+export const COD_KING_ICON =
+  "https://cdn.shopify.com/s/files/1/0743/3119/3628/files/CKlogoicon-1200px_1.png?v=1762758841";

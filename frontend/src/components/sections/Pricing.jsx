@@ -3,6 +3,7 @@ import { Check, Minus, Sparkles, Star, ArrowRight } from "lucide-react";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { openCalendly } from "@/lib/calendly";
 import { trackEvent } from "@/lib/analytics";
+import { COD_KING_ICON } from "@/context/LeadFormContext";
 import { cn } from "@/lib/utils";
 
 function scrollToDemo() {
@@ -95,6 +96,19 @@ export function Pricing() {
           <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
             One clear plan for growing brands, with an enterprise path for higher volume merchants
             that need bespoke rollout support.
+          </p>
+        </BlurFade>
+
+        <BlurFade delay={0.08}>
+          <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] px-4 py-2 text-xs font-medium text-[#6B7280] dark:bg-white/5">
+            <img
+              src={COD_KING_ICON}
+              alt=""
+              aria-hidden="true"
+              className="h-3.5 w-3.5 flex-shrink-0 rounded-[3px] object-contain"
+            />
+            Every RabbitPay plan is backed by COD King's verification and checkout optimization
+            infrastructure.
           </p>
         </BlurFade>
 

@@ -5,7 +5,7 @@ import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { RetroGrid } from "@/components/magic-ui/retro-grid";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import { IPhone15Pro } from "@/components/magic-ui/iphone-15-pro";
-import { RABBITPAY_ICON } from "@/context/LeadFormContext";
+import { RABBITPAY_ICON, COD_KING_ICON } from "@/context/LeadFormContext";
 import { LeadCaptureCard } from "@/components/LeadCaptureCard";
 import { cn } from "@/lib/utils";
 
@@ -58,6 +58,24 @@ export function Hero() {
                     {item}
                   </span>
                 ))}
+              </div>
+            </BlurFade>
+
+            <BlurFade delay={0.45}>
+              <div className="mt-4 flex flex-wrap gap-2.5 text-xs text-[#6B7280]">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F3F4F6] px-3 py-1.5 font-medium dark:bg-white/5">
+                  <img
+                    src={COD_KING_ICON}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 rounded-[3px] object-contain"
+                  />
+                  Powered by COD King
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F3F4F6] px-3 py-1.5 font-medium dark:bg-white/5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-brand" />
+                  Trusted by Indian Shopify merchants
+                </span>
               </div>
             </BlurFade>
 

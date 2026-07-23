@@ -5,6 +5,7 @@ import {
   RABBITPAY_LOGO,
   RABBITPAY_WHITE_LOGO,
   RABBITPAY_ICON,
+  COD_KING_ICON,
 } from "@/context/LeadFormContext";
 import { openCalendly } from "@/lib/calendly";
 import { cn } from "@/lib/utils";
@@ -47,9 +48,15 @@ export function Header() {
           <span className="inline-flex sm:hidden h-10 w-10 items-center justify-center rounded-xl border border-border bg-background shadow-sm">
             <img src={RABBITPAY_ICON} alt="RabbitPay" className="h-6 w-6" />
           </span>
-          <span className="hidden items-center sm:inline-flex">
-            <img src={RABBITPAY_LOGO} alt="RabbitPay" className="h-10 w-auto dark:hidden" />
-            <img src={RABBITPAY_WHITE_LOGO} alt="RabbitPay" className="hidden h-10 w-auto dark:block" />
+          <span className="hidden flex-col items-start gap-0.5 sm:flex">
+            <span className="inline-flex items-center">
+              <img src={RABBITPAY_LOGO} alt="RabbitPay" className="h-10 w-auto dark:hidden" />
+              <img src={RABBITPAY_WHITE_LOGO} alt="RabbitPay" className="hidden h-10 w-auto dark:block" />
+            </span>
+            <span className="inline-flex items-center gap-1 pl-0.5 text-[11px] font-medium leading-none text-[#6B7280]">
+              <img src={COD_KING_ICON} alt="" aria-hidden="true" className="h-3 w-3 rounded-[3px] object-contain" />
+              Powered by COD King
+            </span>
           </span>
         </a>
 
