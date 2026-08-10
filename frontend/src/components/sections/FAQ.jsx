@@ -25,7 +25,7 @@ const FAQS = [
   {
     question: "How much does RabbitPay cost?",
     answer:
-      "Choose the pricing that suits your business. Pay just 0.5% per successful prepaid order with no setup fee or monthly commitment, or opt for our monthly plans starting at just ₹999.",
+      "Choose the pricing that suits your business. Pay just 1% per successful prepaid order with no setup fee or monthly commitment, or opt for our monthly plans starting at just ₹999.",
   },
   {
     question: "Can I continue using my existing payment gateway?",

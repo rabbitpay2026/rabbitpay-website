@@ -19,7 +19,7 @@ const PLANS = [
     key: "growth",
     name: "Growth",
     tagline: "For growing D2C brands",
-    price: "0.5%",
+    price: "1.0%",
     priceNote: "on successful prepaid",
     highlight: true,
   },
@@ -36,7 +36,7 @@ const PLANS = [
 /** `true`/`false` render as a tick / dash; strings render as-is. */
 const ROWS = [
   { feature: "Setup Fee", growth: "Free", enterprise: "Free" },
-  { feature: "Transaction Fee", growth: "0.5%", enterprise: "Custom" },
+  { feature: "Transaction Fee", growth: "1.0%", enterprise: "Custom" },
   { feature: "COD Verification", growth: "Included", enterprise: "Included" },
   { feature: "Customer Support", growth: "Standard", enterprise: "Dedicated" },
   { feature: "SLA", growth: false, enterprise: true },
