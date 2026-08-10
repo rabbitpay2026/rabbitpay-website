@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Loader2, Send, Sparkles, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,35 +11,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   useLeadForm,
   RABBITPAY_WHITE_LOGO,
 } from "@/context/LeadFormContext";
 import { trackEvent } from "@/lib/analytics";
 
-const API = process.env.REACT_APP_BACKEND_URL;
-
-const MONTHLY_ORDER_BUCKETS = [
-  "0 – 500",
-  "500 – 5,000",
-  "5,000 – 20,000",
-  "20,000 – 50,000",
-  "50,000+",
-];
+const API = process.env.REACT_APP_BACKEND_URL || "";
 
 /**
- * Global lead-capture modal.
- * - shadcn Dialog + Input + Textarea + Select
- * - POSTs to `${REACT_APP_BACKEND_URL}/api/leads` (Resend email sent server-side)
- * - Sonner toast on success/error
+ * Global lead-capture / Demo Request modal.
+ * - Displays Full Name, Email, and Phone Number fields.
+ * - Validates all fields on submission.
+ * - Submits to the backend leads API.
+ * - Triggers success toast upon successful demo request.
  */
 export function LeadFormModal() {
   const { open, setOpen, prefill, closeLeadForm } = useLeadForm();
@@ -47,7 +32,7 @@ export function LeadFormModal() {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    brand: "",
+    brand: "Demo Request",
     phone: "",
     monthly_orders: "",
     message: "",
@@ -60,7 +45,7 @@ export function LeadFormModal() {
     setForm({
       name: "",
       email: "",
-      brand: "",
+      brand: "Demo Request",
       phone: "",
       monthly_orders: "",
       message: "",
@@ -69,10 +54,26 @@ export function LeadFormModal() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (busy) return;
-    if (!form.name || !form.email || !form.brand) {
-      toast.error("Please share your name, work email and brand.");
+
+    // Field Validations
+    if (!form.name.trim()) {
+      toast.error("Full Name is required.");
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    const cleanPhone = form.phone.replace(/[\s-()]/g, "");
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      toast.error("Please enter a valid phone number (10-15 digits).");
+      return;
+    }
+
     setBusy(true);
     try {
       const res = await fetch(`${API}/api/leads`, {
@@ -88,16 +89,12 @@ export function LeadFormModal() {
       trackEvent("lead_submit", {
         source: prefill?.source || "landing_page",
         brand: form.brand,
-        monthly_orders: form.monthly_orders || "n/a",
       });
-      toast.success("Thanks — we'll be in touch shortly.", {
-        description:
-          "A RabbitPay specialist will reach out within 1 business day.",
+      toast.success("Thank you! Our team will contact you shortly.", {
         duration: 5000,
       });
       reset();
       closeLeadForm();
-      // Optionally log id for debugging
       if (data?.id) console.info("lead:", data.id);
     } catch (err) {
       toast.error("Something went wrong.", {
@@ -113,7 +110,7 @@ export function LeadFormModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         data-testid="lead-form-modal"
-        className="p-0 sm:max-w-[560px] overflow-hidden gap-0"
+        className="p-0 sm:max-w-[480px] overflow-hidden gap-0"
       >
         {/* Header */}
         <div className="relative bg-gradient-to-br from-brand-deep via-brand to-accent px-6 pt-6 pb-8 text-white">
@@ -133,11 +130,10 @@ export function LeadFormModal() {
             <div>
               <DialogHeader className="text-left">
                 <DialogTitle className="text-white text-lg font-semibold tracking-tight">
-                  Start with RabbitPay
+                  Request a Demo
                 </DialogTitle>
                 <DialogDescription className="text-white/70 text-sm">
-                  Tell us about your brand — a specialist will reach out within
-                  1 business day.
+                  Let us know how to contact you, and we'll show you RabbitPay in action.
                 </DialogDescription>
               </DialogHeader>
             </div>
@@ -146,12 +142,13 @@ export function LeadFormModal() {
 
         <form
           onSubmit={onSubmit}
-          className="grid gap-4 px-6 py-6 sm:grid-cols-2"
+          className="grid gap-4 px-6 py-6"
           data-testid="lead-form"
         >
-          <div className="space-y-1.5 sm:col-span-1">
+          {/* Full Name */}
+          <div className="space-y-1.5">
             <Label htmlFor="lf-name" className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Your name *
+              Full Name *
             </Label>
             <Input
               id="lf-name"
@@ -162,9 +159,11 @@ export function LeadFormModal() {
               required
             />
           </div>
-          <div className="space-y-1.5 sm:col-span-1">
+
+          {/* Email Address */}
+          <div className="space-y-1.5">
             <Label htmlFor="lf-email" className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Work email *
+              Email Address *
             </Label>
             <Input
               id="lf-email"
@@ -176,69 +175,32 @@ export function LeadFormModal() {
               required
             />
           </div>
-          <div className="space-y-1.5 sm:col-span-1">
-            <Label htmlFor="lf-brand" className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Brand / Company *
-            </Label>
-            <Input
-              id="lf-brand"
-              data-testid="lead-form-brand"
-              placeholder="Sundara"
-              value={form.brand}
-              onChange={update("brand")}
-              required
-            />
-          </div>
-          <div className="space-y-1.5 sm:col-span-1">
+
+          {/* Phone Number */}
+          <div className="space-y-1.5">
             <Label htmlFor="lf-phone" className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Phone (optional)
+              Phone Number *
             </Label>
             <Input
               id="lf-phone"
+              type="tel"
               data-testid="lead-form-phone"
-              placeholder="+91 98•••••420"
+              placeholder="+91 98765 43210"
               value={form.phone}
               onChange={update("phone")}
-            />
-          </div>
-          <div className="space-y-1.5 sm:col-span-2">
-            <Label className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Monthly orders
-            </Label>
-            <Select
-              value={form.monthly_orders}
-              onValueChange={update("monthly_orders")}
-            >
-              <SelectTrigger data-testid="lead-form-orders">
-                <SelectValue placeholder="Choose a range" />
-              </SelectTrigger>
-              <SelectContent>
-                {MONTHLY_ORDER_BUCKETS.map((b) => (
-                  <SelectItem key={b} value={b}>
-                    {b}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1.5 sm:col-span-2">
-            <Label htmlFor="lf-msg" className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Anything to share?
-            </Label>
-            <Textarea
-              id="lf-msg"
-              data-testid="lead-form-message"
-              placeholder="Tell us about your checkout, current RTO, categories, etc."
-              rows={3}
-              value={form.message}
-              onChange={update("message")}
+              required
             />
           </div>
 
-          <div className="sm:col-span-2 flex flex-col-reverse items-stretch gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-muted-foreground">
-              By submitting you agree to be contacted by RabbitPay.
-            </p>
+          {/* Action Buttons */}
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-border mt-2">
+            <button
+              type="button"
+              onClick={closeLeadForm}
+              className="inline-flex items-center justify-center rounded-lg border border-border bg-background px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-muted"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               disabled={busy}
@@ -252,9 +214,7 @@ export function LeadFormModal() {
                 </>
               ) : (
                 <>
-                  <Sparkles className="h-4 w-4" />
-                  Get started
-                  <Send className="h-3.5 w-3.5" />
+                  Submit
                 </>
               )}
             </button>

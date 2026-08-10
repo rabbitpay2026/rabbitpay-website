@@ -1,179 +1,179 @@
 "use client";
-import {
-  UserRoundCheck,
-  ShieldCheck,
-  Smartphone,
-  MessageSquareText,
-} from "lucide-react";
-import { MagicCard } from "@/components/magic-ui/magic-card";
-import { AnimatedCircularProgress } from "@/components/magic-ui/animated-circular-progress";
-import { Globe } from "@/components/magic-ui/globe";
+import { Fragment } from "react";
+import { UserRoundCheck, ShieldCheck, Smartphone, ArrowRight } from "lucide-react";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
+import { MagicCard } from "@/components/magic-ui/magic-card";
+import { Integrations } from "@/components/sections/Integrations";
 
-const INDIA_CITIES = [
-  { x: 240, y: 130, label: "Delhi" },
-  { x: 220, y: 180, label: "Jaipur" },
-  { x: 205, y: 215, label: "Ahmedabad" },
-  { x: 210, y: 265, label: "Mumbai" },
-  { x: 280, y: 260, label: "Kolkata" },
-  { x: 240, y: 300, label: "Bengaluru" },
-  { x: 260, y: 335, label: "Chennai" },
+const FEATURES = [
+  {
+    eyebrow: "Prefilled checkout",
+    title: "Ship a checkout that feels already known.",
+    body:
+      "RabbitPay pre-fills the shopper's details so the first screen feels fast, familiar, and frictionless.",
+    bullets: [
+      "Address, phone, and email can appear prefilled",
+      "Cleaner first step on mobile",
+      "Designed to reduce drop-offs before payment",
+    ],
+    icon: <UserRoundCheck className="h-5 w-5" />,
+    visual: <PrefillVisual />,
+  },
+  {
+    eyebrow: "RTO control",
+    title: "Verified COD and risk-aware order capture.",
+    body:
+      "Keep the easy COD path, but add the guardrails that reduce fake orders and unnecessary return-to-origin costs.",
+    bullets: [
+      "Verified COD flows",
+      "Smarter risk checks before fulfillment",
+      "Less leakage between checkout and delivery",
+    ],
+    icon: <ShieldCheck className="h-5 w-5" />,
+    visual: <RiskVisual />,
+  },
+  {
+    eyebrow: "UPI-first",
+    title: "A payment experience Indian shoppers actually use.",
+    body:
+      "UPI gets the premium treatment, with cards and netbanking available as smooth fallbacks when shoppers need them.",
+    bullets: [
+      "UPI-first ordering experience",
+      "Fast fallback to other payment methods",
+      "Built for mobile-heavy Indian traffic",
+    ],
+    icon: <Smartphone className="h-5 w-5" />,
+    visual: <UpiVisual />,
+  },
 ];
 
-/**
- * FEATURE DEEP-DIVE
- * Uses: Magic Card, Animated Circular Progress, Globe.
- */
 export function Features() {
   return (
-    <section
-      data-testid="features"
-      className="relative py-20 md:py-24"
-    >
+    <section id="product" data-testid="features" className="relative py-20 md:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <BlurFade>
-          <p className="text-sm font-medium uppercase tracking-[0.22em] text-brand">
-            The RabbitPay stack
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-brand">
+            Product highlights
           </p>
-          <h2 className="mt-3 max-w-3xl text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter leading-[1.05] text-ink dark:text-white">
-            Everything you need to convert an Indian shopper.
+          <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tighter leading-[1.05] text-ink dark:text-white sm:text-4xl md:text-5xl">
+            Everything needed to make the checkout feel premium, fast, and trustworthy.
           </h2>
         </BlurFade>
 
-        {/* Row 1 — Prefilled addresses */}
-        <FeatureRow
-          reverse={false}
-          eyebrow="Saved shoppers"
-          title="Prefilled address & saved shopper network."
-          body="Millions of Indian shoppers are already on RabbitPay's network. When one lands on your store, we prefill their name, phone, and address — with one tap."
-          bullets={[
-            "Address, phone & email — prefilled on load",
-            "Cross-store recognition (with consent)",
-            "Regional pincode intelligence for tier-2 & tier-3",
-          ]}
-          visual={<PrefillVisual />}
-          icon={<UserRoundCheck className="h-5 w-5" />}
-        />
-
-        {/* Row 2 — RTO control */}
-        <FeatureRow
-          reverse={true}
-          eyebrow="RTO control"
-          title="COD verification that actually reduces returns."
-          body="An OTP + intent check on every COD order, backed by a network-wide address risk score. Merchants routinely see 25–35% fewer RTO orders."
-          bullets={[
-            "OTP verification on 100% of COD orders",
-            "Address risk scoring using network history",
-            "Auto-flag high-risk orders for review",
-          ]}
-          visual={
-            <div className="flex items-center justify-center">
-              <AnimatedCircularProgress value={28} label="RTO reduced" />
-            </div>
-          }
-          icon={<ShieldCheck className="h-5 w-5" />}
-        />
-
-        {/* Row 3 — UPI first */}
-        <FeatureRow
-          reverse={false}
-          eyebrow="UPI-first"
-          title="UPI intent + QR, native at checkout."
-          body="One-tap UPI intent on mobile, QR on desktop. No redirects, no bounced sessions. Because Indian shoppers pay with UPI first — RabbitPay makes sure that is the smoothest path."
-          bullets={[
-            "GPay, PhonePe, Paytm, BHIM intents",
-            "Fast-fallback to cards & netbanking",
-            "Recurring UPI for subscription brands",
-          ]}
-          visual={<UpiVisual />}
-          icon={<Smartphone className="h-5 w-5" />}
-        />
-
-        {/* Row 4 — Notifications + Globe */}
-        <FeatureRow
-          reverse={true}
-          eyebrow="Pan-India"
-          title="SMS OTP + WhatsApp utility — everywhere in India."
-          body="Reach shoppers where they are. RabbitPay ships transactional SMS and WhatsApp utility templates out of the box, with delivery telemetry from tier-1 to tier-3."
-          bullets={[
-            "Transactional SMS with DLT-compliant templates",
-            "WhatsApp utility for OTP, shipping & refunds",
-            "Delivery insights across 19,000+ pincodes",
-          ]}
-          visual={
-            <div className="text-brand">
-              <Globe cities={INDIA_CITIES} />
-            </div>
-          }
-          icon={<MessageSquareText className="h-5 w-5" />}
-        />
+        <div className="mt-12 space-y-6">
+          {FEATURES.map((feature, index) => (
+            <Fragment key={feature.eyebrow}>
+              {/* Integrations strip sits immediately above the UPI-first feature. */}
+              {feature.eyebrow === "UPI-first" ? <Integrations /> : null}
+              <FeatureRow feature={feature} reverse={index % 2 === 1} />
+            </Fragment>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-function FeatureRow({ reverse, eyebrow, title, body, bullets, visual, icon }) {
+function FeatureRow({ feature, reverse }) {
   return (
-    <div className="mt-20 md:mt-28 grid items-center gap-10 lg:grid-cols-12">
-      <BlurFade
-        className={`lg:col-span-6 ${reverse ? "lg:order-2" : ""}`}
-      >
-        <span className="inline-grid h-10 w-10 place-items-center rounded-xl border border-border bg-background text-brand">
-          {icon}
+    <div className="grid items-center gap-6 lg:grid-cols-12">
+      <BlurFade className={reverse ? "lg:order-2 lg:col-span-6" : "lg:col-span-6"}>
+        <span className="inline-grid h-11 w-11 place-items-center rounded-2xl border border-border bg-background text-brand shadow-sm">
+          {feature.icon}
         </span>
-        <p className="mt-4 text-sm font-medium uppercase tracking-[0.22em] text-brand">
-          {eyebrow}
+        <p className="mt-4 text-xs font-semibold uppercase tracking-[0.28em] text-brand">
+          {feature.eyebrow}
         </p>
-        <h3 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight leading-[1.1] text-ink dark:text-white">
-          {title}
+        <h3 className="mt-3 text-2xl font-semibold tracking-tight leading-[1.08] text-ink dark:text-white sm:text-3xl">
+          {feature.title}
         </h3>
-        <p className="mt-4 max-w-lg text-base sm:text-lg text-muted-foreground leading-relaxed">
-          {body}
+        <p className="mt-4 max-w-lg text-base leading-relaxed text-muted-foreground">
+          {feature.body}
         </p>
-        <ul className="mt-6 space-y-2.5">
-          {bullets.map((b) => (
-            <li
-              key={b}
-              className="flex items-start gap-2.5 text-sm text-ink/80 dark:text-white/80"
-            >
+        <ul className="mt-6 space-y-3">
+          {feature.bullets.map((bullet) => (
+            <li key={bullet} className="flex items-start gap-2.5 text-sm text-ink/80 dark:text-white/80">
               <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
-              {b}
+              {bullet}
             </li>
           ))}
         </ul>
       </BlurFade>
-      <BlurFade
-        delay={0.15}
-        className={`lg:col-span-6 ${reverse ? "lg:order-1" : ""}`}
-      >
-        <MagicCard className="rounded-3xl border-border bg-card p-6 sm:p-10">
-          {visual}
+      <BlurFade delay={0.12} className={reverse ? "lg:order-1 lg:col-span-6" : "lg:col-span-6"}>
+        <MagicCard className="rounded-[28px] border-border bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] dark:bg-white/5 sm:p-8">
+          {feature.visual}
         </MagicCard>
       </BlurFade>
     </div>
   );
 }
 
-/* -- Illustrative visuals used inside feature rows -- */
-
 function PrefillVisual() {
   return (
-    <div className="mx-auto w-full max-w-md space-y-3">
+    <div className="mx-auto max-w-md space-y-3">
       <FieldRow label="Name" value="Ananya Sharma" fill={92} />
-      <FieldRow label="Phone" value="+91 98•••••420" fill={98} />
+      <FieldRow label="Phone" value="+91 98••••••420" fill={98} />
       <FieldRow label="Address" value="A-14, HSR Layout, Bengaluru" fill={88} />
       <FieldRow label="Pincode" value="560102" fill={100} />
       <div className="mt-3 flex items-center justify-between rounded-xl border border-brand/20 bg-brand/5 px-4 py-3 text-sm">
         <span className="font-medium text-brand">Address prefilled</span>
-        <span className="font-mono text-xs text-muted-foreground">3 fields · 220ms</span>
+        <span className="font-mono text-xs text-muted-foreground">3 fields - 220 ms</span>
       </div>
+    </div>
+  );
+}
+
+function RiskVisual() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {[
+        ["Verified COD", "Pending orders screened before dispatch"],
+        ["Lower RTO", "Risk signals help reduce bad-fit orders"],
+        ["Intent check", "Customers confirm details with less friction"],
+        ["Ops-ready", "Clean handoff into fulfillment"],
+      ].map(([title, text]) => (
+        <div key={title} className="rounded-2xl border border-border bg-white p-4 shadow-sm dark:bg-neutral-900/70">
+          <p className="text-sm font-semibold text-ink dark:text-white">{title}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Official payment-app logos, rendered without text labels. */
+const UPI_APPS = [
+  { name: "Google Pay", file: "wm-googlepay.svg" },
+  { name: "PhonePe", file: "wm-phonepe.svg" },
+  { name: "Paytm", file: "wm-paytm.svg" },
+  { name: "BHIM UPI", file: "wm-bhim.svg" },
+  { name: "Amazon Pay", file: "wm-amazonpay.svg" },
+  { name: "CRED", file: "wm-cred.png" },
+];
+
+function UpiVisual() {
+  return (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {UPI_APPS.map((app) => (
+        <div
+          key={app.name}
+          className="flex h-[72px] items-center justify-center rounded-2xl border border-border bg-white px-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/35 hover:shadow-md dark:bg-neutral-900/70"
+        >
+          <img
+            src={`${process.env.PUBLIC_URL}/logos/${app.file}`}
+            alt={`${app.name} logo`}
+            loading="lazy"
+            className="max-h-8 w-auto max-w-full object-contain"
+          />
+        </div>
+      ))}
     </div>
   );
 }
 
 function FieldRow({ label, value, fill }) {
   return (
-    <div className="rounded-xl border border-border bg-background/70 dark:bg-white/[0.02] p-3">
+    <div className="rounded-2xl border border-border bg-background/75 p-4 dark:bg-white/[0.03]">
       <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-muted-foreground">
         <span>{label}</span>
         <span className="text-success">Auto-filled</span>
@@ -185,29 +185,6 @@ function FieldRow({ label, value, fill }) {
           style={{ width: `${fill}%` }}
         />
       </div>
-    </div>
-  );
-}
-
-function UpiVisual() {
-  const apps = [
-    { name: "GPay", bg: "bg-white", accent: "text-[#4285F4]" },
-    { name: "PhonePe", bg: "bg-[#5F259F]/10", accent: "text-[#5F259F]" },
-    { name: "Paytm", bg: "bg-[#00BAF2]/10", accent: "text-[#00BAF2]" },
-    { name: "BHIM", bg: "bg-[#0D6EFD]/10", accent: "text-[#0D6EFD]" },
-    { name: "Amazon Pay", bg: "bg-[#FF9900]/10", accent: "text-[#FF9900]" },
-    { name: "CRED", bg: "bg-black/10 dark:bg-white/10", accent: "text-ink dark:text-white" },
-  ];
-  return (
-    <div className="grid grid-cols-3 gap-3">
-      {apps.map((a) => (
-        <div
-          key={a.name}
-          className={`flex items-center justify-center rounded-xl border border-border ${a.bg} py-4 text-sm font-semibold ${a.accent}`}
-        >
-          {a.name}
-        </div>
-      ))}
     </div>
   );
 }

@@ -1,53 +1,12 @@
-"use client";
-import { createContext, useContext, useMemo, useState, useCallback } from "react";
-
-const LeadFormContext = createContext(null);
-
-/**
- * Provides a single global "open lead capture modal" trigger to every CTA
- * on the landing page. Accepts a `prefill` object that seeds the modal
- * (source label, plan, etc.).
- */
-export function LeadFormProvider({ children }) {
-  const [open, setOpen] = useState(false);
-  const [prefill, setPrefill] = useState({ source: "landing_page" });
-
-  const openLeadForm = useCallback((next) => {
-    setPrefill({ source: "landing_page", ...(next || {}) });
-    setOpen(true);
-  }, []);
-
-  const closeLeadForm = useCallback(() => setOpen(false), []);
-
-  const value = useMemo(
-    () => ({ open, prefill, openLeadForm, closeLeadForm, setOpen }),
-    [open, prefill, openLeadForm, closeLeadForm],
-  );
-
-  return (
-    <LeadFormContext.Provider value={value}>
-      {children}
-    </LeadFormContext.Provider>
-  );
-}
-
-export function useLeadForm() {
-  const ctx = useContext(LeadFormContext);
-  if (!ctx) {
-    // graceful noop so components rendered outside provider don't crash
-    return {
-      open: false,
-      prefill: {},
-      openLeadForm: () => {},
-      closeLeadForm: () => {},
-      setOpen: () => {},
-    };
-  }
-  return ctx;
-}
+// Shared brand + support constants used across the landing page.
+//
+// The site has two conversion paths and no lead-capture modal:
+//  - "Start Free"     -> Calendly popup (see lib/calendly.js).
+//  - "Give me a Demo" -> inline lead-capture card (see components/LeadCaptureCard.jsx).
+// This module is kept as the single source of truth for logo URLs and support
+// contacts (the filename is retained to avoid churn across imports).
 
 /** Convenience constants used across CTAs. */
-export const CALENDLY_URL = "https://calendly.com/avijeetdey-email/30min";
 export const SUPPORT_PHONE = "+91 62955 29286";
 export const SUPPORT_PHONE_HREF = "tel:+916295529286";
 export const SUPPORT_WHATSAPP_HREF =
@@ -60,3 +19,9 @@ export const RABBITPAY_WHITE_LOGO =
   "https://cdn.shopify.com/s/files/1/1000/8018/9762/files/rabbitpay-white-logo-no-bg.svg?v=1784539339";
 export const RABBITPAY_ICON =
   "https://cdn.shopify.com/s/files/1/1000/8018/9762/files/rabbitpay-icon-black.svg?v=1784533881";
+
+/** COD King — infrastructure/trust partner. Always secondary to RabbitPay branding. */
+export const COD_KING_LOGO =
+  "https://cdn.shopify.com/s/files/1/0743/3119/3628/files/with_bg_logo2.png?v=1757062726";
+export const COD_KING_ICON =
+  "https://cdn.shopify.com/s/files/1/0743/3119/3628/files/CKlogoicon-1200px_1.png?v=1762758841";

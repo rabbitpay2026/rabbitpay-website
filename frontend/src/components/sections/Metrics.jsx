@@ -1,79 +1,91 @@
 "use client";
+import { Zap, ShieldCheck, Clock, CheckCircle2 } from "lucide-react";
 import { NumberTicker } from "@/components/magic-ui/number-ticker";
-import { TextAnimate } from "@/components/magic-ui/text-animate";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
-import { DotPattern } from "@/components/magic-ui/dot-pattern";
+import { Card, CardContent } from "@/components/ui/card";
 
-/**
- * METRICS BAND
- */
+const ITEMS = [
+  {
+    value: 35,
+    prefix: "+",
+    suffix: "%",
+    label: "Conversion Uplift",
+    icon: <Zap className="h-5 w-5 text-brand" />,
+  },
+  {
+    value: 28,
+    prefix: "-",
+    suffix: "%",
+    label: "Return-to-Origin",
+    icon: <ShieldCheck className="h-5 w-5 text-brand" />,
+  },
+  {
+    value: 3,
+    prefix: "<",
+    suffix: "s",
+    label: "Checkout Time",
+    icon: <Clock className="h-5 w-5 text-brand" />,
+  },
+  {
+    value: 92,
+    suffix: "%",
+    label: "Address Prefill Rate",
+    icon: <CheckCircle2 className="h-5 w-5 text-brand" />,
+  },
+];
+
 export function Metrics() {
   return (
     <section
+      id="metrics"
       data-testid="metrics"
-      className="relative overflow-hidden bg-[#07111F] py-20 text-white md:py-24"
+      className="relative border-y border-border bg-[linear-gradient(180deg,rgba(232,241,254,0.9),rgba(255,255,255,0.94))] py-12 dark:bg-neutral-950/60 md:py-16"
     >
-      <DotPattern glow className="opacity-30" />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(25,107,245,0.35),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(74,140,250,0.22),transparent_60%)]"
-      />
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <BlurFade>
-          <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/60">
-            The outcome
-          </p>
-          <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tighter sm:text-4xl md:text-5xl">
-            <TextAnimate text="Numbers that move a business, not a vanity slide." className="block" />
-          </h2>
-        </BlurFade>
-
-        <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-3">
-          <Metric
-            value={35}
-            prefix="+"
-            suffix="%"
-            label="Conversion uplift"
-            body="Average lift in checkout completion after switching to RabbitPay 1-Click."
-          />
-          <Metric
-            value={28}
-            prefix="−"
-            suffix="%"
-            label="RTO reduction"
-            body="Lower return-to-origin from COD verification and network-wide address scoring."
-          />
-          <Metric
-            value={2.4}
-            decimalPlaces={1}
-            suffix="s"
-            label="Median checkout time"
-            body="From cart to payment success - measured across returning shoppers."
-          />
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <BlurFade>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-brand">
+              Merchant impact
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tighter text-ink dark:text-white sm:text-3xl">
+              RabbitPay improves the business, not just the checkout.
+            </h2>
+          </BlurFade>
+          <BlurFade delay={0.1}>
+            <p className="max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-right sm:text-base">
+              These are the signals merchants care about first: more conversion, less RTO, faster
+              checkout completion, and more addresses prefilled before the shopper even notices.
+            </p>
+          </BlurFade>
         </div>
-        <p className="mt-8 text-xs text-white/50">
-          * Illustrative benchmarks aggregated from pilot merchants across categories.
-        </p>
+
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {ITEMS.map((item, index) => (
+            <BlurFade key={item.label} delay={index * 0.08}>
+              <Card className="group relative h-full overflow-hidden border border-white/70 bg-white/75 shadow-[0_20px_60px_rgba(25,107,245,0.08)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-brand/35 hover:shadow-[0_26px_70px_rgba(25,107,245,0.16)] dark:border-white/10 dark:bg-white/5">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand/50 to-transparent opacity-70" />
+                <CardContent className="relative flex h-full flex-col gap-4 p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="grid h-11 w-11 place-items-center rounded-2xl border border-brand/15 bg-brand/10 text-brand shadow-sm">
+                      {item.icon}
+                    </span>
+                    <span className="rounded-full border border-brand/15 bg-brand/5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">
+                      Live
+                    </span>
+                  </div>
+                  <div className="mt-2 text-5xl font-semibold tracking-tighter text-ink dark:text-white">
+                    <NumberTicker value={item.value} prefix={item.prefix} suffix={item.suffix} />
+                  </div>
+                  <p className="text-sm font-medium text-muted-foreground">{item.label}</p>
+                  <div className="mt-auto h-1.5 overflow-hidden rounded-full bg-brand/10">
+                    <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-brand to-brand-accent transition-all duration-500 group-hover:w-full" />
+                  </div>
+                </CardContent>
+              </Card>
+            </BlurFade>
+          ))}
+        </div>
       </div>
     </section>
-  );
-}
-
-function Metric({ value, prefix, suffix, decimalPlaces, label, body }) {
-  return (
-    <div className="border-t border-white/10 pt-6 sm:border-t-0 sm:border-l sm:pl-6 sm:pt-0">
-      <div className="text-5xl font-semibold tracking-tighter sm:text-6xl">
-        <NumberTicker
-          value={value}
-          prefix={prefix}
-          suffix={suffix}
-          decimalPlaces={decimalPlaces}
-        />
-      </div>
-      <div className="mt-2 text-sm font-semibold uppercase tracking-[0.18em] text-white/60">
-        {label}
-      </div>
-      <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/70">{body}</p>
-    </div>
   );
 }

@@ -23,20 +23,39 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# MongoDB connection (optional — leads are still emailed if the DB is absent).
+mongo_url = os.environ.get('MONGO_URL')
+db_name = os.environ.get('DB_NAME')
+client = None
+db = None
+if mongo_url and db_name:
+    client = AsyncIOMotorClient(mongo_url)
+    db = client[db_name]
+else:
+    logger.warning(
+        "MONGO_URL/DB_NAME not set — leads will be emailed but NOT stored in the database. "
+        "Set both in backend/.env to enable persistence."
+    )
 
-# Emergent-managed email integration constants
+# ---- Email delivery ----
+# Primary provider: Resend (https://resend.com). Set RESEND_API_KEY to enable.
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
+# The "From" address. Resend's shared onboarding@resend.dev works out of the box
+# for sending to your own account email; use a verified domain for anything else.
+EMAIL_FROM = os.environ.get('EMAIL_FROM', 'RabbitPay <onboarding@resend.dev>')
+
+# Fallback provider: Emergent-managed email proxy (used only if no Resend key).
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"
 EMAIL_KEY = os.environ.get('EMERGENT_EMAIL_KEY')
 EMAIL_FROM_NAME = os.environ.get('EMAIL_FROM_NAME', 'RabbitPay')
-SALES_INBOX = os.environ.get('SALES_INBOX', 'hello@rabbitpay.in')
 
-if not EMAIL_KEY:
+# Where lead notifications are delivered.
+EMAIL_TO = os.environ.get('EMAIL_TO', 'avijeetdey.email@gmail.com')
+
+if not RESEND_API_KEY and not EMAIL_KEY:
     logger.warning(
-        "EMERGENT_EMAIL_KEY is missing — /api/leads will store leads but skip email delivery."
+        "No email provider configured (set RESEND_API_KEY in backend/.env) — "
+        "/api/leads will store leads but skip email delivery."
     )
 
 # Create the main app without a prefix
@@ -60,9 +79,10 @@ class StatusCheckCreate(BaseModel):
 
 
 class LeadCreate(BaseModel):
-    name: str = Field(min_length=1, max_length=120)
+    # `name` is optional: the inline Hero CTA captures only email + phone.
+    name: Optional[str] = Field(default=None, max_length=120)
     email: EmailStr
-    brand: str = Field(min_length=1, max_length=120)
+    brand: Optional[str] = Field(default="Demo Request", max_length=120)
     phone: Optional[str] = Field(default=None, max_length=32)
     monthly_orders: Optional[str] = Field(default=None, max_length=64)
     message: Optional[str] = Field(default=None, max_length=2000)
@@ -73,9 +93,9 @@ class Lead(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    name: str
+    name: Optional[str] = None
     email: EmailStr
-    brand: str
+    brand: Optional[str] = "Demo Request"
     phone: Optional[str] = None
     monthly_orders: Optional[str] = None
     message: Optional[str] = None
@@ -91,6 +111,8 @@ async def root():
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database not configured")
     status_obj = StatusCheck(**input.model_dump())
     doc = status_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
@@ -100,6 +122,8 @@ async def create_status_check(input: StatusCheckCreate):
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database not configured")
     rows = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
     for check in rows:
         if isinstance(check['timestamp'], str):
@@ -108,63 +132,49 @@ async def get_status_checks():
 
 
 def _lead_email_html(lead: Lead) -> str:
-    """Render a compact HTML email body for the sales inbox."""
-    esc = html.escape
-    fields = [
-        ("Name", lead.name),
-        ("Email", lead.email),
-        ("Brand / Company", lead.brand),
-        ("Phone", lead.phone or "—"),
-        ("Monthly orders", lead.monthly_orders or "—"),
-        ("Source", lead.source),
-        ("Submitted", lead.timestamp.isoformat()),
-    ]
-    rows = "".join(
-        f"<tr><td style='padding:8px 12px;border-bottom:1px solid #eef;color:#64748B;font-size:12px;text-transform:uppercase;letter-spacing:.1em'>{esc(k)}</td>"
-        f"<td style='padding:8px 12px;border-bottom:1px solid #eef;color:#0F172A;font-size:14px'>{esc(str(v))}</td></tr>"
-        for k, v in fields
-    )
-    message_block = ""
-    if lead.message:
-        message_block = (
-            "<h3 style='margin:24px 0 8px;color:#0F172A;font-size:14px;text-transform:uppercase;letter-spacing:.1em'>Message</h3>"
-            f"<p style='margin:0;color:#0F172A;font-size:14px;line-height:1.6;white-space:pre-wrap'>{esc(lead.message)}</p>"
-        )
-    return f"""
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#FAFAFF; padding:24px;">
-      <table role="presentation" style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #eef;border-radius:12px;overflow:hidden">
-        <tr>
-          <td style="background:linear-gradient(135deg,#0D4CB3,#196BF5);padding:20px 24px;color:#fff">
-            <div style="font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.14em;opacity:.7">New lead — RabbitPay</div>
-            <div style="font-weight:700;font-size:22px;margin-top:4px">{esc(lead.brand)} · {esc(lead.name)}</div>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:20px 12px">
-            <table role="presentation" style="width:100%;border-collapse:collapse">
-              {rows}
-            </table>
-            {message_block}
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:16px 24px;background:#FAFAFF;border-top:1px solid #eef;color:#64748B;font-size:12px">
-            Sent by rabbitpay.in landing page · reply to reach the lead directly.
-          </td>
-        </tr>
-      </table>
-    </div>
-    """
+    """Render the sales inbox email in the requested format."""
+    timestamp_str = lead.timestamp.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    return f"""<pre style="font-family: sans-serif; font-size: 14px; line-height: 1.5; color: #0F172A; white-space: pre-wrap; margin: 0; padding: 0;">Email:
+{html.escape(lead.email)}
+
+Phone:
+{html.escape(lead.phone or "")}
+
+Timestamp:
+{timestamp_str}</pre>"""
 
 
-async def _send_lead_email(lead: Lead) -> Optional[str]:
-    """Send the lead notification via the Emergent-managed email proxy."""
-    if not EMAIL_KEY:
-        logger.warning("EMERGENT_EMAIL_KEY missing — skipping send")
-        return None
+async def _send_via_resend(lead: Lead) -> Optional[str]:
+    """Send the lead notification via Resend."""
     payload = {
-        "to": [SALES_INBOX],
-        "subject": f"New RabbitPay lead — {lead.brand} ({lead.name})",
+        "from": EMAIL_FROM,
+        "to": [EMAIL_TO],
+        "subject": "New RabbitPay Demo Request",
+        "html": _lead_email_html(lead),
+        "reply_to": lead.email,
+    }
+    try:
+        async with httpx.AsyncClient(timeout=20) as http_client:
+            resp = await http_client.post(
+                "https://api.resend.com/emails",
+                headers={"Authorization": f"Bearer {RESEND_API_KEY}"},
+                json=payload,
+            )
+        resp.raise_for_status()
+        return resp.json().get("id")
+    except httpx.HTTPStatusError as e:
+        logger.error(f"Resend send failed: {e.response.status_code} {e.response.text}")
+        return None
+    except Exception as e:
+        logger.error(f"Resend send error: {e}")
+        return None
+
+
+async def _send_via_emergent(lead: Lead) -> Optional[str]:
+    """Send the lead notification via the Emergent-managed email proxy."""
+    payload = {
+        "to": [EMAIL_TO],
+        "subject": "New RabbitPay Demo Request",
         "html": _lead_email_html(lead),
         "from_name": EMAIL_FROM_NAME,
         "contact_email": lead.email,
@@ -186,21 +196,44 @@ async def _send_lead_email(lead: Lead) -> Optional[str]:
         return None
 
 
+async def _send_lead_email(lead: Lead) -> Optional[str]:
+    """Send the lead notification using whichever provider is configured."""
+    if RESEND_API_KEY:
+        return await _send_via_resend(lead)
+    if EMAIL_KEY:
+        return await _send_via_emergent(lead)
+    logger.warning("No email provider configured — skipping send")
+    return None
+
+
 @api_router.post("/leads")
 async def create_lead(input: LeadCreate):
     lead = Lead(**input.model_dump())
     doc = lead.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
-    try:
-        await db.leads.insert_one(doc)
-    except Exception as e:
-        logger.error(f"Lead insert failed: {e}")
-        raise HTTPException(status_code=500, detail="Could not save lead")
+
+    stored = False
+    if db is not None:
+        try:
+            await db.leads.insert_one(doc)
+            stored = True
+        except Exception as e:
+            logger.error(f"Lead insert failed: {e}")
 
     email_id = await _send_lead_email(lead)
+
+    # The request only fails if the lead was neither stored nor emailed — that way
+    # the form still succeeds when only one integration is configured.
+    if not stored and email_id is None:
+        raise HTTPException(
+            status_code=500,
+            detail="Lead could not be saved or emailed. Check MONGO_URL / EMERGENT_EMAIL_KEY.",
+        )
+
     return {
         "status": "ok",
         "id": lead.id,
+        "stored": stored,
         "email_sent": email_id is not None,
         "email_id": email_id,
     }
@@ -230,9 +263,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
-
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    client.close()
+    if client is not None:
+        client.close()

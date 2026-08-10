@@ -1,111 +1,98 @@
 "use client";
-import { ArrowRight, CheckCircle2, ShieldCheck, Zap, Sparkles, MapPin } from "lucide-react";
+import { CheckCircle2, MapPin, Sparkles } from "lucide-react";
 import { AuroraText } from "@/components/magic-ui/aurora-text";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
-import { ShimmerButton } from "@/components/magic-ui/shimmer-button";
-import { NumberTicker } from "@/components/magic-ui/number-ticker";
 import { RetroGrid } from "@/components/magic-ui/retro-grid";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import { IPhone15Pro } from "@/components/magic-ui/iphone-15-pro";
-import { BorderBeam } from "@/components/magic-ui/border-beam";
-import { RABBITPAY_ICON } from "@/context/LeadFormContext";
-import { openCalendly, trackEvent } from "@/lib/analytics";
+import { RABBITPAY_ICON, COD_KING_ICON } from "@/context/LeadFormContext";
+import { LeadCaptureCard } from "@/components/LeadCaptureCard";
 import { cn } from "@/lib/utils";
 
-/**
- * HERO
- * Keeps the existing structure, but aligns all accents to the RabbitPay blue system.
- */
 export function Hero() {
-  const onStartFree = () => {
-    trackEvent("cta_click", { location: "hero_primary", label: "Start free" });
-    openCalendly("hero_primary");
-  };
-
-  const onBookDemo = () => {
-    trackEvent("cta_click", { location: "hero_secondary", label: "Book a demo" });
-    openCalendly("hero_secondary");
-  };
-
   return (
     <section
       id="top"
       data-testid="hero-section"
-      className="relative isolate overflow-hidden pb-8 pt-28 md:pb-12 md:pt-32"
+      className="relative isolate overflow-hidden pb-10 pt-28 md:pb-14 md:pt-32"
     >
       <RetroGrid />
-      <DotPattern className="[mask-image:radial-gradient(600px_circle_at_center,white,transparent_75%)]" />
+      <DotPattern className="[mask-image:radial-gradient(620px_circle_at_center,white,transparent_75%)]" />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(25,107,245,0.22),transparent_68%)] blur-3xl"
+      />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <BlurFade delay={0.05}>
-              <p className="text-xs font-medium uppercase tracking-[0.24em] text-brand sm:text-sm">
-                Made in India - for Indian D2C
+              <p className="text-xs font-medium uppercase tracking-[0.28em] text-brand sm:text-sm">
+                Built for Indian D2C brands
               </p>
             </BlurFade>
 
             <BlurFade delay={0.15}>
-              <h1 className="mt-4 text-[40px] font-semibold leading-[1.02] tracking-tighter text-ink dark:text-white sm:text-[56px] lg:text-[64px]">
-                <span className="block">One-Click Checkout,</span>
+              <h1 className="mt-4 max-w-3xl text-[40px] font-semibold leading-[1.02] tracking-tighter text-ink dark:text-white sm:text-[56px] lg:text-[68px]">
+                <span className="block">1-Click Checkout,</span>
                 <AuroraText className="font-semibold">built in India.</AuroraText>
               </h1>
             </BlurFade>
 
             <BlurFade delay={0.28}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Higher conversions. Lower RTO. A checkout your Indian shoppers actually finish - with
+                Higher conversions. Lower RTO. A checkout your Indian shoppers actually finish with
                 prefilled addresses, UPI-first payments, and verified COD.
               </p>
             </BlurFade>
 
             <BlurFade delay={0.4}>
-              <div className="mt-7 flex flex-wrap items-center gap-3">
-                <ShimmerButton
-                  as="button"
-                  type="button"
-                  onClick={onStartFree}
-                  data-testid="hero-primary-cta"
-                >
-                  Start free
-                  <ArrowRight className="ml-2 inline h-4 w-4" />
-                </ShimmerButton>
-                <button
-                  type="button"
-                  onClick={onBookDemo}
-                  data-testid="hero-secondary-cta"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white/50 px-5 py-3 text-sm font-medium text-ink/80 backdrop-blur transition-colors hover:border-brand hover:text-brand dark:bg-white/5 dark:text-white/80"
-                >
-                  Book a demo
-                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                </button>
+              <div className="mt-8 flex flex-wrap gap-3 text-sm text-muted-foreground">
+                {["Zero setup fee", "Live in minutes", "Made in India"].map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-white/80 px-4 py-2 shadow-sm backdrop-blur dark:bg-white/5"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-brand" />
+                    {item}
+                  </span>
+                ))}
               </div>
             </BlurFade>
 
-            <BlurFade delay={0.55}>
-              <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                <li className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> Zero setup fee
-                </li>
-                <li className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> Live in minutes
-                </li>
-                <li className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-brand-accent" /> 1:1 support
-                </li>
-              </ul>
+            <BlurFade delay={0.45}>
+              <div className="mt-4 flex flex-wrap gap-2.5 text-xs text-[#6B7280]">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F3F4F6] px-3 py-1.5 font-medium dark:bg-white/5">
+                  <img
+                    src={COD_KING_ICON}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 rounded-[3px] object-contain"
+                  />
+                  Powered by COD King
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F3F4F6] px-3 py-1.5 font-medium dark:bg-white/5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-brand" />
+                  Trusted by Indian Shopify merchants
+                </span>
+              </div>
+            </BlurFade>
+
+            <BlurFade delay={0.5} className="mt-12">
+              <LeadCaptureCard source="hero_inline" testPrefix="hero-lead" />
             </BlurFade>
           </div>
 
           <BlurFade delay={0.35} className="lg:col-span-5">
-            <div className="relative mx-auto">
+            <div className="relative mx-auto max-w-[360px]">
               <div
                 aria-hidden="true"
-                className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_50%_30%,rgba(25,107,245,0.38),transparent_60%),radial-gradient(circle_at_70%_70%,rgba(74,140,250,0.18),transparent_55%)] blur-2xl"
+                className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_50%_30%,rgba(25,107,245,0.35),transparent_58%),radial-gradient(circle_at_70%_70%,rgba(74,140,250,0.16),transparent_52%)] blur-2xl"
               />
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -left-6 top-24 z-30 hidden items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur lg:flex dark:bg-neutral-900/95"
+                className="pointer-events-none absolute -left-6 top-20 z-30 hidden items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur lg:flex dark:bg-neutral-900/95"
               >
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white shadow-[0_10px_24px_rgba(25,107,245,0.24)]">
                   <MapPin className="h-4 w-4" />
@@ -114,9 +101,7 @@ export function Hero() {
                   <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Address prefilled
                   </p>
-                  <p className="text-xs font-semibold text-ink dark:text-white">
-                    3 fields · 220 ms
-                  </p>
+                  <p className="text-xs font-semibold text-ink dark:text-white">3 fields - 220 ms</p>
                 </div>
               </div>
               <div
@@ -128,11 +113,9 @@ export function Hero() {
                 </span>
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                    UPI · Paid
+                    UPI - Paid
                   </p>
-                  <p className="text-xs font-semibold text-ink dark:text-white">
-                    ₹1,001 · 2.4s
-                  </p>
+                  <p className="text-xs font-semibold text-ink dark:text-white">Rs 1,001 - 2.4s</p>
                 </div>
               </div>
 
@@ -144,50 +127,8 @@ export function Hero() {
             </div>
           </BlurFade>
         </div>
-
-        <BlurFade delay={0.6}>
-          <div className="relative mt-14 rounded-2xl border border-border bg-white/70 p-5 backdrop-blur dark:bg-white/[0.03] md:mt-16 sm:p-6">
-            <BorderBeam size={220} duration={12} colorFrom="#196BF5" colorTo="#4A8CFA" />
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-              <Stat icon={<Zap className="h-4 w-4" />} label="Conversion uplift" value={35} suffix="%" prefix="+" />
-              <Stat
-                icon={<ShieldCheck className="h-4 w-4" />}
-                label="Return-to-Origin"
-                value={28}
-                suffix="%"
-                prefix="−"
-                tone="accent"
-              />
-              <Stat icon={<CheckCircle2 className="h-4 w-4" />} label="Checkout time" value={3} suffix="s" prefix="<" />
-            </div>
-          </div>
-          <p className="mt-3 text-xs text-muted-foreground/80">
-            Illustrative benchmarks aggregated across pilot merchants - your mileage may vary.
-          </p>
-        </BlurFade>
       </div>
     </section>
-  );
-}
-
-function Stat({ icon, label, value, prefix, suffix, tone }) {
-  return (
-    <div className="flex items-center gap-4">
-      <span
-        className={cn(
-          "grid h-10 w-10 place-items-center rounded-xl border border-border bg-background",
-          tone === "accent" ? "text-brand-accent" : "text-brand",
-        )}
-      >
-        {icon}
-      </span>
-      <div>
-        <div className="text-3xl font-semibold tracking-tight text-ink dark:text-white sm:text-4xl">
-          <NumberTicker value={value} prefix={prefix} suffix={suffix} />
-        </div>
-        <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{label}</div>
-      </div>
-    </div>
   );
 }
 
@@ -216,7 +157,7 @@ function MockCheckoutUI() {
             <span className="text-[10px] font-semibold text-brand">Change</span>
           </div>
           <p className="mt-1 text-[11px] font-semibold text-ink dark:text-white">
-            Avijeet Dey · +91 62955 29286
+            Avijeet Dey - +91 62955 29286
           </p>
           <p className="text-[10px] leading-tight text-black/60 dark:text-white/60">
             56A Savithri Nilayam, Bengaluru - 560035
@@ -226,7 +167,7 @@ function MockCheckoutUI() {
         <div className="mt-3 rounded-lg border border-black/5 bg-white p-3 dark:border-white/10 dark:bg-neutral-800">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-medium text-ink dark:text-white">Male Vintage Watch</span>
-            <span className="text-[11px] font-semibold text-ink dark:text-white">₹1,089</span>
+            <span className="text-[11px] font-semibold text-ink dark:text-white">Rs 1,089</span>
           </div>
           <div className="mt-1 flex items-center justify-between">
             <span className="text-[11px] text-black/60 dark:text-white/60">Shipping</span>
@@ -234,7 +175,7 @@ function MockCheckoutUI() {
           </div>
           <div className="mt-2 flex items-center justify-between border-t border-black/5 pt-2 dark:border-white/10">
             <span className="text-[11px] font-semibold text-ink dark:text-white">Total</span>
-            <span className="text-sm font-bold text-ink dark:text-white">₹1,089</span>
+            <span className="text-sm font-bold text-ink dark:text-white">Rs 1,089</span>
           </div>
         </div>
 
@@ -249,7 +190,7 @@ function MockCheckoutUI() {
             </span>
           </div>
           <div className="mt-2 space-y-1.5">
-            <PayRow name="UPI · GPay / PhonePe" selected />
+            <PayRow name="UPI - GPay / PhonePe" selected />
             <PayRow name="Cards / NetBanking" />
             <PayRow name="Cash on Delivery - verified" />
           </div>
@@ -259,14 +200,14 @@ function MockCheckoutUI() {
           <span className="grid h-5 w-5 place-items-center rounded-full bg-brand text-white">
             <CheckCircle2 className="h-3 w-3" />
           </span>
-          <span className="text-[11px] font-medium text-brand">Payment successful · ₹1,001.88</span>
+          <span className="text-[11px] font-medium text-brand">Payment successful - Rs 1,001.88</span>
         </div>
 
         <button
           disabled
           className="mt-3 w-full rounded-lg bg-brand py-3 text-[12px] font-semibold text-white shadow-[0_18px_40px_rgba(25,107,245,0.24)]"
         >
-          Pay ₹1,001.88 via UPI
+          Pay Rs 1,001.88 via UPI
         </button>
       </div>
     </div>
