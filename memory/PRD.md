@@ -30,7 +30,7 @@ Build a single-page, production-grade marketing landing page for RabbitPay — a
 12. Footer — multi-column + Dot Pattern backdrop
 
 ## Copy locked (do not alter numbers)
-- Transaction Fee: Just 0.5% on successful prepaid orders only
+- Transaction Fee: 1% on successful prepaid orders, 0.3% on successful COD orders
 - COD Verification: FREE Forever
 - SMS OTP: ₹0.30/message
 - WhatsApp Utility: Starting at ₹0.40/message

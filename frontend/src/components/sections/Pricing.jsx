@@ -19,8 +19,10 @@ const PLANS = [
     key: "growth",
     name: "Growth",
     tagline: "For growing D2C brands",
-    price: "1.0%",
-    priceNote: "on successful prepaid",
+    price: "1%",
+    priceNote: "on successful prepaid orders",
+    secondaryPrice: "0.3%",
+    secondaryPriceNote: "on successful COD orders",
     highlight: true,
   },
   {
@@ -33,10 +35,21 @@ const PLANS = [
   },
 ];
 
-/** `true`/`false` render as a tick / dash; strings render as-is. */
+/**
+ * `true`/`false` render as a tick / dash; strings render as-is. An array of
+ * `{ value, note }` renders as stacked lines — used where one plan carries more
+ * than one rate (prepaid vs COD).
+ */
 const ROWS = [
   { feature: "Setup Fee", growth: "Free", enterprise: "Free" },
-  { feature: "Transaction Fee", growth: "1.0%", enterprise: "Custom" },
+  {
+    feature: "Transaction Fee",
+    growth: [
+      { value: "1%", note: "on successful prepaid orders" },
+      { value: "0.3%", note: "on successful COD orders" },
+    ],
+    enterprise: "Custom",
+  },
   { feature: "COD Verification", growth: "Included", enterprise: "Included" },
   { feature: "Customer Support", growth: "Standard", enterprise: "Dedicated" },
   { feature: "SLA", growth: false, enterprise: true },
@@ -46,6 +59,25 @@ const ROWS = [
 ];
 
 function Cell({ value, highlight }) {
+  if (Array.isArray(value)) {
+    return (
+      <span className="flex flex-col items-center gap-1.5">
+        {value.map((line) => (
+          <span key={line.value} className="flex flex-col items-center">
+            <span
+              className={cn(
+                "text-sm font-semibold sm:text-[15px]",
+                highlight ? "text-brand" : "text-ink dark:text-white",
+              )}
+            >
+              {line.value}
+            </span>
+            <span className="text-[11px] leading-tight text-muted-foreground">{line.note}</span>
+          </span>
+        ))}
+      </span>
+    );
+  }
   if (value === true) {
     return (
       <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand/10 text-brand">
@@ -94,8 +126,9 @@ export function Pricing() {
             Simple pricing that feels premium, not punitive.
           </h2>
           <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            One clear plan for growing brands, with an enterprise path for higher volume merchants
-            that need bespoke rollout support.
+            Two clear rates: 1% on successful prepaid orders and 0.3% on successful COD orders. One
+            plan for growing brands, with an enterprise path for higher volume merchants that need
+            bespoke rollout support.
           </p>
         </BlurFade>
 
@@ -154,6 +187,21 @@ export function Pricing() {
                         <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
                           {plan.priceNote}
                         </div>
+                        {plan.secondaryPrice ? (
+                          <>
+                            <div
+                              className={cn(
+                                "mt-2 text-xl font-semibold tracking-tighter sm:text-2xl",
+                                plan.highlight ? "text-brand" : "text-ink dark:text-white",
+                              )}
+                            >
+                              {plan.secondaryPrice}
+                            </div>
+                            <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                              {plan.secondaryPriceNote}
+                            </div>
+                          </>
+                        ) : null}
                       </th>
                     ))}
                   </tr>

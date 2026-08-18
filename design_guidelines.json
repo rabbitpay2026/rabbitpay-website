@@ -109,7 +109,7 @@
       "id": "pricing",
       "type": "Pricing",
       "components_to_use": ["Neon Gradient Card (Magic UI)", "Rainbow Button (Magic UI)"],
-      "instructions": "Clean exact copy: 'Transaction Fee: Just 0.5% on successful prepaid orders only', 'COD Verification: FREE Forever' (highlight FREE in success green #16A34A), 'SMS OTP: ₹0.30/message', 'WhatsApp Utility: Starting at ₹0.40/message', 'Zero Setup Fee, Dedicated 1:1 Support'. Wrap in Neon Gradient Card. CTA is Rainbow Button.",
+      "instructions": "Clean exact copy: 'Transaction Fee: 1% on successful prepaid orders and 0.3% on successful COD orders', 'COD Verification: FREE Forever' (highlight FREE in success green #16A34A), 'SMS OTP: ₹0.30/message', 'WhatsApp Utility: Starting at ₹0.40/message', 'Zero Setup Fee, Dedicated 1:1 Support'. Wrap in Neon Gradient Card. CTA is Rainbow Button.",
       "data_testid": "pricing"
     },
     {

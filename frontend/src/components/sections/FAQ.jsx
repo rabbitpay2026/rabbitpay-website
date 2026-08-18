@@ -25,7 +25,12 @@ const FAQS = [
   {
     question: "How much does RabbitPay cost?",
     answer:
-      "Choose the pricing that suits your business. Pay just 1% per successful prepaid order with no setup fee or monthly commitment, or opt for our monthly plans starting at just ₹999.",
+      "Choose the pricing that suits your business. Pay 1% on successful prepaid orders and 0.3% on successful COD orders, with no setup fee or monthly commitment, or opt for our monthly plans starting at just ₹999.",
+  },
+  {
+    question: "What does RabbitPay charge on COD orders?",
+    answer:
+      "RabbitPay charges 0.3% on successful COD orders. This is separate from the 1% on successful prepaid orders, so you only pay the rate that matches how the order was actually paid.",
   },
   {
     question: "Can I continue using my existing payment gateway?",
@@ -45,7 +50,7 @@ const FAQS = [
   {
     question: "Can I add a COD transaction fee?",
     answer:
-      "Yes. You can easily add a COD convenience fee to encourage prepaid orders and reduce unnecessary COD purchases.",
+      "Yes. You can easily add a COD convenience fee for your customers to encourage prepaid orders and reduce unnecessary COD purchases. This is separate from RabbitPay's own pricing, which is 1% on successful prepaid orders and 0.3% on successful COD orders.",
   },
   {
     question: "Does RabbitPay support part payment or split payment?",
