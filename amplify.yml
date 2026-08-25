@@ -1,0 +1,24 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # `npm ci` requires package-lock.json to be committed — it is.
+        - npm ci
+    build:
+      commands:
+        # NEXT_PUBLIC_* values are inlined here, at build time. Amplify injects
+        # the app's environment variables into this phase automatically, so they
+        # must be set in App settings -> Environment variables before a build.
+        - npm run build
+  artifacts:
+    # Next.js on Amplify (SSR/"WEB_COMPUTE") builds into .next — Amplify's
+    # Next.js adapter picks it up from there. Do not point this at `out/`;
+    # this app is not using `output: "export"`.
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*

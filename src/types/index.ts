@@ -1,0 +1,138 @@
+import type { LucideIcon } from "lucide-react";
+
+/* ---------------------------------- nav ---------------------------------- */
+
+export type NavLink = {
+  label: string;
+  href: string;
+  /** External links open in a new tab and are never marked active. */
+  external?: boolean;
+};
+
+/**
+ * A primary navbar entry: either a plain route or the Resources dropdown.
+ * Discriminated on `kind` so the Header can render an ordered list without
+ * knowing which position Resources occupies.
+ */
+export type PrimaryNavItem =
+  | { kind: "link"; label: string; href: string }
+  | { kind: "menu"; label: string; items: ResourceLink[] };
+
+/** An entry in the Resources dropdown. */
+export type ResourceLink = {
+  label: string;
+  description: string;
+  /** Absent when the destination does not exist yet — the item renders disabled. */
+  href?: string;
+  external?: boolean;
+  /** Shown as a "Coming soon" pill instead of a link. */
+  comingSoon?: boolean;
+  /** Component reference, not an element — keeps the data module JSX-free. */
+  Icon: LucideIcon;
+};
+
+export type FooterColumn = {
+  title: string;
+  links: NavLink[];
+};
+
+/* ---------------------------------- faq ---------------------------------- */
+
+export type FaqItem = {
+  /** Stable slug — also the accordion value and the JSON-LD key. */
+  id: string;
+  question: string;
+  answer: string;
+};
+
+export type FaqCategory = {
+  /** Stable slug used for the `#anchor` and the sidebar link. */
+  id: string;
+  title: string;
+  /** Navigational label describing the group — not a product claim. */
+  description: string;
+  items: FaqItem[];
+};
+
+/* -------------------------------- pricing -------------------------------- */
+
+export type PricingPlan = {
+  key: string;
+  name: string;
+  tagline: string;
+  price: string;
+  priceNote: string;
+  secondaryPrice?: string;
+  secondaryPriceNote?: string;
+  highlight: boolean;
+};
+
+/**
+ * A comparison-table cell. `true`/`false` render as a tick / dash, strings
+ * render as-is, and an array of lines renders stacked — used where one plan
+ * carries more than one rate (prepaid vs COD).
+ */
+export type PricingCellValue = boolean | string | { value: string; note: string }[];
+
+export type PricingRow = {
+  feature: string;
+  growth: PricingCellValue;
+  enterprise: PricingCellValue;
+};
+
+/* -------------------------------- metrics -------------------------------- */
+
+export type MetricItem = {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+  /** Component reference, not an element — keeps the data module JSX-free. */
+  Icon: LucideIcon;
+};
+
+/* -------------------------------- features ------------------------------- */
+
+export type FeatureVisualKey = "prefill" | "risk" | "upi";
+
+export type FeatureItem = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  bullets: string[];
+  Icon: LucideIcon;
+  visual: FeatureVisualKey;
+};
+
+/* ------------------------------ integrations ----------------------------- */
+
+export type PartnerLogo = {
+  name: string;
+  file: string;
+  /** Google Ads only ships a portrait icon — render it taller. */
+  mark?: boolean;
+  /** Decentro publishes no wordmark lockup — pair the mark with the name. */
+  withText?: boolean;
+};
+
+/* -------------------------------- clients -------------------------------- */
+
+export type ClientBrand = {
+  name: string;
+  url: string;
+  logo: string;
+};
+
+/* --------------------------------- leads --------------------------------- */
+
+export type LeadPayload = {
+  email: string;
+  phone: string;
+  source: string;
+};
+
+export type LeadResponse = {
+  status?: string;
+  email_sent?: boolean;
+  email_id?: string | null;
+};

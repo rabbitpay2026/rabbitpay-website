@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Ported from the React project's `src/index.css`.
+ * The Google Fonts @import was removed — Poppins / Plus Jakarta Sans / Geist Mono
+ * are now self-hosted via next/font in `src/lib/fonts.ts`, which exposes the same
+ * families through --font-poppins / --font-plus-jakarta-sans / --font-geist-mono.
+ */
+
+body {
+  margin: 0;
+  font-family: var(--font-poppins), var(--font-plus-jakarta-sans), "Inter",
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+
+code,
+pre,
+.font-mono {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  :root {
+    /* shadcn tokens re-mapped to RabbitPay palette */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 218 92% 53%; /* #196BF5 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 16% 47%; /* #64748B */
+    --accent: 217 95% 63%; /* #4A8CFA */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 218 92% 53%;
+    --radius: 0.75rem;
+
+    /* Rainbow palette (Magic UI Rainbow Button) */
+    --color-1: 218 92% 53%;
+    --color-2: 217 91% 60%;
+    --color-3: 210 100% 78%;
+    --color-4: 214 100% 88%;
+    --color-5: 220 92% 40%;
+  }
+
+  .dark {
+    --background: 224 71% 4%; /* #020617 */
+    --foreground: 210 40% 98%;
+    --card: 222 47% 6%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 218 92% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 12%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 95% 68%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 14%;
+    --input: 217 33% 14%;
+    --ring: 218 92% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background-color: rgba(25, 107, 245, 0.25);
+    color: inherit;
+  }
+}
+
+/* --- Magic UI custom utilities --- */
+@layer utilities {
+  /* Aurora Text gradient */
+  .aurora-text {
+    background: linear-gradient(
+      to right,
+      #196bf5 0%,
+      #4a8cfa 20%,
+      #0d4cb3 40%,
+      #8bb8ff 60%,
+      #196bf5 80%,
+      #020617 100%
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: aurora-flow 8s ease-in-out infinite;
+  }
+
+  /* Rainbow Button gradient utility (used inside RainbowButton) */
+  .rainbow-gradient {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--color-1)),
+      hsl(var(--color-5)),
+      hsl(var(--color-3)),
+      hsl(var(--color-4)),
+      hsl(var(--color-2))
+    );
+    background-size: 200%;
+  }
+
+  /* Retro grid */
+  .retro-grid-lines {
+    background-image: linear-gradient(
+        to right,
+        rgba(25, 107, 245, 0.12) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(25, 107, 245, 0.12) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .dark .retro-grid-lines {
+    background-image: linear-gradient(
+        to right,
+        rgba(59, 130, 246, 0.18) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(59, 130, 246, 0.18) 1px, transparent 1px);
+  }
+
+  /* Grain / noise overlay */
+  .noise-overlay {
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.3 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-repeat: repeat;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-text,
+    .rainbow-gradient,
+    .animate-marquee,
+    .animate-marquee-reverse,
+    .animate-shimmer,
+    .animate-rainbow,
+    .animate-border-beam,
+    .animate-meteor,
+    .animate-grid {
+      animation: none !important;
+    }
+  }
+}

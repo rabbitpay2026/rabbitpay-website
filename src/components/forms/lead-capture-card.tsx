@@ -1,0 +1,175 @@
+"use client";
+import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { SUPPORT_EMAIL } from "@/data/site";
+import { trackEvent } from "@/lib/analytics";
+import { submitLead } from "@/lib/leads";
+import { isValidEmail, isValidPhone, type LeadSource } from "@/lib/leads-schema";
+import { cn } from "@/lib/utils";
+
+/**
+ * Inline lead-capture card. Captures email + phone only — no name, no company,
+ * no message. It is NOT a modal and it NEVER opens Calendly: "Start Free" here
+ * submits the lead form, while the navbar's "Book a Demo" opens the scheduler.
+ * The two flows are deliberately independent.
+ *
+ * Markup, styling, copy and layout are unchanged from the React original; the
+ * only additions are the explicit form states the flow needs.
+ *
+ * States: idle -> submitting -> success | error (error returns to idle so the
+ * merchant can retry with their input intact).
+ */
+type FormState = "idle" | "submitting" | "success";
+
+export function LeadCaptureCard({
+  source = "hero_inline",
+  testPrefix = "hero-lead",
+  showHeading = true,
+  className,
+}: {
+  source?: LeadSource;
+  testPrefix?: string;
+  showHeading?: boolean;
+  className?: string;
+}) {
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [state, setState] = useState<FormState>("idle");
+
+  const busy = state === "submitting";
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Guard against double-submit from a fast second click or Enter key.
+    if (busy || state === "success") return;
+
+    if (!isValidEmail(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    if (!isValidPhone(phone)) {
+      toast.error("Please enter a valid 10-digit Indian mobile number.");
+      return;
+    }
+
+    setState("submitting");
+    const result = await submitLead({
+      email: email.trim(),
+      phone: phone.trim(),
+      source,
+    });
+
+    if (!result.ok) {
+      setState("idle"); // back to idle so the merchant can retry
+      toast.error(result.message, {
+        description: `You can also email us at ${SUPPORT_EMAIL}.`,
+      });
+      return;
+    }
+
+    trackEvent("lead_submit", { source });
+    setEmail("");
+    setPhone("");
+    setState("success");
+    toast.success("Thanks! Your details are on the way to the RabbitPay team.");
+  };
+
+  return (
+    <div
+      data-testid={`${testPrefix}-capture`}
+      data-state={state}
+      className={cn(
+        "w-full max-w-xl rounded-2xl border border-border bg-white/95 p-5 text-left shadow-[0_24px_60px_rgba(15,23,42,0.10)] backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/85",
+        className,
+      )}
+    >
+      {showHeading ? (
+        <p className="text-sm font-semibold text-ink dark:text-white">
+          Want to see RabbitPay in action?
+        </p>
+      ) : null}
+
+      {state === "success" ? (
+        <div
+          data-testid={`${testPrefix}-success`}
+          role="status"
+          aria-live="polite"
+          className={cn(
+            "flex items-center gap-3 rounded-xl border border-brand/15 bg-brand/5 px-4 py-3.5",
+            showHeading ? "mt-4" : "",
+          )}
+        >
+          <span className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-full bg-brand text-white shadow-[0_10px_24px_rgba(25,107,245,0.24)]">
+            <CheckCircle2 className="h-5 w-5" />
+          </span>
+          <p className="text-sm font-semibold text-ink dark:text-white">
+            Thank you! Our team will contact you shortly.
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={onSubmit} noValidate>
+          {showHeading ? (
+            <p className="mt-1 text-xs text-muted-foreground">
+              Drop your details and our team will reach out.
+            </p>
+          ) : null}
+
+          <div
+            className={cn(
+              "flex flex-col gap-3.5 sm:flex-row sm:gap-4",
+              showHeading ? "mt-4" : "",
+            )}
+          >
+            <input
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              required
+              disabled={busy}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email address"
+              aria-label="Email address"
+              data-testid={`${testPrefix}-email`}
+              className="h-11 w-full rounded-xl border border-border bg-white px-3.5 text-sm text-ink outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-70 dark:bg-neutral-950/60 dark:text-white"
+            />
+            <input
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              required
+              disabled={busy}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter mobile number"
+              aria-label="Mobile number"
+              data-testid={`${testPrefix}-phone`}
+              className="h-11 w-full rounded-xl border border-border bg-white px-3.5 text-sm text-ink outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-70 dark:bg-neutral-950/60 dark:text-white"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={busy}
+            aria-busy={busy}
+            data-testid={`${testPrefix}-submit`}
+            className="group mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(25,107,245,0.24)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_18px_34px_rgba(25,107,245,0.32)] active:translate-y-0 disabled:opacity-70 sm:w-auto"
+          >
+            {busy ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Sending...
+              </>
+            ) : (
+              <>
+                Start Free
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </>
+            )}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
