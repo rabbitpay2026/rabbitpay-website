@@ -7,9 +7,49 @@ frontend:
         - npm ci
     build:
       commands:
-        # NEXT_PUBLIC_* values are inlined here, at build time. Amplify injects
-        # the app's environment variables into this phase automatically, so they
-        # must be set in App settings -> Environment variables before a build.
+        # --- Make server-only variables reach the SERVER, not just the build ---
+        #
+        # This is the step whose absence breaks the contact form in production
+        # while localhost works.
+        #
+        # Amplify injects the app's environment variables into THIS build
+        # container. NEXT_PUBLIC_* values are fine that way: `next build` inlines
+        # them into the browser bundle right here, at build time.
+        #
+        # Server-only values are NOT fine that way. RESEND_API_KEY, EMAIL_TO and
+        # EMAIL_FROM are read by `process.env` inside /api/leads at REQUEST time,
+        # in the compute instance that serves the deployed site. That instance is
+        # a different process from this build container and does not inherit its
+        # environment, so `process.env.RESEND_API_KEY` is undefined there and the
+        # route answers 503 email_not_configured for every submission.
+        #
+        # Writing them to `.env.production` before `next build` fixes it: the file
+        # ships with the app and Next.js loads it into `process.env` when the
+        # server starts. Locally the same values come from `.env.local`, which is
+        # why local has always worked.
+        #
+        # The build fails loudly if a variable is missing, because a green deploy
+        # with a silently broken contact form is the worse outcome. Values are
+        # written to the file, never echoed into the build log.
+        - |
+          set -eu
+          : > .env.production
+          missing=""
+          for name in RESEND_API_KEY EMAIL_TO EMAIL_FROM; do
+            eval "value=\${$name:-}"
+            if [ -z "$value" ]; then
+              missing="$missing $name"
+            else
+              printf '%s=%s\n' "$name" "$value" >> .env.production
+            fi
+          done
+          if [ -n "$missing" ]; then
+            echo "FATAL: missing required environment variable(s):$missing" >&2
+            echo "Set them in Amplify -> App settings -> Environment variables," >&2
+            echo "make sure they apply to THIS branch, then redeploy." >&2
+            exit 1
+          fi
+          echo "Wrote .env.production for the server runtime (RESEND_API_KEY, EMAIL_TO, EMAIL_FROM; values not logged)."
         - npm run build
   artifacts:
     # Next.js on Amplify (SSR/"WEB_COMPUTE") builds into .next — Amplify's

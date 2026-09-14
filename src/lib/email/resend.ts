@@ -40,3 +40,31 @@ export function getEmailFrom(): string | null {
 export function isEmailConfigured() {
   return Boolean(getResend() && getEmailTo() && getEmailFrom());
 }
+
+/** The env vars the lead email needs. Order is the order we report them in. */
+export const REQUIRED_EMAIL_VARS = ["RESEND_API_KEY", "EMAIL_TO", "EMAIL_FROM"] as const;
+
+/**
+ * Names of the required variables that are missing or blank — names only, never
+ * values, so this is safe to log and safe to return to the browser.
+ *
+ * This exists because "email is not configured" is the one failure that looks
+ * identical to a provider outage from the outside, and on AWS Amplify it is the
+ * likely one: Amplify injects environment variables into the *build* container,
+ * and the server that runs this route only sees them if the build wrote them
+ * into `.env.production` first (see amplify.yml).
+ */
+export function missingEmailVars(): string[] {
+  return REQUIRED_EMAIL_VARS.filter((name) => !process.env[name]?.trim());
+}
+
+/**
+ * The sender's domain, e.g. "rabbitpay.ai". Not a secret — it is visible in the
+ * From header of every notification — and it is the fastest way to spot the
+ * other common misconfiguration: `onboarding@resend.dev` is Resend's shared
+ * sandbox sender, which may only deliver to the Resend account owner's own
+ * address. Any other recipient is rejected with a 403.
+ */
+export function getEmailFromDomain(): string | null {
+  return getEmailFrom()?.match(/@([^>\s]+)/)?.[1]?.toLowerCase() ?? null;
+}
