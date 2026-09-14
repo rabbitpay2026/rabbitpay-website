@@ -1,5 +1,7 @@
 "use client";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import type { FaqItem } from "@/types";
 
 /**
@@ -39,14 +41,67 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
             </AccordionPrimitive.Trigger>
           </AccordionPrimitive.Header>
 
-          <AccordionPrimitive.Content className="overflow-hidden [animation-duration:300ms] data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-            <p className="px-6 pb-6 text-[15px] leading-relaxed text-[#6B7280] sm:pr-16 sm:text-[16px]">
-              {faq.answer}
-            </p>
+          {/*
+            `forceMount` keeps the answer in the DOM at all times, hidden by
+            Radix's `hidden` attribute while collapsed rather than unmounted.
+            Without it the answers never reach the server-rendered HTML: a
+            crawler that does not execute JavaScript — which is most AI crawlers
+            — would see 35 questions and no answers, and the FAQPage structured
+            data would describe content absent from the page. Presence is still
+            driven by `data-state`, so the open/close animation is unchanged.
+          */}
+          <AccordionPrimitive.Content
+            forceMount
+            className="overflow-hidden [animation-duration:300ms] data-[state=closed]:h-0 data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+          >
+            <div className="px-6 pb-6 sm:pr-16">
+              <p className="text-[15px] leading-relaxed text-[#6B7280] sm:text-[16px]">
+                {faq.answer}
+              </p>
+              {faq.link ? <AnswerLink link={faq.link} /> : null}
+            </div>
           </AccordionPrimitive.Content>
         </AccordionPrimitive.Item>
       ))}
     </AccordionPrimitive.Root>
+  );
+}
+
+/**
+ * The optional "read more" link under an answer.
+ *
+ * Deliberately NOT part of `faq.answer`: the answer string is what the FAQPage
+ * JSON-LD reports, and that should stay plain prose. This is navigation, and it
+ * is what gives the FAQ real internal linking into /product, /pricing and
+ * /support rather than leaving every answer as a dead end.
+ *
+ * Internal hrefs use `next/link` for client navigation; the one external link
+ * (the docs subdomain) renders as a plain anchor with the usual rel guard.
+ */
+function AnswerLink({ link }: { link: NonNullable<FaqItem["link"]> }) {
+  const className =
+    "group/link mt-3.5 inline-flex items-center gap-1.5 text-[14px] font-semibold text-brand transition-colors hover:text-brand-deep";
+  const inner = (
+    <>
+      {link.label}
+      <ArrowRight
+        aria-hidden="true"
+        className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5"
+      />
+    </>
+  );
+
+  if (link.external) {
+    return (
+      <a href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <Link href={link.href} className={className}>
+      {inner}
+    </Link>
   );
 }
 

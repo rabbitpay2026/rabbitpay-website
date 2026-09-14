@@ -72,8 +72,11 @@ export const RESOURCES_ROUTES = RESOURCES_NAV.filter(
   (item) => item.href && !item.external,
 ).map((item) => item.href as string);
 
-/** Every internal route the site serves — used by `sitemap.ts`. */
-export const ROUTES = ["/", "/product", "/pricing", "/support", "/contact", "/faq"] as const;
+/*
+ * The list of public routes used to live here. It now lives in `data/pages.ts`
+ * as `PUBLIC_ROUTES`, alongside each page's title, description and summary, so
+ * the sitemap, llms.txt, page metadata and structured data all read one list.
+ */
 
 export const FOOTER_COLUMNS: FooterColumn[] = [
   {

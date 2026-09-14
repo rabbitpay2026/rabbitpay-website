@@ -6,8 +6,10 @@ import { Metrics } from "@/components/home/metrics";
 import { PoweredBy } from "@/components/home/powered-by";
 import { Features } from "@/components/product/features";
 import { Pricing } from "@/components/pricing/pricing";
+import { JsonLd } from "@/components/seo/json-ld";
 import { CustomerSupport } from "@/components/support/customer-support";
 import { HOMEPAGE_FAQS } from "@/data/faq";
+import { buildPageJsonLd } from "@/lib/json-ld";
 
 /**
  * RabbitPay landing page — the complete marketing page, in the same section
@@ -26,6 +28,14 @@ import { HOMEPAGE_FAQS } from "@/data/faq";
 export default function HomePage() {
   return (
     <>
+      {/*
+        The homepage's own WebPage node. The Organization and WebSite entities
+        it points at are emitted once in the root layout, and the FAQPage schema
+        belongs to /faq — the six-question preview below is a subset of that
+        page and is deliberately not marked up a second time here.
+      */}
+      <JsonLd data={buildPageJsonLd("/")} />
+
       <Hero />
       <Metrics />
       <LogoWall />
