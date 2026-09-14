@@ -1,13 +1,9 @@
 import { Pricing } from "@/components/pricing/pricing";
+import { JsonLd } from "@/components/seo/json-ld";
+import { buildPageJsonLd } from "@/lib/json-ld";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({
-  title: "Pricing",
-  description:
-    "1% on successful prepaid orders and 0.3% on successful COD orders. No setup fee, unlimited monthly volume, and an enterprise plan for 50k+ orders a month.",
-  path: "/pricing",
-  ogTitle: "RabbitPay Pricing - 1% prepaid, 0.3% COD, zero setup fee",
-});
+export const metadata = pageMetadata("/pricing");
 
 /**
  * `/pricing` — the complete pricing comparison table and CTAs, rendered from the
@@ -15,5 +11,10 @@ export const metadata = pageMetadata({
  * route, so it routes to the homepage one (see `cta/talk-to-sales-button.tsx`).
  */
 export default function PricingPage() {
-  return <Pricing asPage headingLevel="h1" />;
+  return (
+    <>
+      <JsonLd data={buildPageJsonLd("/pricing")} />
+      <Pricing asPage headingLevel="h1" />
+    </>
+  );
 }

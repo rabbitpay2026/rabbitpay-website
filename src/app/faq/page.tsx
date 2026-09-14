@@ -2,17 +2,12 @@ import { FaqCTA } from "@/components/faq/faq-cta";
 import { FaqCategory } from "@/components/faq/faq-category";
 import { FaqHero } from "@/components/faq/faq-hero";
 import { FaqSidebar } from "@/components/faq/faq-sidebar";
+import { JsonLd } from "@/components/seo/json-ld";
 import { FAQ_CATEGORIES } from "@/data/faq";
-import { buildFaqPageJsonLd } from "@/lib/json-ld";
+import { buildPageJsonLd } from "@/lib/json-ld";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({
-  title: "FAQ — Frequently Asked Questions",
-  description:
-    "Answers about RabbitPay setup, pricing, COD charges, payment gateways, address prefill, part payments, Shopify integration, settlements and security.",
-  path: "/faq",
-  ogTitle: "RabbitPay FAQ — Frequently Asked Questions",
-});
+export const metadata = pageMetadata("/faq");
 
 /**
  * `/faq` — the complete FAQ, in a documentation-style two-column layout.
@@ -24,21 +19,16 @@ export const metadata = pageMetadata({
  * components, and they sit at the leaves.
  */
 export default function FaqPage() {
-  const jsonLd = buildFaqPageJsonLd();
-
   return (
     <>
       {/*
-        Next's documented way to render JSON-LD. The payload is our own typed
-        object serialised with JSON.stringify — no user input reaches it — and
-        `<` is escaped so the string can never terminate the script element early.
+        One node typed as both WebPage and FAQPage, with every question built
+        from the same `FAQ_CATEGORIES` rendered below — so the schema and the
+        visible content cannot diverge, and one URL does not claim to be two
+        different page entities. Organization and WebSite live in the root
+        layout and are referenced here by `@id`.
       */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={buildPageJsonLd("/faq")} />
 
       <FaqHero />
 

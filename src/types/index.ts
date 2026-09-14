@@ -42,7 +42,17 @@ export type FaqItem = {
   /** Stable slug — also the accordion value and the JSON-LD key. */
   id: string;
   question: string;
+  /**
+   * The complete answer, as plain text. This exact string is what the page
+   * renders AND what goes into the FAQPage JSON-LD, so the two cannot diverge.
+   */
   answer: string;
+  /**
+   * Optional "read more" link rendered under the answer. Kept out of `answer`
+   * so the structured data stays plain text; the link is navigation, not part
+   * of the answer.
+   */
+  link?: { href: string; label: string; external?: boolean };
 };
 
 export type FaqCategory = {
@@ -135,4 +145,23 @@ export type LeadResponse = {
   status?: string;
   email_sent?: boolean;
   email_id?: string | null;
+};
+
+/* ------------------------------ structured data ------------------------------ */
+
+/** A single Schema.org entity inside a JSON-LD document. */
+export type JsonLdNode = {
+  "@type": string | string[];
+  [key: string]: unknown;
+};
+
+/**
+ * A Schema.org JSON-LD document — either a single entity or an `@graph` of
+ * related ones. Loose by design: the builders in `lib/json-ld.ts` are the typed
+ * surface, and this only constrains what `<JsonLd>` accepts to something
+ * serialisable that carries a `@context`.
+ */
+export type JsonLdDocument = {
+  "@context": "https://schema.org";
+  [key: string]: unknown;
 };
