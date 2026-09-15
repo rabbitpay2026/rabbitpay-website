@@ -1,6 +1,6 @@
 "use client";
 import type { ReactNode } from "react";
-import { openCalendly } from "@/lib/calendly";
+import { openCalendly, type SchedulerIntent } from "@/lib/calendly";
 
 /**
  * The scheduling CTA — "Book a Demo" in the navbar and FAQ page, "Start Free"
@@ -19,13 +19,21 @@ import { openCalendly } from "@/lib/calendly";
  */
 export function BookDemoButton({
   location,
+  intent,
   className,
   children,
   testId,
   onBeforeOpen,
 }: {
-  /** Analytics label recorded on the existing `cta_click` event. */
+  /** Analytics label for where the click came from. */
   location: string;
+  /**
+   * Which offer this instance presents — required rather than defaulted
+   * because this one component renders both "Book a Demo" and "Start Free",
+   * and a default would silently mislabel whichever call site forgot it. It
+   * decides the event name: `demo_click` or `start_free_click`.
+   */
+  intent: SchedulerIntent;
   className?: string;
   children: ReactNode;
   testId?: string;
@@ -40,7 +48,7 @@ export function BookDemoButton({
       onClick={() => {
         onBeforeOpen?.();
         // Fire-and-forget: openCalendly handles its own failures and never throws.
-        void openCalendly(location);
+        void openCalendly(location, intent);
       }}
     >
       {children}

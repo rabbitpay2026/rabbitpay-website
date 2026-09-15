@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { DEMO_SECTION_ID } from "@/data/anchors";
-import { trackEvent } from "@/lib/analytics";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 /**
  * "Talk to Sales" — ported from the React Pricing section, where it smooth-scrolled
@@ -31,7 +31,7 @@ export function TalkToSalesButton({
       className={className}
       onClick={(e) => {
         e.preventDefault();
-        trackEvent("cta_click", { location, label: "Talk to Sales" });
+        trackEvent(ANALYTICS_EVENTS.TALK_TO_SALES_CLICK, { location });
         const target = document.getElementById(DEMO_SECTION_ID);
         if (target) {
           target.scrollIntoView({ behavior: "smooth", block: "center" });

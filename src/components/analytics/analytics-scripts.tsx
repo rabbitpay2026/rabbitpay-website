@@ -1,6 +1,10 @@
 import Script from "next/script";
-import { PLAUSIBLE_DOMAIN, POSTHOG_API_HOST, POSTHOG_KEY } from "@/data/analytics-config";
-import { GA4_ID } from "@/lib/analytics";
+import {
+  GA_MEASUREMENT_ID,
+  PLAUSIBLE_DOMAIN,
+  POSTHOG_API_HOST,
+  POSTHOG_KEY,
+} from "@/data/analytics-config";
 
 /**
  * Third-party analytics loaders, migrated from the inline <script> tags the
@@ -39,16 +43,34 @@ export function AnalyticsScripts() {
         </Script>
       ) : null}
 
-      {/* GA4 — optional, stayed inert on the React site because no ID was set. */}
-      {GA4_ID ? (
+      {/*
+        GA4 — the one and only initialisation of gtag.js on this site.
+
+        There is no Google Tag Manager container and no second `config` call
+        anywhere; route-change page views are sent as explicit `page_view`
+        events by `route-analytics.tsx`, never by a repeated `config`. A second
+        `config` for the same measurement ID is the usual way a Next.js site
+        ends up double-counting every navigation, because `config` sends a page
+        view of its own each time it runs.
+
+        `afterInteractive` so the tag loads after hydration: analytics must not
+        sit on the critical path, and nothing on the page waits for it. Events
+        fired before the script finishes downloading are not lost — the inline
+        snippet defines `dataLayer` and `gtag` synchronously, so calls queue and
+        flush once gtag.js arrives.
+
+        `anonymize_ip` is carried over from the original snippet. It is a no-op
+        on GA4 (which always truncates IPs) and harmless to keep.
+      */}
+      {GA_MEASUREMENT_ID ? (
         <>
           <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             strategy="afterInteractive"
           />
           <Script id="ga4-init" strategy="afterInteractive">
             {`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag("js", new Date());gtag("config", ${JSON.stringify(
-              GA4_ID,
+              GA_MEASUREMENT_ID,
             )}, { anonymize_ip: true });`}
           </Script>
         </>

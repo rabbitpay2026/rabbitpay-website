@@ -42,6 +42,7 @@ export function FaqCTA() {
               <div className="mt-8 flex justify-center">
                 <BookDemoButton
                   location="faq_book_demo"
+                  intent="demo"
                   testId="faq-cta-demo"
                   className="inline-flex w-full items-center justify-center rounded-full bg-white px-7 py-3.5 text-base font-semibold text-brand shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition-all hover:-translate-y-0.5 active:translate-y-0 sm:w-auto"
                 >
