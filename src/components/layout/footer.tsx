@@ -63,7 +63,9 @@ export function Footer() {
                 <ul className="mt-4 space-y-2.5">
                   {col.links.map((link) => (
                     <li key={link.label}>
-                      {link.external ? (
+                      {/* `proxied` is internal but not rendered by this app,
+                          so it needs a document load — see `NavLink.proxied`. */}
+                      {link.external || link.proxied ? (
                         <a
                           href={link.href}
                           className="text-sm text-muted-foreground transition-colors hover:text-brand"

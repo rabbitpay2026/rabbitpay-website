@@ -7,6 +7,23 @@ export type NavLink = {
   href: string;
   /** External links open in a new tab and are never marked active. */
   external?: boolean;
+  /**
+   * Served from this origin, but by an application other than this one — the
+   * proxied documentation under `/documentation`.
+   *
+   * Still an internal link in every way a visitor can see: same tab, no
+   * `rel="noopener"`, no external-link affordance. What it changes is how the
+   * navigation happens. Next's `<Link>` treats a same-origin path as one of its
+   * own routes and tries a client-side transition, which means fetching an RSC
+   * payload for it — and the payload that comes back belongs to Mintlify's
+   * build, referencing module ids this app does not have. The router recovers
+   * by falling back to a document load, so the visitor still arrives, but the
+   * failed attempt costs a round trip and logs an error.
+   *
+   * A plain anchor asks for the document in the first place, which is the
+   * correct thing for a page this app does not render.
+   */
+  proxied?: boolean;
 };
 
 /**
@@ -25,6 +42,8 @@ export type ResourceLink = {
   /** Absent when the destination does not exist yet — the item renders disabled. */
   href?: string;
   external?: boolean;
+  /** Same-origin but not this app — see `NavLink.proxied`. */
+  proxied?: boolean;
   /** Shown as a "Coming soon" pill instead of a link. */
   comingSoon?: boolean;
   /** Component reference, not an element — keeps the data module JSX-free. */
@@ -52,7 +71,7 @@ export type FaqItem = {
    * so the structured data stays plain text; the link is navigation, not part
    * of the answer.
    */
-  link?: { href: string; label: string; external?: boolean };
+  link?: { href: string; label: string; external?: boolean; proxied?: boolean };
 };
 
 export type FaqCategory = {

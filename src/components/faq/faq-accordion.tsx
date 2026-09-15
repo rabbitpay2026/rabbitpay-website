@@ -91,9 +91,16 @@ function AnswerLink({ link }: { link: NonNullable<FaqItem["link"]> }) {
     </>
   );
 
-  if (link.external) {
+  // `proxied` is internal but not rendered by this app, so it needs a document
+  // load rather than a client-side transition — see `NavLink.proxied`.
+  if (link.external || link.proxied) {
     return (
-      <a href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
+      <a
+        href={link.href}
+        target={link.external ? "_blank" : undefined}
+        rel={link.external ? "noopener noreferrer" : undefined}
+        className={className}
+      >
         {inner}
       </a>
     );

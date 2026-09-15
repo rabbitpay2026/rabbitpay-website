@@ -214,14 +214,17 @@ export function ResourceRow({
     );
   }
 
-  if (item.external) {
+  // `proxied` is an internal destination this app does not render — same tab,
+  // no `rel`, but a document load rather than a client-side transition. See
+  // `NavLink.proxied`.
+  if (item.external || item.proxied) {
     return (
       <a
         ref={registerRef}
         role="menuitem"
         href={item.href}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={item.external ? "_blank" : undefined}
+        rel={item.external ? "noopener noreferrer" : undefined}
         onClick={onNavigate}
         data-testid={`resource-${item.label.toLowerCase()}`}
         className={cn(rowClass, "hover:bg-secondary focus-visible:bg-secondary")}

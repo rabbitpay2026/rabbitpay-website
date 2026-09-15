@@ -347,12 +347,12 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         // DERIVED — source: `data/navigation.ts` RESOURCES_NAV, which links
-        // docs.rabbitpay.ai from the Resources menu in the site header.
+        // /documentation from the Resources menu in the site header.
         id: "documentation",
         question: "Is there documentation for setting up and configuring RabbitPay?",
         answer:
-          "Yes. Setup and configuration documentation is published at docs.rabbitpay.ai, linked from the Resources menu in the site header. It sits on its own subdomain, separate from this marketing site.",
-        link: { href: "https://docs.rabbitpay.ai", label: "Open the documentation", external: true },
+          "Yes. Setup and configuration documentation is published at rabbitpay.ai/documentation, linked from the Resources menu in the site header. It covers getting started, integrations and troubleshooting.",
+        link: { href: "/documentation", label: "Open the documentation", proxied: true },
       },
       {
         // DERIVED — source: the Enterprise plan ("Custom", volume-based) and the

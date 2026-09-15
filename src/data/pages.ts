@@ -13,9 +13,18 @@
  *
  * Only routes that exist and are meant to be indexed belong here. Deliberately
  * excluded: `/api/leads` (a POST endpoint), the 404 page, the `mailto:` links in
- * the footer, `docs.rabbitpay.ai` (a different host — linked from llms.txt as an
- * external resource), and `/blog`, which does not exist and renders in the nav
- * as a disabled "Coming soon" item.
+ * the footer, and `/blog`, which does not exist and renders in the nav as a
+ * disabled "Coming soon" item.
+ *
+ * `/documentation` is excluded too, for a different reason. It is served from
+ * this domain rather than linked away — `app/documentation` proxies the
+ * Mintlify deployment — but the pages under it are authored and published
+ * elsewhere, so this registry does not know their titles, descriptions or even
+ * how many there are. Listing only the front page here would put one URL in the
+ * sitemap and give every page beneath it a `<title>` from this app instead of
+ * its own. The documentation ships its own sitemap at
+ * `/documentation/sitemap.xml`, which is proxied and address-translated like
+ * everything else under that path, and llms.txt points crawlers at it.
  */
 
 export type PublicPage = {
