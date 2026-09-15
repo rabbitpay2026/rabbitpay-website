@@ -33,10 +33,18 @@ export const RESOURCES_NAV: ResourceLink[] = [
     Icon: HelpCircle,
   },
   {
+    /*
+      Served from this origin rather than linked away. The content is still the
+      Mintlify deployment the writers publish to — `app/documentation` proxies
+      this path straight to it — but the address is ours, so a click is an
+      internal link: no `external` flag, no new tab, no `rel="noopener"`, and
+      the row lights up as active like every other internal destination through
+      `RESOURCES_ROUTES` below.
+    */
     label: "Docs",
     description: "Set up and configure RabbitPay.",
-    href: "https://docs.rabbitpay.ai",
-    external: true,
+    href: "/documentation",
+    proxied: true,
     Icon: FileText,
   },
   {
@@ -89,7 +97,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "Pricing", href: "/pricing" },
       { label: "Support", href: "/support" },
       { label: "FAQ", href: "/faq" },
-      { label: "Docs", href: "https://docs.rabbitpay.ai", external: true },
+      { label: "Docs", href: "/documentation", proxied: true },
     ],
   },
   {
