@@ -36,6 +36,12 @@ export const metadata: Metadata = {
   description: home.description,
   applicationName: SITE_NAME,
   alternates: { canonical: "/" },
+  // Google Search Console ownership proof. Renders as
+  // <meta name="google-site-verification"> in <head>. Google re-checks it
+  // periodically, so removing it un-verifies the property.
+  verification: {
+    google: "VR0MMpEFyK0CdWo1gZHSUsOTnssZdE1U1MCVJDzz0HU",
+  },
   icons: {
     icon: [{ url: RABBITPAY_ICON, type: "image/svg+xml" }],
     apple: [{ url: RABBITPAY_ICON }],
