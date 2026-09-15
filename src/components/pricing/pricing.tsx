@@ -158,6 +158,7 @@ export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {})
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <BookDemoButton
                 location="pricing_start_free"
+                intent="start_free"
                 testId="pricing-primary-cta"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-7 py-3.5 text-base font-semibold text-white shadow-[0_18px_40px_rgba(25,107,245,0.28)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_22px_46px_rgba(25,107,245,0.36)] active:translate-y-0 sm:w-auto"
               >

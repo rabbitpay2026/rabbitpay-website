@@ -13,9 +13,26 @@
  * fallback is invented.
  */
 
-import { trackEvent } from "@/lib/analytics";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 export const CALENDLY_URL = (process.env.NEXT_PUBLIC_CALENDLY_URL ?? "").trim();
+
+/**
+ * Which CTA opened the scheduler.
+ *
+ * The same button component serves two different offers — "Start Free" under
+ * the pricing table, "Book a Demo" in the header and on the FAQ page — and both
+ * open this same popup. Before this existed, every one of them reported itself
+ * as "Start Free", so three quarters of the scheduling CTAs were recorded as
+ * something the visitor never clicked. The caller now states which it is, and
+ * the event name follows from it.
+ */
+export type SchedulerIntent = "start_free" | "demo";
+
+const INTENT_EVENT = {
+  start_free: ANALYTICS_EVENTS.START_FREE_CLICK,
+  demo: ANALYTICS_EVENTS.DEMO_CLICK,
+} as const;
 
 const WIDGET_JS = "https://assets.calendly.com/assets/external/widget.js";
 const WIDGET_CSS = "https://assets.calendly.com/assets/external/widget.css";
@@ -73,12 +90,25 @@ function loadWidget(): Promise<void> {
 /**
  * Open the Calendly scheduling popup as an overlay on the CURRENT page.
  * Never redirects and never opens a new tab.
+ *
+ * Two events, and the distinction between them is the useful part. The click
+ * event fires unconditionally, because a click is a click whether or not the
+ * widget then loads. `scheduler_open` fires only once the overlay has actually
+ * rendered, so the gap between the two counts is exactly the number of visitors
+ * who asked for the scheduler and did not get it — a missing
+ * `NEXT_PUBLIC_CALENDLY_URL`, a blocked third-party script, a failed network.
+ * Firing both from the same place would make that failure invisible.
+ *
  * @param location analytics label for where the click came from.
+ * @param intent which CTA this was — decides the click event's name.
  * @returns true if the popup opened, false if no URL is configured.
  */
-export async function openCalendly(location?: string): Promise<boolean> {
+export async function openCalendly(
+  location?: string,
+  intent: SchedulerIntent = "demo",
+): Promise<boolean> {
   if (location) {
-    trackEvent("cta_click", { location, label: "Start Free" });
+    trackEvent(INTENT_EVENT[intent], { location });
   }
   if (!CALENDLY_URL) {
     // Loud, actionable message instead of a button that silently does nothing.
@@ -92,6 +122,7 @@ export async function openCalendly(location?: string): Promise<boolean> {
     await loadWidget();
     if (typeof window.Calendly?.initPopupWidget === "function") {
       window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      trackEvent(ANALYTICS_EVENTS.SCHEDULER_OPEN, { location: location ?? "", intent });
       return true;
     }
   } catch {

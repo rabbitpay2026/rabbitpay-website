@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SUPPORT_EMAIL } from "@/data/site";
-import { trackEvent } from "@/lib/analytics";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 import { submitLead } from "@/lib/leads";
 import {
   MAX_MONTHLY_GMV_LENGTH,
@@ -91,7 +91,18 @@ export function LeadCaptureCard({
       return;
     }
 
-    trackEvent("lead_submit", { source });
+    /*
+      Fired here, after /api/leads has accepted the lead — not in the submit
+      handler's first line. A submit that fails validation or that the API
+      rejects is not a conversion, and counting it as one would make this event
+      useless as a conversion in GA4. The early returns above leave without
+      reporting anything, which is correct: the merchant is still on the form.
+
+      `source` distinguishes the three places this same form appears
+      (hero_inline, demo_cta, contact_page), so one event name still answers
+      "which form did this come from".
+    */
+    trackEvent(ANALYTICS_EVENTS.DEMO_FORM_SUBMIT, { source });
     setEmail("");
     setPhone("");
     setStoreUrl("");
