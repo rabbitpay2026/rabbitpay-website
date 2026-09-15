@@ -26,9 +26,21 @@ function escapeHtml(value: string) {
 export type LeadNotification = {
   email: string;
   phone: string;
+  storeUrl: string;
+  /** Absent when the merchant left it blank — rendered as "Not provided". */
+  monthlyGmv?: string;
   source: LeadSource;
   submittedAt: Date;
 };
+
+/**
+ * What to print for the one optional field.
+ *
+ * Spelled out rather than left blank so the reader can tell "the merchant
+ * skipped this" from "the field broke on the way here" — an empty line under a
+ * heading looks like a bug and invites someone to go and check.
+ */
+const NOT_PROVIDED = "Not provided";
 
 /**
  * Fixed subject line, identical to the FastAPI and PHP handlers this replaces —
@@ -40,6 +52,8 @@ export const LEAD_NOTIFICATION_SUBJECT = "New RabbitPay Demo Request";
 export function renderLeadNotificationHtml({
   email,
   phone,
+  storeUrl,
+  monthlyGmv,
   source,
   submittedAt,
 }: LeadNotification) {
@@ -52,6 +66,12 @@ export function renderLeadNotificationHtml({
     "",
     "Phone:",
     escapeHtml(phone),
+    "",
+    "Store URL:",
+    escapeHtml(storeUrl),
+    "",
+    "Monthly GMV:",
+    escapeHtml(monthlyGmv ?? NOT_PROVIDED),
     "",
     "Source:",
     escapeHtml(LEAD_SOURCE_LABELS[source]),
@@ -67,6 +87,8 @@ export function renderLeadNotificationHtml({
 export function renderLeadNotificationText({
   email,
   phone,
+  storeUrl,
+  monthlyGmv,
   source,
   submittedAt,
 }: LeadNotification) {
@@ -77,6 +99,10 @@ export function renderLeadNotificationText({
     `Email:\n${email}`,
     "",
     `Phone:\n${phone}`,
+    "",
+    `Store URL:\n${storeUrl}`,
+    "",
+    `Monthly GMV:\n${monthlyGmv ?? NOT_PROVIDED}`,
     "",
     `Source:\n${LEAD_SOURCE_LABELS[source]}`,
     "",
