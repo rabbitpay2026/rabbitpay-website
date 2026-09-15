@@ -5,7 +5,14 @@ import { toast } from "sonner";
 import { SUPPORT_EMAIL } from "@/data/site";
 import { trackEvent } from "@/lib/analytics";
 import { submitLead } from "@/lib/leads";
-import { isValidEmail, isValidPhone, type LeadSource } from "@/lib/leads-schema";
+import {
+  MAX_MONTHLY_GMV_LENGTH,
+  MAX_STORE_URL_LENGTH,
+  isValidEmail,
+  isValidPhone,
+  isValidStoreUrl,
+  type LeadSource,
+} from "@/lib/leads-schema";
 import { cn } from "@/lib/utils";
 
 /**
@@ -35,6 +42,8 @@ export function LeadCaptureCard({
 }) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [storeUrl, setStoreUrl] = useState("");
+  const [monthlyGmv, setMonthlyGmv] = useState("");
   const [state, setState] = useState<FormState>("idle");
 
   const busy = state === "submitting";
@@ -52,12 +61,26 @@ export function LeadCaptureCard({
       toast.error("Please enter a valid 10-digit Indian mobile number.");
       return;
     }
+    if (!isValidStoreUrl(storeUrl)) {
+      toast.error("Please enter your store URL (for example, mystore.com).");
+      return;
+    }
+    /*
+      Monthly GMV is deliberately absent from this list. It is optional, so the
+      only way it can be wrong is by being too long — and `maxLength` on the
+      input already makes that untypeable. The server still re-checks it; what
+      it must never do is block a merchant who simply left it blank.
+    */
 
     setState("submitting");
+    const trimmedGmv = monthlyGmv.trim();
     const result = await submitLead({
       email: email.trim(),
       phone: phone.trim(),
+      storeUrl: storeUrl.trim(),
       source,
+      // Omitted rather than sent as "" so "not provided" travels as one thing.
+      ...(trimmedGmv ? { monthlyGmv: trimmedGmv } : {}),
     });
 
     if (!result.ok) {
@@ -71,6 +94,8 @@ export function LeadCaptureCard({
     trackEvent("lead_submit", { source });
     setEmail("");
     setPhone("");
+    setStoreUrl("");
+    setMonthlyGmv("");
     setState("success");
     toast.success("Thanks! Your details are on the way to the RabbitPay team.");
   };
@@ -145,6 +170,48 @@ export function LeadCaptureCard({
               placeholder="Enter mobile number"
               aria-label="Mobile number"
               data-testid={`${testPrefix}-phone`}
+              className="h-11 w-full rounded-xl border border-border bg-white px-3.5 text-sm text-ink outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-70 dark:bg-neutral-950/60 dark:text-white"
+            />
+          </div>
+
+          {/*
+            Store URL + Monthly GMV, in a second row that repeats the first
+            row's classes exactly — same heights, same gaps, same two-up split
+            on desktop — so the card keeps its existing rhythm and nothing
+            above it moves.
+          */}
+          <div className="mt-3.5 flex flex-col gap-3.5 sm:mt-4 sm:flex-row sm:gap-4">
+            {/*
+              `type="text"`, not `type="url"`. A url input makes the browser
+              demand a scheme, so a merchant typing "mystore.com" would be
+              stopped by a native bubble before our own, more forgiving check
+              ever ran. `inputMode="url"` still gets the right mobile keyboard.
+            */}
+            <input
+              type="text"
+              inputMode="url"
+              autoComplete="url"
+              required
+              maxLength={MAX_STORE_URL_LENGTH}
+              disabled={busy}
+              value={storeUrl}
+              onChange={(e) => setStoreUrl(e.target.value)}
+              placeholder="Enter store URL"
+              aria-label="Store URL"
+              data-testid={`${testPrefix}-store-url`}
+              className="h-11 w-full rounded-xl border border-border bg-white px-3.5 text-sm text-ink outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-70 dark:bg-neutral-950/60 dark:text-white"
+            />
+            <input
+              type="text"
+              inputMode="text"
+              autoComplete="off"
+              maxLength={MAX_MONTHLY_GMV_LENGTH}
+              disabled={busy}
+              value={monthlyGmv}
+              onChange={(e) => setMonthlyGmv(e.target.value)}
+              placeholder="Monthly GMV (optional)"
+              aria-label="Monthly GMV (optional)"
+              data-testid={`${testPrefix}-monthly-gmv`}
               className="h-11 w-full rounded-xl border border-border bg-white px-3.5 text-sm text-ink outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-70 dark:bg-neutral-950/60 dark:text-white"
             />
           </div>

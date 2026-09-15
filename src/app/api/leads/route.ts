@@ -24,7 +24,7 @@ import { REQUEST_RULE, SEND_RULE, checkRateLimit } from "@/lib/rate-limit";
  *
  * Contract — matches the FastAPI / PHP handlers this replaces, so the browser
  * client reads the same fields it always did:
- *   POST { email, phone, source }
+ *   POST { email, phone, storeUrl, source, monthlyGmv? }
  *     200 { status: "ok",    email_sent: true,  email_id, success: true }
  *     400 { status: "error", email_sent: false, error, code: "validation_failed" }
  *     429 { status: "error", email_sent: false, error, code: "rate_limited" }
@@ -51,7 +51,10 @@ export const runtime = "nodejs";
 // Never cache a mutation.
 export const dynamic = "force-dynamic";
 
-/** Body cap — the payload is three short strings; anything larger is abuse. */
+/**
+ * Body cap — the payload is a handful of short strings (the longest, storeUrl,
+ * is capped at 200 chars by the schema); anything larger is abuse.
+ */
 const MAX_BODY_BYTES = 4 * 1024;
 
 function clientIp(request: NextRequest): string {
