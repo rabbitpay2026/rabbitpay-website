@@ -53,9 +53,22 @@ export function AnalyticsScripts() {
         ends up double-counting every navigation, because `config` sends a page
         view of its own each time it runs.
 
-        `afterInteractive` so the tag loads after hydration: analytics must not
-        sit on the critical path, and nothing on the page waits for it. Events
-        fired before the script finishes downloading are not lost — the inline
+        `beforeInteractive` so the tag is rendered into `<head>`. Next injects
+        these two into the head of the server-rendered HTML regardless of where
+        the component sits in the tree, which is the App Router way to satisfy
+        Google's "put the Google tag in the head" requirement — the placement
+        the previous site-verification attempt failed on. It also requires the
+        component to be reached from the root layout, which it is.
+
+        This is the one deliberate cost in the file: the tag now sits on the
+        critical path rather than loading after hydration. Execution still does
+        not block hydration, and the alternative is a tag Google will not
+        verify.
+
+        Order matters and is preserved: `beforeInteractive` scripts run in the
+        order they appear, so gtag.js is fetched first and the inline snippet
+        below configures it — the same sequence as Google's own snippet. Events
+        fired before the download finishes are not lost either, because that
         snippet defines `dataLayer` and `gtag` synchronously, so calls queue and
         flush once gtag.js arrives.
 
@@ -64,11 +77,21 @@ export function AnalyticsScripts() {
       */}
       {GA_MEASUREMENT_ID ? (
         <>
+          {/*
+            The two disables below silence `no-before-interactive-script-outside-
+            document`, which is a Pages Router rule: it wants `beforeInteractive`
+            in `pages/_document.js`, a file the App Router does not have. The
+            App Router's documented home for these is the root layout, which is
+            where this component renders, so the rule is reporting a file that
+            cannot exist here rather than a real problem.
+          */}
+          {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
+            strategy="beforeInteractive"
           />
-          <Script id="ga4-init" strategy="afterInteractive">
+          {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+          <Script id="ga4-init" strategy="beforeInteractive">
             {`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag("js", new Date());gtag("config", ${JSON.stringify(
               GA_MEASUREMENT_ID,
             )}, { anonymize_ip: true });`}
