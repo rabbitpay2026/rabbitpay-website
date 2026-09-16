@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { BookDemoButton } from "@/components/cta/book-demo-button";
 import { BrandLockup } from "@/components/layout/brand-lockup";
 import { ResourceRow, ResourcesMenu } from "@/components/navigation/resources-menu";
 import { PRIMARY_NAV, RESOURCES_ROUTES } from "@/data/navigation";
+import { DEMO_STORE_URL } from "@/data/site";
 import { cn } from "@/lib/utils";
 import type { ResourceLink } from "@/types";
 
@@ -16,7 +17,7 @@ import type { ResourceLink } from "@/types";
  *
  * Navbar order comes from `PRIMARY_NAV` in `data/navigation.ts`:
  *
- *   Product | Pricing | Support | Resources ▾ | Contact | Book a Demo
+ *   Product | Pricing | Support | Resources ▾ | Contact | View Demo Store | Request a Demo
  *
  * Desktop and mobile iterate that same array — Resources is a floating dropdown
  * on desktop and a collapsible submenu on mobile, both fed by `RESOURCES_NAV`.
@@ -92,13 +93,23 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            href={DEMO_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="header-demo-store"
+            className="hidden items-center justify-center gap-1.5 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand dark:text-white xl:inline-flex"
+          >
+            View Demo Store
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </a>
           <BookDemoButton
             location="header_book_demo"
             intent="demo"
             testId="header-cta"
             className="group hidden items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(25,107,245,0.22)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_18px_34px_rgba(25,107,245,0.3)] active:translate-y-0 sm:inline-flex"
           >
-            Book a Demo
+            Request a Demo
           </BookDemoButton>
           <button
             type="button"
@@ -155,11 +166,22 @@ export function Header() {
               location="header_book_demo"
               intent="demo"
               testId="mobile-header-cta"
-              onBeforeOpen={closeMobileMenu}
+              onNavigate={closeMobileMenu}
               className="mt-2 inline-flex items-center justify-center rounded-full bg-brand px-3 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-deep"
             >
-              Book a Demo
+              Request a Demo
             </BookDemoButton>
+            <a
+              href={DEMO_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMobileMenu}
+              data-testid="mobile-header-demo-store"
+              className="mt-1 inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-background px-3 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand dark:text-white"
+            >
+              View Demo Store
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
           </div>
         </div>
       ) : null}

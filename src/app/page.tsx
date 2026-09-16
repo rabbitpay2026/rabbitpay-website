@@ -21,9 +21,8 @@ import { buildPageJsonLd } from "@/lib/json-ld";
  * Header, Footer, ScrollProgress, StickyMobileCTA and Toaster live in the root
  * layout so every route gets them.
  *
- * Two separate conversion paths, no modal:
- *  - "Book a Demo" / "Start Free" -> Calendly popup (scheduling).
- *  - The inline lead-capture card -> email + phone to the lead endpoint.
+ * One conversion path, no modal: the inline lead-capture card posts to the lead
+ * endpoint, and the "Request a Demo" / "Start Free" CTAs scroll to it.
  */
 export default function HomePage() {
   return (

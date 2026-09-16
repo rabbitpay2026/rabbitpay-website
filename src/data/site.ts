@@ -8,13 +8,16 @@ export const SITE_URL = "https://rabbitpay.ai";
 export const SITE_NAME = "RabbitPay";
 
 /** Convenience constants used across CTAs. */
-export const SUPPORT_PHONE = "+91 62955 29286";
-export const SUPPORT_PHONE_HREF = "tel:+916295529286";
+export const SUPPORT_PHONE = "8050493030";
+export const SUPPORT_PHONE_HREF = "tel:+918050493030";
 export const SUPPORT_WHATSAPP_HREF =
-  "https://wa.me/916295529286?text=" +
+  "https://wa.me/918050493030?text=" +
   encodeURIComponent("Hi RabbitPay team — I'd like to know more.");
 export const SUPPORT_EMAIL = "hello@rabbitpay.in";
 export const SUPPORT_HOURS = "Mon-Sat - 09:00 to 21:00 IST";
+
+/** Live RabbitPay demo storefront. */
+export const DEMO_STORE_URL = "https://store.rabbitpay.ai/";
 
 /**
  * RabbitPay branding is served from the Shopify CDN in production. These are the

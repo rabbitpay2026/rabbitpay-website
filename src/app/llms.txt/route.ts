@@ -1,6 +1,7 @@
 import { ALL_FAQS, FAQ_CATEGORIES } from "@/data/faq";
 import { PUBLIC_PAGES } from "@/data/pages";
 import {
+  DEMO_STORE_URL,
   SITE_URL,
   SUPPORT_EMAIL,
   SUPPORT_HOURS,
@@ -156,12 +157,11 @@ documentation for them is published under ${url("/documentation")} — see below
 
 ## Getting started
 
-Two routes, both on the website:
-
 - Leave an email address and mobile number in the short form on the home or
-  contact page; the team follows up. The form asks for nothing else.
-- Use "Book a Demo", which opens RabbitPay's scheduling calendar as an overlay
-  on the current page, for a walkthrough of the checkout, features and pricing.
+  contact page ("Request a Demo" leads to the same form); the team contacts the
+  merchant within 12–24 hours for a walkthrough of the checkout, features and
+  pricing.
+- See the checkout live on the demo store: ${DEMO_STORE_URL}
 
 Setup is handled by the RabbitPay team. The site states there are no documents
 or lengthy verification steps, and that integration does not disrupt existing

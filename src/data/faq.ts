@@ -134,15 +134,14 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
   {
     id: "getting-started",
     title: "Getting started",
-    description: "Setup, paperwork, and booking a walkthrough.",
+    description: "Setup, paperwork, and requesting a walkthrough.",
     items: [
       {
-        // DERIVED — source: the lead-capture card (email + mobile number only)
-        // and the Book a Demo CTA, which opens the scheduling popup in place.
+        // DERIVED — source: the lead-capture card and its 12–24 hour response time.
         id: "how-do-i-get-started",
         question: "How do I get started with RabbitPay?",
         answer:
-          "Two routes, both on this site. Leave your email address and mobile number in the short form on the home or contact page and the team will get back to you; or use Book a Demo, which opens RabbitPay's scheduling calendar over the page so you can pick a slot yourself.",
+          "Leave your email address and mobile number in the short form on the home or contact page, and our team will contact you within 12–24 hours. You can also reach the team directly by phone or WhatsApp.",
         link: { href: "/contact", label: "Get in touch" },
       },
       {
@@ -172,7 +171,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         id: "get-a-demo",
         question: "How can I get a demo?",
         answer:
-          "Book a free demo with our team, and we'll walk you through the checkout, features, pricing, and answer any questions specific to your business.",
+          "Request a free demo through the form on this site, and our team will contact you within 12–24 hours to walk you through the checkout, features, pricing, and answer any questions specific to your business.",
       },
     ],
   },
@@ -360,7 +359,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         id: "talk-to-sales",
         question: "How do I talk to sales about Enterprise pricing?",
         answer:
-          "Enterprise is priced on volume, so it starts with a conversation. Use Talk to Sales on the pricing page, book a demo, or reach the team on any of the usual support channels — phone, WhatsApp or email.",
+          "Enterprise is priced on volume, so it starts with a conversation. Use Talk to Sales on the pricing page, request a demo, or reach the team on any of the usual support channels — phone, WhatsApp or email.",
         link: { href: "/pricing", label: "See Enterprise on the pricing page" },
       },
     ],

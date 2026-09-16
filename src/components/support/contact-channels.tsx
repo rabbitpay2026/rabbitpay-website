@@ -30,7 +30,7 @@ export function ContactChannels() {
       <BlurFade delay={0.15}>
         <ContactCard
           icon={<MessageSquareText className="h-5 w-5" />}
-          label="WhatsApp"
+          label="WhatsApp us"
           value="Chat with a specialist"
           href={SUPPORT_WHATSAPP_HREF}
           testId="support-whatsapp"

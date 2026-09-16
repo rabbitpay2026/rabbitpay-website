@@ -1,57 +1,67 @@
 "use client";
+import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
-import { openCalendly, type SchedulerIntent } from "@/lib/calendly";
+import { DEMO_SECTION_ID } from "@/data/anchors";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 /**
- * The scheduling CTA — "Book a Demo" in the navbar and FAQ page, "Start Free"
- * beneath the pricing table (which opened Calendly in the React original too).
+ * The demo request CTA — "Request a Demo" in the navbar and FAQ page, "Start
+ * Free" beneath the pricing table and in the sticky mobile bar.
  *
- * This is the smallest possible client boundary: every section that contains a
- * scheduling CTA stays a Server Component and only this button ships JS.
- *
- * It never navigates. There is deliberately no /book-a-demo route — `openCalendly`
- * opens the scheduler as an overlay on the current page, lazy-loading the widget
- * on first click. All Calendly logic lives in `lib/calendly.ts`; nothing is
- * duplicated here.
- *
- * Distinct from the lead form: this books a meeting, `LeadCaptureCard` posts to
- * /api/leads. The two flows never touch.
+ * Takes the visitor to the existing lead form: scrolls to it when the current
+ * page has one, otherwise opens the homepage's demo section.
  */
+export type DemoIntent = "start_free" | "demo";
+
+const INTENT_EVENT = {
+  start_free: ANALYTICS_EVENTS.START_FREE_CLICK,
+  demo: ANALYTICS_EVENTS.DEMO_CLICK,
+} as const;
+
 export function BookDemoButton({
   location,
   intent,
   className,
   children,
   testId,
-  onBeforeOpen,
+  tabIndex,
+  onNavigate,
 }: {
   /** Analytics label for where the click came from. */
   location: string;
-  /**
-   * Which offer this instance presents — required rather than defaulted
-   * because this one component renders both "Book a Demo" and "Start Free",
-   * and a default would silently mislabel whichever call site forgot it. It
-   * decides the event name: `demo_click` or `start_free_click`.
-   */
-  intent: SchedulerIntent;
+  /** Decides the click event's name: `demo_click` or `start_free_click`. */
+  intent: DemoIntent;
   className?: string;
   children: ReactNode;
   testId?: string;
-  /** Runs before the popup opens — used by the mobile menu to close itself. */
-  onBeforeOpen?: () => void;
+  tabIndex?: number;
+  /** Runs before navigating — used by the mobile menu to close itself. */
+  onNavigate?: () => void;
 }) {
+  const router = useRouter();
+
   return (
-    <button
-      type="button"
+    <a
+      href={`/#${DEMO_SECTION_ID}`}
       data-testid={testId}
+      tabIndex={tabIndex}
       className={className}
-      onClick={() => {
-        onBeforeOpen?.();
-        // Fire-and-forget: openCalendly handles its own failures and never throws.
-        void openCalendly(location, intent);
+      onClick={(event) => {
+        event.preventDefault();
+        onNavigate?.();
+        trackEvent(INTENT_EVENT[intent], { location });
+        const section = document.getElementById(DEMO_SECTION_ID);
+        if (section) {
+          (section.querySelector("form") ?? section).scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          return;
+        }
+        router.push(`/#${DEMO_SECTION_ID}`);
       }}
     >
       {children}
-    </button>
+    </a>
   );
 }

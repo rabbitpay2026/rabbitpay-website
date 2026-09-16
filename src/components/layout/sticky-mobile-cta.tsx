@@ -1,7 +1,7 @@
 "use client";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { openCalendly } from "@/lib/calendly";
+import { BookDemoButton } from "@/components/cta/book-demo-button";
 import { cn } from "@/lib/utils";
 
 /**
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
  * - Auto-hides when the Demo CTA section or footer enters the viewport, so it
  *   never competes with the on-screen closing CTA.
  * - Safe-area padded for iOS home indicator.
- * - "Start Free" opens the Calendly scheduling popup on the same page.
+ * - "Start Free" takes the visitor to the lead form.
  */
 export function StickyMobileCTA() {
   const [scrolled, setScrolled] = useState(false);
@@ -58,16 +58,16 @@ export function StickyMobileCTA() {
       )}
     >
       <div className="mx-auto flex max-w-2xl items-center px-4 py-3">
-        <button
-          type="button"
-          onClick={() => void openCalendly("sticky_mobile", "start_free")}
-          data-testid="sticky-cta-start"
+        <BookDemoButton
+          location="sticky_mobile"
+          intent="start_free"
+          testId="sticky-cta-start"
           tabIndex={visible ? 0 : -1}
           className="group inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-brand px-4 py-3 text-sm font-semibold text-white shadow-sm transition-transform active:translate-y-[1px]"
         >
           Start Free
           <ArrowRight className="h-4 w-4 transition-transform group-active:translate-x-0.5" />
-        </button>
+        </BookDemoButton>
       </div>
     </div>
   );

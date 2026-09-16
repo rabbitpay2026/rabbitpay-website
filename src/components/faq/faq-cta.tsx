@@ -1,8 +1,9 @@
-import { Mail, MessageSquareText, Phone } from "lucide-react";
+import { ArrowUpRight, Mail, MessageSquareText, Phone } from "lucide-react";
 import { BookDemoButton } from "@/components/cta/book-demo-button";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { MagicCard } from "@/components/magic-ui/magic-card";
 import {
+  DEMO_STORE_URL,
   SUPPORT_EMAIL,
   SUPPORT_PHONE,
   SUPPORT_PHONE_HREF,
@@ -14,8 +15,8 @@ import {
  *
  * Reuses RabbitPay's existing CTA language: the heading is the demo section's
  * copy, the supporting line is the support section's, the channels are the ones
- * `data/site.ts` already holds, and "Book a Demo" is the same Calendly button
- * the header uses. Nothing new is claimed here.
+ * `data/site.ts` already holds, and "Request a Demo" is the same button the
+ * header uses. Nothing new is claimed here.
  */
 export function FaqCTA() {
   return (
@@ -39,16 +40,29 @@ export function FaqCTA() {
               </p>
             </BlurFade>
             <BlurFade delay={0.2}>
-              <div className="mt-8 flex justify-center">
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <BookDemoButton
                   location="faq_book_demo"
                   intent="demo"
                   testId="faq-cta-demo"
                   className="inline-flex w-full items-center justify-center rounded-full bg-white px-7 py-3.5 text-base font-semibold text-brand shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition-all hover:-translate-y-0.5 active:translate-y-0 sm:w-auto"
                 >
-                  Book a Demo
+                  Request a Demo
                 </BookDemoButton>
+                <a
+                  href={DEMO_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="faq-cta-demo-store"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-7 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0 sm:w-auto"
+                >
+                  View Demo Store
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </a>
               </div>
+              <p className="mt-4 text-sm text-white/85">
+                Our team will contact you within 12–24 hours.
+              </p>
             </BlurFade>
             <BlurFade delay={0.28}>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-medium text-white/85">
@@ -68,7 +82,7 @@ export function FaqCTA() {
                   className="inline-flex items-center gap-2 transition-colors hover:text-white"
                 >
                   <MessageSquareText className="h-4 w-4" aria-hidden="true" />
-                  WhatsApp
+                  WhatsApp Us
                 </a>
                 <a
                   href={`mailto:${SUPPORT_EMAIL}`}

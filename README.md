@@ -40,13 +40,13 @@ src/
 │   ├── contact/         contact page section
 │   ├── faq/             FAQ page (hero, sidebar, category, accordion, CTA)
 │   ├── forms/           lead capture card
-│   ├── cta/             book demo (Calendly) button, Talk to Sales button
+│   ├── cta/             Request a Demo button, Talk to Sales button
 │   ├── navigation/      Resources dropdown
 │   ├── analytics/       Plausible / PostHog / GA4 scripts, route pageviews
 │   ├── magic-ui/        the 10 Magic UI components the site actually uses
 │   └── ui/              card, toaster
 ├── data/                navigation, faq, pricing, features, metrics, …
-├── lib/                 utils, analytics, calendly, leads, leads-schema,
+├── lib/                 utils, analytics, leads, leads-schema,
 │                        rate-limit, seo, fonts, json-ld
 │   └── email/           resend client + lead notification template
 └── types/               shared types
@@ -67,9 +67,7 @@ Server by default. `"use client"` is only on: `Header`, `StickyMobileCTA`,
 
 Every page prerenders as static HTML; only `/api/leads` is dynamic.
 
-## The two CTA flows
-
-They are deliberately independent and never touch each other.
+## CTA flows
 
 **Start Free** (lead capture) — the card on the homepage, demo section and `/contact`:
 
@@ -78,18 +76,18 @@ email + phone -> client validation -> POST /api/leads
    -> server re-validates -> Resend -> EMAIL_TO -> inline success state
 ```
 
-**Book a Demo** (scheduling) — the navbar CTA, the pricing "Start Free" button and
-the FAQ CTA, all rendered by `components/cta/book-demo-button.tsx`:
+**Request a Demo** — the navbar CTA, the pricing and sticky mobile "Start Free"
+buttons and the FAQ CTA, all rendered by `components/cta/book-demo-button.tsx`:
 
 ```
-click -> lazy-load the Calendly widget -> popup overlay on the current page
+click -> scroll to the lead form on this page, or open /#demo-section
 ```
 
-There is **no `/book-a-demo` route** and Book a Demo never posts a lead. The
-Calendly widget is not loaded until someone actually clicks.
+It never posts a lead itself; the team contacts the merchant within 12–24 hours
+of a form submission.
 
-If `NEXT_PUBLIC_CALENDLY_URL` is unset the button logs a warning and opens
-nothing — it never navigates and never invents a fallback destination.
+**View Demo Store** and **WhatsApp Us** are plain external links to
+`DEMO_STORE_URL` and `SUPPORT_WHATSAPP_HREF` in `data/site.ts`.
 
 ## Lead endpoint
 
@@ -188,17 +186,14 @@ closed union so a typo is a build error rather than a silently missing report.
 | Event                 | Fired when                                    | Parameters         |
 | --------------------- | --------------------------------------------- | ------------------ |
 | `start_free_click`    | a "Start Free" CTA is clicked                  | `location`         |
-| `demo_click`          | a "Book a Demo" CTA is clicked                 | `location`         |
-| `scheduler_open`      | the Calendly overlay actually rendered         | `location`,`intent`|
+| `demo_click`          | a "Request a Demo" CTA is clicked              | `location`         |
 | `demo_form_submit`    | `/api/leads` **accepted** a lead               | `source`           |
 | `talk_to_sales_click` | the pricing "Talk to Sales" CTA is clicked     | `location`         |
 
-Two of those pay for themselves immediately. `scheduler_open` fires only after
-the popup renders, so the gap between it and the click events is exactly the
-number of visitors who asked for the scheduler and did not get one (blocked
-script, missing `NEXT_PUBLIC_CALENDLY_URL`, dead network). And
-`demo_form_submit` fires *after* the API accepts the lead, never on submit, so
-it is safe to mark as a conversion — a validation failure is not a conversion.
+`scheduler_open` is still declared in `ANALYTICS_EVENTS` but is no longer fired,
+since the Calendly scheduler was removed. `demo_form_submit` fires *after* the
+API accepts the lead, never on submit, so it is safe to mark as a conversion —
+a validation failure is not a conversion.
 
 **Verifying in GA4.**
 
@@ -218,7 +213,7 @@ it is safe to mark as a conversion — a validation failure is not a conversion.
 
 One gotcha worth knowing before you conclude something is broken: GA4 batches
 non-`page_view` events and flushes on its own schedule, and a heavy third-party
-widget on the page (Calendly, for one) can push that past ten seconds. Backgrounding
+widget on the page can push that past ten seconds. Backgrounding
 the tab forces the flush. An event that has not shown up *yet* is usually not a
 missing event.
 
@@ -234,7 +229,6 @@ missing event.
   | `RESEND_API_KEY` | server | yes | Secret. Never `NEXT_PUBLIC_`, never in git. |
   | `EMAIL_TO` | server | yes | Inbox that receives lead notifications. |
   | `EMAIL_FROM` | server | yes | Must be on a **domain verified in Resend**, else sends are rejected. |
-  | `NEXT_PUBLIC_CALENDLY_URL` | public | for Book a Demo | Inlined into the bundle. |
   | `CALENDLY_WEBHOOK_SIGNING_KEY` | server | no | Reserved; no webhook is implemented. |
   | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | public | for GA4 | `G-6RQ63F8KDN`. A public identifier, not a secret. **No default** — unset means no GA4 at all. |
   | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` / `NEXT_PUBLIC_POSTHOG_KEY` / `NEXT_PUBLIC_POSTHOG_HOST` | public | no | Analytics; have defaults. |

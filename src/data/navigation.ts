@@ -6,8 +6,8 @@ import { SUPPORT_EMAIL } from "@/data/site";
  * Single source of truth for navigation. Consumed by the desktop nav, the mobile
  * menu, and the footer — there is no second copy anywhere.
  *
- * "Book a Demo" is deliberately absent: it is a CTA that opens the Calendly
- * popup over the current page, not a route. See `src/lib/calendly.ts`.
+ * "Request a Demo" is deliberately absent: it is a CTA that scrolls to the lead
+ * form, not a route. See `components/cta/book-demo-button.tsx`.
  */
 export const MAIN_NAV: NavLink[] = [
   { label: "Product", href: "/product" },

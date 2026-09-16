@@ -1,11 +1,14 @@
+import { ArrowUpRight, MessageSquareText } from "lucide-react";
 import { LeadCaptureCard } from "@/components/forms/lead-capture-card";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { MagicCard } from "@/components/magic-ui/magic-card";
 import { DEMO_SECTION_ID } from "@/data/anchors";
+import { DEMO_STORE_URL, SUPPORT_WHATSAPP_HREF } from "@/data/site";
 
 /**
  * Closing conversion block. Ported from the React `sections/DemoCTA.jsx`.
- * `id="demo-section"` is the scroll target for the pricing "Talk to Sales" CTA.
+ * `id="demo-section"` is the scroll target for the "Request a Demo", "Start
+ * Free" and "Talk to Sales" CTAs.
  */
 export function DemoCTA() {
   return (
@@ -31,11 +34,42 @@ export function DemoCTA() {
                 Get a personalized walkthrough of RabbitPay and discover how leading D2C brands
                 increase conversions and reduce RTO.
               </p>
+              <p
+                data-testid="demo-cta-response-time"
+                className="mx-auto mt-3 max-w-2xl text-sm font-semibold text-white sm:text-base"
+              >
+                Apply now and our team will contact you within 12–24 hours.
+              </p>
             </BlurFade>
 
             <BlurFade delay={0.22}>
               <div className="mt-8 flex justify-center">
                 <LeadCaptureCard source="demo_cta" testPrefix="demo-lead" showHeading={false} />
+              </div>
+            </BlurFade>
+
+            <BlurFade delay={0.3}>
+              <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <a
+                  href={DEMO_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="demo-cta-demo-store"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0 sm:w-auto"
+                >
+                  View Demo Store
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+                <a
+                  href={SUPPORT_WHATSAPP_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="demo-cta-whatsapp"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0 sm:w-auto"
+                >
+                  <MessageSquareText className="h-4 w-4" aria-hidden="true" />
+                  WhatsApp Us
+                </a>
               </div>
             </BlurFade>
           </div>

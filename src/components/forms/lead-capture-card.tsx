@@ -17,9 +17,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * Inline lead-capture card. Captures email + phone only — no name, no company,
- * no message. It is NOT a modal and it NEVER opens Calendly: "Start Free" here
- * submits the lead form, while the navbar's "Book a Demo" opens the scheduler.
- * The two flows are deliberately independent.
+ * no message. It is NOT a modal. The "Request a Demo" and "Start Free" CTAs
+ * elsewhere on the site scroll to this card rather than submitting anything.
  *
  * Markup, styling, copy and layout are unchanged from the React original; the
  * only additions are the explicit form states the flow needs.
@@ -140,14 +139,14 @@ export function LeadCaptureCard({
             <CheckCircle2 className="h-5 w-5" />
           </span>
           <p className="text-sm font-semibold text-ink dark:text-white">
-            Thank you! Our team will contact you shortly.
+            Thank you! Our team will contact you within 12–24 hours.
           </p>
         </div>
       ) : (
         <form onSubmit={onSubmit} noValidate>
           {showHeading ? (
             <p className="mt-1 text-xs text-muted-foreground">
-              Drop your details and our team will reach out.
+              Apply now and our team will contact you within 12–24 hours.
             </p>
           ) : null}
 
