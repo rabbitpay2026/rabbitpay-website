@@ -11,6 +11,7 @@ import {
   toneFor,
 } from "@/components/calculator/calculator-results";
 import { useCalculatorForm } from "@/components/calculator/use-calculator-form";
+import { CALCULATOR_DEFAULTS } from "@/data/calculator-defaults";
 import { RABBITPAY_FEE_RATES } from "@/data/pricing";
 import { formatCurrency, formatPercent } from "@/lib/calculators/format";
 import { calculateProfitMargin, type CostKey } from "@/lib/calculators/formulas";
@@ -40,7 +41,12 @@ const COSTS: { key: CostKey; label: string; swatch: string }[] = [
 const feeOn = (revenue: number, rate: number) => Math.round(revenue * rate) / 100;
 
 export function ProfitMarginCalculator() {
-  const form = useCalculatorForm({ calculator: "profit-margin", rules: RULES, required: REQUIRED });
+  const form = useCalculatorForm({
+    calculator: "profit-margin",
+    rules: RULES,
+    required: REQUIRED,
+    defaults: CALCULATOR_DEFAULTS["profit-margin"],
+  });
   const { raw, fields, setField, ready } = form;
 
   const result = calculateProfitMargin({
@@ -69,7 +75,7 @@ export function ProfitMarginCalculator() {
 
   return (
     <CalculatorLayout
-      canReset={!form.isEmpty}
+      canReset={!form.isPristine}
       onReset={form.reset}
       inputs={
         <>

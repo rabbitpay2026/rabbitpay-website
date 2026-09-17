@@ -1,6 +1,6 @@
 /**
- * The five calculators on /calculator: their tab labels, headings and the short
- * explanation rendered beneath each one.
+ * The five calculators: their route, labels, headings and the short explanation
+ * rendered beneath each one.
  *
  * Copy only — the maths lives in `lib/calculators/formulas.ts`, and every
  * formula written out here describes exactly what that module computes. No
@@ -10,13 +10,24 @@
 
 export type CalculatorId = "profit-margin" | "roi" | "roas" | "high-profit" | "revenue";
 
+/** The id GA4 and Plausible receive. snake_case, like every other event name. */
+export type CalculatorAnalyticsId =
+  | "profit_margin"
+  | "roi"
+  | "roas"
+  | "high_profit"
+  | "revenue";
+
 export type CalculatorContent = {
   id: CalculatorId;
-  /** Tab label. */
+  /** This calculator's own page. */
+  href: string;
+  analyticsId: CalculatorAnalyticsId;
+  /** Short name, used in the switcher and the hub. */
   label: string;
-  /** Second line under the tab label on wide screens. */
-  tabHint: string;
-  /** Panel heading. */
+  /** One line under the label. */
+  hint: string;
+  /** Page heading. */
   title: string;
   summary: string;
   explainer: {
@@ -31,8 +42,10 @@ export type CalculatorContent = {
 export const CALCULATORS: CalculatorContent[] = [
   {
     id: "profit-margin",
+    href: "/calculator/profit-margin",
+    analyticsId: "profit_margin",
     label: "Profit Margin",
-    tabHint: "Net profit after all costs",
+    hint: "Net profit after all costs",
     title: "Profit margin calculator",
     summary:
       "See what's left of your revenue after product cost, ads, shipping, payment fees and everything else.",
@@ -63,8 +76,10 @@ export const CALCULATORS: CalculatorContent[] = [
   },
   {
     id: "roi",
+    href: "/calculator/roi",
+    analyticsId: "roi",
     label: "ROI",
-    tabHint: "Return on investment",
+    hint: "Return on investment",
     title: "ROI calculator",
     summary:
       "Measure what a campaign, an inventory buy or a new tool returned once its full cost is taken out.",
@@ -91,8 +106,10 @@ export const CALCULATORS: CalculatorContent[] = [
   },
   {
     id: "roas",
+    href: "/calculator/roas",
+    analyticsId: "roas",
     label: "ROAS",
-    tabHint: "Return on ad spend",
+    hint: "Return on ad spend",
     title: "ROAS calculator",
     summary:
       "See how much revenue each rupee of ad spend brought in, and the ROAS your margins need to break even.",
@@ -122,8 +139,10 @@ export const CALCULATORS: CalculatorContent[] = [
   },
   {
     id: "high-profit",
+    href: "/calculator/high-profit",
+    analyticsId: "high_profit",
     label: "High Profit",
-    tabHint: "Price & ad cost for a target",
+    hint: "Price & ad cost for a target",
     title: "High profit calculator",
     summary:
       "Set the margin you want per order and see the selling price and maximum ad cost that get you there.",
@@ -160,8 +179,10 @@ export const CALCULATORS: CalculatorContent[] = [
   },
   {
     id: "revenue",
+    href: "/calculator/revenue",
+    analyticsId: "revenue",
     label: "Revenue",
-    tabHint: "Orders & revenue estimate",
+    hint: "Orders & revenue estimate",
     title: "Revenue calculator",
     summary:
       "Estimate orders and revenue from your store's sessions, conversion rate and average order value.",
@@ -192,4 +213,11 @@ export const CALCULATORS: CalculatorContent[] = [
   },
 ];
 
-export const DEFAULT_CALCULATOR: CalculatorId = "profit-margin";
+/** Lookup by id, so a page module can read its own entry. */
+export const CALCULATOR_BY_ID = Object.fromEntries(
+  CALCULATORS.map((calculator) => [calculator.id, calculator]),
+) as Record<CalculatorId, CalculatorContent>;
+
+export function getCalculator(id: CalculatorId): CalculatorContent {
+  return CALCULATOR_BY_ID[id];
+}

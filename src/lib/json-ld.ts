@@ -1,5 +1,5 @@
 import { ALL_FAQS } from "@/data/faq";
-import { getPage, type PublicRoute } from "@/data/pages";
+import { getPage, isPublicRoute, type PublicRoute } from "@/data/pages";
 import {
   RABBITPAY_LOGO,
   SITE_NAME,
@@ -162,31 +162,31 @@ export function buildSiteJsonLd(): JsonLdDocument {
 }
 
 /**
- * BreadcrumbList for a sub-page: Home → the page.
+ * BreadcrumbList for a sub-page: Home → the page, with the parent section in
+ * between where the URL has one (each calculator sits under /calculator).
  *
- * Mirrors the real URL hierarchy — every public page sits one level below the
- * root and is linked from the header. The homepage gets no breadcrumb, since a
+ * Mirrors the real URL hierarchy. The homepage gets no breadcrumb, since a
  * single-item trail describes nothing.
  */
 function breadcrumbNode(path: PublicRoute): JsonLdNode {
-  const page = getPage(path);
+  const parent = path.slice(0, path.lastIndexOf("/"));
+  const trail = [
+    { name: "Home", item: `${SITE_URL}/` },
+    ...(parent && isPublicRoute(parent)
+      ? [{ name: getPage(parent).name, item: absolute(parent) }]
+      : []),
+    { name: getPage(path).name, item: absolute(path) },
+  ];
+
   return {
     "@type": "BreadcrumbList",
     "@id": `${absolute(path)}#breadcrumb`,
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${SITE_URL}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: page.name,
-        item: absolute(path),
-      },
-    ],
+    itemListElement: trail.map((step, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: step.name,
+      item: step.item,
+    })),
   };
 }
 

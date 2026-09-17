@@ -10,6 +10,7 @@ import {
   ResultsSection,
 } from "@/components/calculator/calculator-results";
 import { useCalculatorForm } from "@/components/calculator/use-calculator-form";
+import { CALCULATOR_DEFAULTS } from "@/data/calculator-defaults";
 import {
   formatCount,
   formatCurrency,
@@ -29,7 +30,12 @@ const RULES = {
 const REQUIRED = ["sessions", "conversionRate", "averageOrderValue"] as const;
 
 export function RevenueCalculator() {
-  const form = useCalculatorForm({ calculator: "revenue", rules: RULES, required: REQUIRED });
+  const form = useCalculatorForm({
+    calculator: "revenue",
+    rules: RULES,
+    required: REQUIRED,
+    defaults: CALCULATOR_DEFAULTS["revenue"],
+  });
   const { raw, fields, setField, ready } = form;
 
   const result = calculateRevenue({
@@ -42,7 +48,7 @@ export function RevenueCalculator() {
 
   return (
     <CalculatorLayout
-      canReset={!form.isEmpty}
+      canReset={!form.isPristine}
       onReset={form.reset}
       inputs={
         <>

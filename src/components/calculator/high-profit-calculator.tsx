@@ -11,6 +11,7 @@ import {
   toneFor,
 } from "@/components/calculator/calculator-results";
 import { useCalculatorForm } from "@/components/calculator/use-calculator-form";
+import { CALCULATOR_DEFAULTS } from "@/data/calculator-defaults";
 import { RABBITPAY_FEE_RATES } from "@/data/pricing";
 import {
   formatCurrency,
@@ -33,7 +34,12 @@ const RULES = {
 const REQUIRED = ["sellingPrice"] as const;
 
 export function HighProfitCalculator() {
-  const form = useCalculatorForm({ calculator: "high-profit", rules: RULES, required: REQUIRED });
+  const form = useCalculatorForm({
+    calculator: "high-profit",
+    rules: RULES,
+    required: REQUIRED,
+    defaults: CALCULATOR_DEFAULTS["high-profit"],
+  });
   const { raw, fields, setField, ready, hasErrors } = form;
 
   const targetMargin = fields.targetMargin.value;
@@ -57,7 +63,7 @@ export function HighProfitCalculator() {
 
   return (
     <CalculatorLayout
-      canReset={!form.isEmpty}
+      canReset={!form.isPristine}
       onReset={form.reset}
       inputs={
         <>
