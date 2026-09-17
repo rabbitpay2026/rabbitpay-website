@@ -48,6 +48,19 @@ export const ANALYTICS_EVENTS = {
   DEMO_FORM_SUBMIT: "demo_form_submit",
   /** The pricing page's "Talk to Sales" CTA was clicked. */
   TALK_TO_SALES_CLICK: "talk_to_sales_click",
+  /*
+    The /calculator events carry the calculator's id and nothing else. The
+    numbers a merchant types are their store's finances and never leave the
+    browser — see `components/calculator/calculator-analytics.ts`.
+  */
+  /** /calculator was opened. */
+  CALCULATOR_VIEW: "calculator_view",
+  /** A different calculator was chosen on /calculator. */
+  CALCULATOR_SELECTED: "calculator_selected",
+  /** A calculator's required fields were filled and it showed a result. */
+  CALCULATOR_CALCULATE: "calculator_calculate",
+  /** A calculator's Reset button was pressed. */
+  CALCULATOR_RESET: "calculator_reset",
 } as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];

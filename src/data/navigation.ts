@@ -61,7 +61,7 @@ export const RESOURCES_LABEL = "Resources";
 /**
  * The primary navbar, in render order:
  *
- *   Product | Pricing | Support | Resources | Contact
+ *   Product | Pricing | Calculator | Support | Resources | Contact
  *
  * Order lives here rather than in the Header so there is one place to change it,
  * and the desktop nav and the mobile menu iterate this same array. `kind`
@@ -70,6 +70,7 @@ export const RESOURCES_LABEL = "Resources";
 export const PRIMARY_NAV: PrimaryNavItem[] = [
   { kind: "link", label: "Product", href: "/product" },
   { kind: "link", label: "Pricing", href: "/pricing" },
+  { kind: "link", label: "Calculator", href: "/calculator" },
   { kind: "link", label: "Support", href: "/support" },
   { kind: "menu", label: RESOURCES_LABEL, items: RESOURCES_NAV },
   { kind: "link", label: "Contact", href: "/contact" },
@@ -95,6 +96,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "1-Click Checkout", href: "/product" },
       { label: "Conversion Metrics", href: "/#metrics" },
       { label: "Pricing", href: "/pricing" },
+      { label: "Calculator", href: "/calculator" },
       { label: "Support", href: "/support" },
       { label: "FAQ", href: "/faq" },
       { label: "Docs", href: "/documentation", proxied: true },

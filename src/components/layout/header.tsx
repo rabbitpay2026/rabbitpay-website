@@ -4,8 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BookDemoButton } from "@/components/cta/book-demo-button";
+import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { BrandLockup } from "@/components/layout/brand-lockup";
 import { ResourceRow, ResourcesMenu } from "@/components/navigation/resources-menu";
+import { getAnnouncement } from "@/data/announcement";
 import { PRIMARY_NAV, RESOURCES_ROUTES } from "@/data/navigation";
 import { DEMO_STORE_URL } from "@/data/site";
 import { cn } from "@/lib/utils";
@@ -17,7 +19,7 @@ import type { ResourceLink } from "@/types";
  *
  * Navbar order comes from `PRIMARY_NAV` in `data/navigation.ts`:
  *
- *   Product | Pricing | Support | Resources ▾ | Contact | View Demo Store | Request a Demo
+ *   Product | Pricing | Calculator | Support | Resources ▾ | Contact | View Demo Store | Request a Demo
  *
  * Desktop and mobile iterate that same array — Resources is a floating dropdown
  * on desktop and a collapsible submenu on mobile, both fed by `RESOURCES_NAV`.
@@ -47,6 +49,7 @@ export function Header() {
     setMobileResourcesOpen(false);
   }
 
+  const announcement = getAnnouncement(pathname);
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
   const resourcesActive = RESOURCES_ROUTES.some((href) => isActive(href));
 
@@ -65,6 +68,9 @@ export function Header() {
           : "bg-background/55 backdrop-blur-md",
       )}
     >
+      {announcement ? (
+        <AnnouncementBar announcement={announcement} collapsed={scrolled} />
+      ) : null}
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <BrandLockup variant="header" />
 
@@ -129,7 +135,10 @@ export function Header() {
       {open ? (
         <div
           id="mobile-nav"
-          className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-border bg-background/95 backdrop-blur-xl md:hidden"
+          className={cn(
+            "overflow-y-auto border-t border-border bg-background/95 backdrop-blur-xl md:hidden",
+            announcement && !scrolled ? "max-h-[calc(100vh-6.25rem)]" : "max-h-[calc(100vh-4rem)]",
+          )}
         >
           <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
             {PRIMARY_NAV.map((item) =>

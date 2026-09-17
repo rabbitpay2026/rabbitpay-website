@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import { AnalyticsScripts } from "@/components/analytics/analytics-scripts";
 import { RouteAnalytics } from "@/components/analytics/route-analytics";
+import { AnnouncementSpacer } from "@/components/layout/announcement-bar";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { StickyMobileCTA } from "@/components/layout/sticky-mobile-cta";
@@ -83,6 +84,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <JsonLd data={buildSiteJsonLd()} />
 
         <ScrollProgress />
+        <AnnouncementSpacer />
         <Header />
         <main>{children}</main>
         <Footer />

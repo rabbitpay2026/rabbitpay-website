@@ -6,6 +6,7 @@ import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import { IPhone15Pro } from "@/components/magic-ui/iphone-15-pro";
 import { RetroGrid } from "@/components/magic-ui/retro-grid";
 import { MockCheckoutUI } from "@/components/home/mock-checkout-ui";
+import { SCREEN_WIDTH } from "@/components/home/mock-checkout-data";
 import { HERO_ID } from "@/data/anchors";
 import { HERO_BADGES } from "@/data/trust";
 import { COD_KING_ICON } from "@/data/site";
@@ -88,14 +89,16 @@ export function Hero() {
           </div>
 
           <BlurFade delay={0.35} className="lg:col-span-5">
-            <div className="relative mx-auto max-w-[360px]">
+            {/* Device widths track the rendered COD King hero phone: 94% / 70% of the container,
+                then 230-301px and 329px plus the 20px gutter the floating chips were positioned against. */}
+            <div className="relative mx-auto w-[94%] sm:max-[1023px]:w-[70%] lg:max-[1151px]:w-[calc(134.16%_-_228.9px)] min-[1152px]:w-[369px]">
               <div
                 aria-hidden="true"
                 className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_50%_30%,rgba(25,107,245,0.35),transparent_58%),radial-gradient(circle_at_70%_70%,rgba(74,140,250,0.16),transparent_52%)] blur-2xl"
               />
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -left-6 top-20 z-30 hidden items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur lg:flex dark:bg-neutral-900/95"
+                className="pointer-events-none absolute right-[calc(100%_+_12px)] top-[76px] z-30 hidden w-max items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur min-[1152px]:flex dark:bg-neutral-900/95"
               >
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-white shadow-[0_10px_24px_rgba(25,107,245,0.24)]">
                   <MapPin className="h-4 w-4" />
@@ -106,10 +109,14 @@ export function Hero() {
                   </p>
                   <p className="text-xs font-semibold text-ink dark:text-white">3 fields - 220 ms</p>
                 </div>
+                <span className="absolute left-full top-1/2 h-[7px] w-8 -translate-y-1/2">
+                  <span className="absolute left-0 right-[8px] top-1/2 h-[1.5px] -translate-y-1/2 rounded-full bg-brand/45" />
+                  <span className="absolute right-[2px] top-1/2 h-0 w-0 -translate-y-1/2 border-y-[3.5px] border-l-[6px] border-y-transparent border-l-brand" />
+                </span>
               </div>
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -right-4 bottom-16 z-30 hidden items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur lg:flex dark:bg-neutral-900/95"
+                className="pointer-events-none absolute left-[calc(100%_-_4px)] top-[62%] z-30 hidden w-max items-center gap-2 rounded-2xl border border-border bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur min-[1366px]:flex min-[1440px]:left-[calc(100%_+_8px)] dark:bg-neutral-900/95"
               >
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-accent text-white shadow-[0_10px_24px_rgba(74,140,250,0.24)]">
                   <Sparkles className="h-4 w-4" />
@@ -120,10 +127,14 @@ export function Hero() {
                   </p>
                   <p className="text-xs font-semibold text-ink dark:text-white">Rs 1,001 - 2.4s</p>
                 </div>
+                <span className="absolute right-full top-1/2 h-[7px] w-4 -translate-y-1/2 min-[1440px]:w-7">
+                  <span className="absolute left-[8px] right-0 top-1/2 h-[1.5px] -translate-y-1/2 rounded-full bg-brand/45" />
+                  <span className="absolute left-[2px] top-1/2 h-0 w-0 -translate-y-1/2 border-y-[3.5px] border-r-[6px] border-y-transparent border-r-brand" />
+                </span>
               </div>
 
-              <div className="relative z-10">
-                <IPhone15Pro width={320}>
+              <div className="relative z-10 lg:mx-5">
+                <IPhone15Pro screenWidth={SCREEN_WIDTH}>
                   <MockCheckoutUI />
                 </IPhone15Pro>
               </div>
