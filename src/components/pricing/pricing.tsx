@@ -18,6 +18,7 @@ import type { PricingCellValue } from "@/types";
  */
 export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {}) {
   const Heading = headingLevel;
+  const CtaHeading = headingLevel === "h1" ? "h2" : "h3";
   return (
     <section
       id={PRICING_ID}
@@ -152,9 +153,12 @@ export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {})
         {/* CTA below the table */}
         <BlurFade delay={0.18}>
           <div className="mt-10 rounded-3xl border border-border bg-[linear-gradient(180deg,rgba(25,107,245,0.06),transparent)] px-6 py-10 text-center sm:px-10">
-            <h3 className="text-2xl font-semibold tracking-tighter text-ink dark:text-white sm:text-3xl">
+            {/* One level below the section heading — h2 under the <h1> on
+                /pricing, h3 under the <h2> on the homepage. As a flat h3 this
+                made /pricing skip from h1 straight to h3. */}
+            <CtaHeading className="text-2xl font-semibold tracking-tighter text-ink dark:text-white sm:text-3xl">
               Ready to start accepting payments faster?
-            </h3>
+            </CtaHeading>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <BookDemoButton
                 location="pricing_start_free"

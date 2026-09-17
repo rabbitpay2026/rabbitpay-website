@@ -36,6 +36,12 @@ export const metadata: Metadata = {
   },
   description: home.description,
   applicationName: SITE_NAME,
+  // Renders as <link rel="canonical" href="https://rabbitpay.ai">. Next strips
+  // the trailing slash here and on `og:url` regardless of the form given, and
+  // that is fine: an empty path is equivalent to "/" per RFC 3986, so this and
+  // the "https://rabbitpay.ai/" the sitemap and JSON-LD publish are one URL.
+  // Checked against the built HTML — do not "fix" it by passing an absolute
+  // string, which produces byte-identical output.
   alternates: { canonical: "/" },
   // Google Search Console ownership proof. Renders as
   // <meta name="google-site-verification"> in <head>. Google re-checks it

@@ -39,7 +39,14 @@ export function Features({ asPage, headingLevel = "h2" }: SectionShellProps = {}
             <Fragment key={feature.eyebrow}>
               {/* Integrations strip sits immediately above the UPI-first feature. */}
               {feature.eyebrow === "UPI-first" ? <Integrations /> : null}
-              <FeatureRow feature={feature} reverse={index % 2 === 1} />
+              <FeatureRow
+                feature={feature}
+                reverse={index % 2 === 1}
+                /* One level below the section heading: h2 under the <h1> on
+                   /product, h3 under the <h2> on the homepage. Without this
+                   /product jumped straight from h1 to h3. */
+                headingLevel={headingLevel === "h1" ? "h2" : "h3"}
+              />
             </Fragment>
           ))}
         </div>
@@ -48,7 +55,16 @@ export function Features({ asPage, headingLevel = "h2" }: SectionShellProps = {}
   );
 }
 
-function FeatureRow({ feature, reverse }: { feature: FeatureItem; reverse: boolean }) {
+function FeatureRow({
+  feature,
+  reverse,
+  headingLevel,
+}: {
+  feature: FeatureItem;
+  reverse: boolean;
+  headingLevel: "h2" | "h3";
+}) {
+  const Heading = headingLevel;
   return (
     <div className="grid items-center gap-6 lg:grid-cols-12">
       <BlurFade className={reverse ? "lg:order-2 lg:col-span-6" : "lg:col-span-6"}>
@@ -58,9 +74,9 @@ function FeatureRow({ feature, reverse }: { feature: FeatureItem; reverse: boole
         <p className="mt-4 text-xs font-semibold uppercase tracking-[0.28em] text-brand">
           {feature.eyebrow}
         </p>
-        <h3 className="mt-3 text-2xl font-semibold leading-[1.08] tracking-tight text-ink dark:text-white sm:text-3xl">
+        <Heading className="mt-3 text-2xl font-semibold leading-[1.08] tracking-tight text-ink dark:text-white sm:text-3xl">
           {feature.title}
-        </h3>
+        </Heading>
         <p className="mt-4 max-w-lg text-base leading-relaxed text-muted-foreground">
           {feature.body}
         </p>

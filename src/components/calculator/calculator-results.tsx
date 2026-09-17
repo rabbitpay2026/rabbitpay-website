@@ -199,7 +199,11 @@ export function ResultsSection({
   return (
     <section className={cn("mt-7 border-t border-border pt-6", className)}>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-ink dark:text-white">{title}</h3>
+        {/* h2, not h3: a results block is a top-level section of the
+            calculator page, sitting directly under its <h1> alongside the
+            explainer blocks. As an h3 it made the three calculators that use
+            one skip from h1 to h3. Rendered size is unchanged. */}
+        <h2 className="text-sm font-semibold text-ink dark:text-white">{title}</h2>
         {aside}
       </div>
       <div className="mt-3">{children}</div>

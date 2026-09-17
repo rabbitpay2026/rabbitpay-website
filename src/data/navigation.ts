@@ -91,6 +91,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     // footer keeps its existing three-column geometry.
     title: "Product",
     links: [
+      { label: "What is RabbitPay?", href: "/what-is-rabbitpay" },
       { label: "1-Click Checkout", href: "/product" },
       { label: "Conversion Metrics", href: "/#metrics" },
       { label: "Pricing", href: "/pricing" },
@@ -103,7 +104,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: "Company",
     links: [
-      { label: "About", href: "/support" },
+      { label: "About RabbitPay", href: "/what-is-rabbitpay" },
       { label: "Careers", href: `mailto:${SUPPORT_EMAIL}?subject=Careers`, external: true },
       { label: "Press", href: `mailto:${SUPPORT_EMAIL}?subject=Press`, external: true },
     ],
