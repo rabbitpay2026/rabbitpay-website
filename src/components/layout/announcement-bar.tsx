@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const HEIGHT_CLASS = "h-9";
 
 /**
- * The strip of brand blue above the header navigation. Rendered by the header,
+ * A soft brand-blue strip above the header navigation. Rendered by the header,
  * inside its fixed container, and folded away once the page scrolls so it only
  * costs vertical space at the top of the page.
  *
@@ -28,7 +28,7 @@ export function AnnouncementBar({
       data-testid="announcement-bar"
       inert={collapsed}
       className={cn(
-        "overflow-hidden bg-brand transition-[max-height] duration-300 ease-out motion-reduce:transition-none",
+        "overflow-hidden border-b border-brand/10 bg-brand-soft transition-[max-height] duration-300 ease-out motion-reduce:transition-none",
         collapsed ? "max-h-0" : "max-h-9",
       )}
     >
@@ -36,18 +36,18 @@ export function AnnouncementBar({
         href={announcement.href}
         data-testid="announcement-link"
         className={cn(
-          "group flex items-center justify-center gap-2.5 px-4 text-xs font-medium text-white outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white sm:text-[13px]",
+          "group flex items-center justify-center gap-2.5 px-4 text-xs font-medium text-ink/80 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand/40 sm:text-[13px]",
           HEIGHT_CLASS,
         )}
       >
-        <span className="hidden rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] sm:inline">
+        <span className="hidden rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-brand ring-1 ring-inset ring-brand/15 sm:inline">
           New
         </span>
         <span className="min-w-0 truncate">
           <span className="sm:hidden">{announcement.shortMessage}</span>
           <span className="hidden sm:inline">{announcement.message}</span>
         </span>
-        <span className="inline-flex flex-shrink-0 items-center gap-1 font-semibold underline-offset-4 group-hover:underline">
+        <span className="inline-flex flex-shrink-0 items-center gap-1 font-semibold text-brand-deep underline-offset-4 group-hover:underline">
           {announcement.cta}
           <ArrowRight
             aria-hidden="true"
