@@ -70,7 +70,10 @@ export function CalculatorExplainer({ calculator }: { calculator: CalculatorCont
 function ExplainerBlock({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section>
-      <h3 className="text-lg font-semibold tracking-tight text-ink dark:text-white">{title}</h3>
+      {/* h2, not h3: these sit directly under the calculator page's <h1> with
+          no intervening heading, so h3 was a skipped level. The rendered size
+          is unchanged. */}
+      <h2 className="text-lg font-semibold tracking-tight text-ink dark:text-white">{title}</h2>
       <div className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{children}</div>
     </section>
   );

@@ -18,7 +18,21 @@ export function CalculatorCTA() {
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
             RabbitPay charges {RABBITPAY_FEE_RATES.prepaid}% on successful prepaid orders and{" "}
-            {RABBITPAY_FEE_RATES.cod}% on successful COD orders, with no setup fee.
+            {RABBITPAY_FEE_RATES.cod}% on successful COD orders, with no setup fee.{" "}
+            <Link
+              href="/what-is-rabbitpay"
+              className="font-medium text-brand underline-offset-4 hover:underline"
+            >
+              RabbitPay is a 1-click checkout for Shopify
+            </Link>{" "}
+            built for Indian D2C brands &mdash; see{" "}
+            <Link
+              href="/product"
+              className="font-medium text-brand underline-offset-4 hover:underline"
+            >
+              what the checkout does
+            </Link>
+            .
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link

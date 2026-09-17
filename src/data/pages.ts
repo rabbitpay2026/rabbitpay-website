@@ -55,10 +55,20 @@ export const PUBLIC_PAGES = [
     // Preserved verbatim from the production React site — see `lib/seo.ts`.
     title: "RabbitPay - 1-Click Checkout for Shopify & D2C, made in India",
     description:
-      "RabbitPay helps Shopify and D2C brands ship a faster, blue-branded one-click checkout with UPI-first payments, verified COD, and address prefill.",
+      "RabbitPay is a 1-click checkout for Shopify stores run by Indian D2C brands, with prefilled addresses, UPI-first payments and verified COD to lift conversion and cut RTO.",
     ogTitle: "RabbitPay - 1-Click Checkout, built in India",
     summary:
       "Product overview, the merchant-impact figures RabbitPay publishes, pricing, features, integrations, support and a short FAQ.",
+  },
+  {
+    path: "/what-is-rabbitpay",
+    name: "What is RabbitPay?",
+    title: "What is RabbitPay?",
+    description:
+      "RabbitPay is a 1-click checkout app for Shopify stores run by Indian D2C brands. What it is, who it is for, how it works, and how it differs from the default Shopify checkout.",
+    ogTitle: "What is RabbitPay? 1-Click Checkout for Shopify in India",
+    summary:
+      "The plain-language definition of RabbitPay: the product category it belongs to, the platform it runs on, the market it serves, how a merchant goes live, and the COD King infrastructure behind it.",
   },
   {
     path: "/product",
