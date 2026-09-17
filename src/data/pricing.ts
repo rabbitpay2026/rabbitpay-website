@@ -45,3 +45,13 @@ export const PRICING_TRUST_POINTS = [
   "SOC 2 - In progress",
   "Made in India",
 ];
+
+/**
+ * The Growth plan's transaction rates as numbers, in percent, for anything that
+ * calculates with them — the payment-fee presets on /calculator read these.
+ * They describe the same rates as the plan copy above; change both together.
+ */
+export const RABBITPAY_FEE_RATES = {
+  prepaid: 1,
+  cod: 0.3,
+} as const;

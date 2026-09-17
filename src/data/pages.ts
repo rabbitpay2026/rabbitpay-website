@@ -110,6 +110,16 @@ export const PUBLIC_PAGES = [
     summary:
       "The most detailed single source on the site: questions on what RabbitPay is, onboarding, pricing, payments, gateways, the checkout experience, integrations, security and support.",
   },
+  {
+    path: "/calculator",
+    name: "Calculator",
+    title: "Free D2C Calculator — Profit, ROI & ROAS",
+    description:
+      "Free calculators for Shopify and D2C brands. Work out profit margin, ROI, ROAS, the price and ad cost for a target margin, and monthly revenue from your own numbers.",
+    ogTitle: "RabbitPay Calculator — Profit, ROI & ROAS for D2C brands",
+    summary:
+      "Five calculators on one page that run in the browser on numbers the merchant enters: net profit margin, ROI, ROAS with break-even ROAS, the selling price and maximum ad cost per order for a target margin, and estimated revenue from sessions, conversion rate and average order value.",
+  },
 ] as const satisfies readonly PublicPage[];
 
 /** Union of every public route path — used to key route-specific records. */
