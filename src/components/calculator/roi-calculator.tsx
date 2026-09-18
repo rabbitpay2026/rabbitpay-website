@@ -10,6 +10,7 @@ import {
   toneFor,
 } from "@/components/calculator/calculator-results";
 import { useCalculatorForm } from "@/components/calculator/use-calculator-form";
+import { CALCULATOR_DEFAULTS } from "@/data/calculator-defaults";
 import { formatCurrency, formatPercent } from "@/lib/calculators/format";
 import { calculateRoi } from "@/lib/calculators/formulas";
 
@@ -22,7 +23,12 @@ const RULES = {
 const REQUIRED = ["investment", "revenue"] as const;
 
 export function RoiCalculator() {
-  const form = useCalculatorForm({ calculator: "roi", rules: RULES, required: REQUIRED });
+  const form = useCalculatorForm({
+    calculator: "roi",
+    rules: RULES,
+    required: REQUIRED,
+    defaults: CALCULATOR_DEFAULTS["roi"],
+  });
   const { raw, fields, setField, ready } = form;
 
   const result = calculateRoi({
@@ -34,7 +40,7 @@ export function RoiCalculator() {
 
   return (
     <CalculatorLayout
-      canReset={!form.isEmpty}
+      canReset={!form.isPristine}
       onReset={form.reset}
       inputs={
         <>

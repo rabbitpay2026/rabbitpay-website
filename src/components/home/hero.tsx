@@ -1,4 +1,5 @@
 import { CheckCircle2, MapPin, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { LeadCaptureCard } from "@/components/forms/lead-capture-card";
 import { AuroraText } from "@/components/magic-ui/aurora-text";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
@@ -38,15 +39,27 @@ export function Hero() {
 
             <BlurFade delay={0.15}>
               <h1 className="mt-4 max-w-3xl text-[40px] font-semibold leading-[1.02] tracking-tighter text-ink dark:text-white sm:text-[56px] lg:text-[68px]">
-                <span className="block">1-Click Checkout,</span>
+                {/* The trailing space is deliberate. Both lines render as
+                    blocks so it changes nothing visually, but without it a
+                    text extractor reads the <h1> as "Checkout,built in India."
+                    — and this heading is the site's clearest statement of what
+                    RabbitPay is. */}
+                <span className="block">RabbitPay is 1-Click Checkout, </span>
                 <AuroraText className="font-semibold">built in India.</AuroraText>
               </h1>
             </BlurFade>
 
             <BlurFade delay={0.28}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Higher conversions. Lower RTO. A checkout your Indian shoppers actually finish with
-                prefilled addresses, UPI-first payments, and verified COD.
+                RabbitPay replaces the default Shopify checkout for Indian D2C brands with prefilled
+                addresses, UPI-first payments, and verified COD - so more shoppers finish, and fewer
+                orders come back.{" "}
+                <Link
+                  href="/what-is-rabbitpay"
+                  className="font-medium text-brand underline-offset-4 hover:underline"
+                >
+                  What is RabbitPay?
+                </Link>
               </p>
             </BlurFade>
 

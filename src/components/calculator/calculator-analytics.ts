@@ -1,4 +1,4 @@
-import type { CalculatorId } from "@/data/calculators";
+import { getCalculator, type CalculatorId } from "@/data/calculators";
 import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 type CalculatorEvent =
@@ -13,7 +13,10 @@ type CalculatorEvent =
  * It takes a calculator id and nothing else, so no revenue, cost, ad spend,
  * order value or fee a merchant types can be attached to an event — not by a
  * later edit, and not by accident.
+ *
+ * The id is sent in the snake_case form GA4 reports group by: profit_margin,
+ * roi, roas, high_profit, revenue.
  */
 export function trackCalculatorEvent(event: CalculatorEvent, calculator: CalculatorId) {
-  trackEvent(event, { calculator });
+  trackEvent(event, { calculator: getCalculator(calculator).analyticsId });
 }

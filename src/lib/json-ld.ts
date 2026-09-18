@@ -1,5 +1,5 @@
 import { ALL_FAQS } from "@/data/faq";
-import { getPage, type PublicRoute } from "@/data/pages";
+import { getPage, isPublicRoute, type PublicRoute } from "@/data/pages";
 import {
   RABBITPAY_LOGO,
   SITE_NAME,
@@ -8,6 +8,9 @@ import {
   SUPPORT_PHONE_HREF,
 } from "@/data/site";
 import type { JsonLdDocument, JsonLdNode } from "@/types";
+
+/** A reference to a node defined elsewhere in the graph, by `@id` alone. */
+type JsonLdRef = { "@id": string };
 
 /**
  * Schema.org structured data for the whole site.
@@ -19,14 +22,15 @@ import type { JsonLdDocument, JsonLdNode } from "@/types";
  *
  * Two documents are emitted, and they do not overlap:
  *
- *   Root layout   `buildSiteJsonLd()`  → Organization + WebSite
+ *   Root layout   `buildSiteJsonLd()`  → Organization + WebSite + the product
  *   Each page     `buildPageJsonLd()`  → WebPage (+ BreadcrumbList, + FAQPage)
  *
  * Everything is linked by `@id` rather than repeated, which is what lets a
- * crawler resolve all of it to one organization and one website:
+ * crawler resolve all of it to one organization, one website and one product:
  *
  *   https://rabbitpay.ai/#organization      the company
  *   https://rabbitpay.ai/#website           the site
+ *   https://rabbitpay.ai/#checkout          RabbitPay Checkout, the product
  *   https://rabbitpay.ai/<path>#webpage     one page
  *   https://rabbitpay.ai/<path>#breadcrumb  that page's trail
  *
@@ -35,6 +39,7 @@ import type { JsonLdDocument, JsonLdNode } from "@/types";
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+const SOFTWARE_ID = `${SITE_URL}/#checkout`;
 
 /** Phone in the E.164 form Schema.org expects, derived from the `tel:` href. */
 const SUPPORT_PHONE_E164 = SUPPORT_PHONE_HREF.replace("tel:", "");
@@ -79,6 +84,12 @@ function organizationNode(): JsonLdNode {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
+    // The product name the site itself uses throughout the FAQ and the product
+    // page ("RabbitPay Checkout"). Google's Organization documentation asks for
+    // the same name/alternateName the site name uses, and a second real name
+    // gives a crawler one more string that resolves to this entity rather than
+    // to one of the unrelated services also called "RabbitPay".
+    alternateName: "RabbitPay Checkout",
     url: `${SITE_URL}/`,
     logo: {
       "@type": "ImageObject",
@@ -151,42 +162,91 @@ function websiteNode(): JsonLdNode {
 }
 
 /**
- * The site-level document: Organization + WebSite, emitted once from the root
- * layout so both resolve identically on every route.
+ * SoftwareApplication — RabbitPay Checkout, the thing the company sells.
+ *
+ * This exists for one reason: "RabbitPay" is an ambiguous string. Several
+ * unrelated services share the name — a US transit fare app, a Thai wallet, a
+ * crypto processor — so an Organization node alone leaves a crawler to infer
+ * the category from marketing copy. Typing the product explicitly states which
+ * kind of thing this is: business software, in the ecommerce checkout
+ * subcategory, running on Shopify, sold in India.
+ *
+ * Every property is something the site puts on screen. `featureList` is the
+ * three product pillars from `data/features.ts` plus the two capabilities the
+ * FAQ documents; `description` is the /product page's own meta description.
+ *
+ * Deliberately absent: `offers` and `aggregateRating`. RabbitPay's published
+ * price is a percentage of order value (1% prepaid, 0.3% COD), which an `Offer`
+ * cannot express honestly, and the "4.9/5 by 100+ merchants" line on the
+ * pricing page is self-asserted rather than drawn from inspectable reviews —
+ * marking either up would be a rich-result violation, not an optimisation.
+ * Without them Google will not show a software rich result, which is fine: the
+ * node is here to identify the entity, not to win a snippet.
  */
-export function buildSiteJsonLd(): JsonLdDocument {
+function softwareApplicationNode(): JsonLdNode {
   return {
-    "@context": "https://schema.org",
-    "@graph": [organizationNode(), websiteNode()],
+    "@type": "SoftwareApplication",
+    "@id": SOFTWARE_ID,
+    name: "RabbitPay Checkout",
+    url: absolute("/product"),
+    applicationCategory: "BusinessApplication",
+    applicationSubCategory: "Ecommerce checkout",
+    operatingSystem: "Web",
+    description: getPage("/product").description,
+    inLanguage: "en-IN",
+    areaServed: { "@type": "Country", name: "India" },
+    provider: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+    featureList: [
+      "One-click checkout for Shopify stores",
+      "Address, phone and email prefill",
+      "UPI-first payments with card and netbanking fallback",
+      "Verified cash on delivery with pre-dispatch risk checks",
+      "Part payment / split payment",
+      "Merchant-set COD convenience fee",
+      "Brand-customisable checkout",
+      "Works with the merchant's existing payment gateway",
+    ],
   };
 }
 
 /**
- * BreadcrumbList for a sub-page: Home → the page.
+ * The site-level document: Organization + WebSite + the product, emitted once
+ * from the root layout so all three resolve identically on every route.
+ */
+export function buildSiteJsonLd(): JsonLdDocument {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [organizationNode(), websiteNode(), softwareApplicationNode()],
+  };
+}
+
+/**
+ * BreadcrumbList for a sub-page: Home → the page, with the parent section in
+ * between where the URL has one (each calculator sits under /calculator).
  *
- * Mirrors the real URL hierarchy — every public page sits one level below the
- * root and is linked from the header. The homepage gets no breadcrumb, since a
+ * Mirrors the real URL hierarchy. The homepage gets no breadcrumb, since a
  * single-item trail describes nothing.
  */
 function breadcrumbNode(path: PublicRoute): JsonLdNode {
-  const page = getPage(path);
+  const parent = path.slice(0, path.lastIndexOf("/"));
+  const trail = [
+    { name: "Home", item: `${SITE_URL}/` },
+    ...(parent && isPublicRoute(parent)
+      ? [{ name: getPage(parent).name, item: absolute(parent) }]
+      : []),
+    { name: getPage(path).name, item: absolute(path) },
+  ];
+
   return {
     "@type": "BreadcrumbList",
     "@id": `${absolute(path)}#breadcrumb`,
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${SITE_URL}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: page.name,
-        item: absolute(path),
-      },
-    ],
+    itemListElement: trail.map((step, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: step.name,
+      item: step.item,
+    })),
   };
 }
 
@@ -216,6 +276,23 @@ function faqMainEntity() {
 }
 
 /**
+ * What a page is *about*, by reference rather than by repeating the entity.
+ *
+ * Most pages are about the company. The two that describe the product itself
+ * point at the SoftwareApplication node instead, and `/what-is-rabbitpay` — the
+ * page that answers the entity question directly — is about both. This is what
+ * lets a crawler see which URL to treat as the definition of each entity rather
+ * than inferring it from the copy.
+ */
+function pageSubject(path: PublicRoute): JsonLdRef | JsonLdRef[] {
+  if (path === "/what-is-rabbitpay") {
+    return [{ "@id": ORGANIZATION_ID }, { "@id": SOFTWARE_ID }];
+  }
+  if (path === "/product") return { "@id": SOFTWARE_ID };
+  return { "@id": ORGANIZATION_ID };
+}
+
+/**
  * The per-page document: a WebPage node, plus a BreadcrumbList on sub-pages.
  *
  * `/faq` gets the same single node typed as both WebPage and FAQPage rather
@@ -236,7 +313,7 @@ export function buildPageJsonLd(path: PublicRoute): JsonLdDocument {
     description: page.description,
     inLanguage: "en-IN",
     isPartOf: { "@id": WEBSITE_ID },
-    about: { "@id": ORGANIZATION_ID },
+    about: pageSubject(path),
     ...(isFaq ? { mainEntity: faqMainEntity() } : {}),
     ...(path === "/" ? {} : { breadcrumb: { "@id": `${url}#breadcrumb` } }),
   };

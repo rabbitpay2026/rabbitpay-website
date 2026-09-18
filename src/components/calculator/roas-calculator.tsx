@@ -11,6 +11,7 @@ import {
   StatusBadge,
 } from "@/components/calculator/calculator-results";
 import { useCalculatorForm } from "@/components/calculator/use-calculator-form";
+import { CALCULATOR_DEFAULTS } from "@/data/calculator-defaults";
 import {
   EMPTY_VALUE,
   formatCurrency,
@@ -28,7 +29,12 @@ const RULES = {
 const REQUIRED = ["adSpend", "revenue"] as const;
 
 export function RoasCalculator() {
-  const form = useCalculatorForm({ calculator: "roas", rules: RULES, required: REQUIRED });
+  const form = useCalculatorForm({
+    calculator: "roas",
+    rules: RULES,
+    required: REQUIRED,
+    defaults: CALCULATOR_DEFAULTS["roas"],
+  });
   const { raw, fields, setField, ready } = form;
 
   const margin = fields.marginBeforeAds.value;
@@ -41,7 +47,7 @@ export function RoasCalculator() {
 
   return (
     <CalculatorLayout
-      canReset={!form.isEmpty}
+      canReset={!form.isPristine}
       onReset={form.reset}
       inputs={
         <>

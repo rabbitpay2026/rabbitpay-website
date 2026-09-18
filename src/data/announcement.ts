@@ -11,7 +11,7 @@ export type Announcement = {
   shortMessage: string;
   cta: string;
   href: string;
-  /** Routes where the bar would only point at the page already open. */
+  /** Route trees where the bar would only point at what the visitor is already in. */
   hiddenOn: string[];
 };
 
@@ -26,5 +26,8 @@ export const ANNOUNCEMENT: Announcement | null = {
 /** The announcement to show on `pathname`, or `null` for none. */
 export function getAnnouncement(pathname: string): Announcement | null {
   if (!ANNOUNCEMENT) return null;
-  return ANNOUNCEMENT.hiddenOn.includes(pathname) ? null : ANNOUNCEMENT;
+  const inside = ANNOUNCEMENT.hiddenOn.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  );
+  return inside ? null : ANNOUNCEMENT;
 }

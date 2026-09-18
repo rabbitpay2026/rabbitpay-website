@@ -55,10 +55,20 @@ export const PUBLIC_PAGES = [
     // Preserved verbatim from the production React site — see `lib/seo.ts`.
     title: "RabbitPay - 1-Click Checkout for Shopify & D2C, made in India",
     description:
-      "RabbitPay helps Shopify and D2C brands ship a faster, blue-branded one-click checkout with UPI-first payments, verified COD, and address prefill.",
+      "RabbitPay is a 1-click checkout for Shopify stores run by Indian D2C brands, with prefilled addresses, UPI-first payments and verified COD to lift conversion and cut RTO.",
     ogTitle: "RabbitPay - 1-Click Checkout, built in India",
     summary:
       "Product overview, the merchant-impact figures RabbitPay publishes, pricing, features, integrations, support and a short FAQ.",
+  },
+  {
+    path: "/what-is-rabbitpay",
+    name: "What is RabbitPay?",
+    title: "What is RabbitPay?",
+    description:
+      "RabbitPay is a 1-click checkout app for Shopify stores run by Indian D2C brands. What it is, who it is for, how it works, and how it differs from the default Shopify checkout.",
+    ogTitle: "What is RabbitPay? 1-Click Checkout for Shopify in India",
+    summary:
+      "The plain-language definition of RabbitPay: the product category it belongs to, the platform it runs on, the market it serves, how a merchant goes live, and the COD King infrastructure behind it.",
   },
   {
     path: "/product",
@@ -118,7 +128,57 @@ export const PUBLIC_PAGES = [
       "Free calculators for Shopify and D2C brands. Work out profit margin, ROI, ROAS, the price and ad cost for a target margin, and monthly revenue from your own numbers.",
     ogTitle: "RabbitPay Calculator — Profit, ROI & ROAS for D2C brands",
     summary:
-      "Five calculators on one page that run in the browser on numbers the merchant enters: net profit margin, ROI, ROAS with break-even ROAS, the selling price and maximum ad cost per order for a target margin, and estimated revenue from sessions, conversion rate and average order value.",
+      "The calculator hub: links to five free calculators that run in the browser on numbers the merchant enters — profit margin, ROI, ROAS, target-margin pricing and revenue.",
+  },
+  {
+    path: "/calculator/profit-margin",
+    name: "Profit Margin Calculator",
+    title: "Profit Margin Calculator",
+    description:
+      "Free profit margin calculator for Shopify and D2C brands. Enter revenue, product cost, ads, shipping and payment fees to see net profit and net profit margin.",
+    ogTitle: "Profit Margin Calculator for D2C brands | RabbitPay",
+    summary:
+      "Net profit and net profit margin from revenue minus product cost, advertising, shipping, payment fees and other costs, with gross profit shown separately and a breakdown of where revenue goes.",
+  },
+  {
+    path: "/calculator/roi",
+    name: "ROI Calculator",
+    title: "ROI Calculator",
+    description:
+      "Free ROI calculator for D2C brands. Enter what you invested and the revenue it generated to see net return and return on investment as a percentage.",
+    ogTitle: "ROI Calculator for D2C brands | RabbitPay",
+    summary:
+      "Return on investment from total investment, additional costs and the revenue generated: net return in rupees and ROI as a percentage, with the difference from ROAS explained.",
+  },
+  {
+    path: "/calculator/roas",
+    name: "ROAS Calculator",
+    title: "ROAS Calculator",
+    description:
+      "Free ROAS calculator for D2C brands. Enter ad spend and attributed revenue to see return on ad spend, revenue per ₹1 spent and your break-even ROAS.",
+    ogTitle: "ROAS Calculator for D2C brands | RabbitPay",
+    summary:
+      "Return on ad spend from advertising spend and attributed revenue, the revenue each ₹1 of ads brings in, and — with a margin before ad spend — break-even ROAS and profit after ad spend.",
+  },
+  {
+    path: "/calculator/high-profit",
+    name: "High Profit Calculator",
+    title: "High Profit Calculator",
+    description:
+      "Free target margin calculator for D2C brands. Enter your costs per order and a target profit margin to see the selling price and maximum ad cost that reach it.",
+    ogTitle: "High Profit Calculator for D2C brands | RabbitPay",
+    summary:
+      "Works backwards from a target profit margin: current profit and margin per order, break-even selling price, the selling price required for the target, and the maximum advertising cost per order it allows.",
+  },
+  {
+    path: "/calculator/revenue",
+    name: "Revenue Calculator",
+    title: "Revenue Calculator",
+    description:
+      "Free revenue calculator for Shopify and D2C brands. Estimate monthly and annual revenue from sessions, conversion rate, average order value and a growth rate.",
+    ogTitle: "Revenue Calculator for D2C brands | RabbitPay",
+    summary:
+      "Estimated orders, monthly revenue and annual revenue from monthly sessions, conversion rate and average order value, with an optional growth rate shown next to the current estimate.",
   },
 ] as const satisfies readonly PublicPage[];
 
@@ -132,6 +192,11 @@ export const PUBLIC_ROUTES = PUBLIC_PAGES.map((page) => page.path) as PublicRout
 export const PAGE_BY_PATH = Object.fromEntries(
   PUBLIC_PAGES.map((page) => [page.path, page]),
 ) as Record<PublicRoute, PublicPage>;
+
+/** Whether a path is one of the registered public routes. */
+export function isPublicRoute(path: string): path is PublicRoute {
+  return path in PAGE_BY_PATH;
+}
 
 /** The registry entry for a route, typed so a bad path fails the build. */
 export function getPage(path: PublicRoute): PublicPage {

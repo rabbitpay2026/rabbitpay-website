@@ -18,7 +18,8 @@ export function CalculatorHero() {
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
           Work out profit margin, ROI, ROAS and revenue for your Shopify store from your own order
-          values, ad spend and fulfilment costs. Results update as you type.
+          values, ad spend and fulfilment costs. Pick a calculator below — each one opens with
+          example numbers you can replace with your own.
         </p>
         <p className="mt-6 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           {CALCULATORS.length} calculators
