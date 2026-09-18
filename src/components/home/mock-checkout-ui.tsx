@@ -5,14 +5,12 @@ import {
   BadgePercent,
   ChevronDown,
   ChevronRight,
-  Eye,
   LogOut,
   Mail,
   MapPin,
   MessageSquareText,
   Pencil,
   Phone,
-  QrCode,
   TicketPercent,
 } from "lucide-react";
 import {
@@ -54,6 +52,8 @@ import {
   SectionLabel,
   StatusBar,
   StepBanner,
+  UPI_APPS,
+  UpiAppMark,
   UpiApps,
   WhatsAppIcon,
 } from "@/components/home/mock-checkout-parts";
@@ -79,6 +79,8 @@ const BEAT = {
 } as const;
 
 const EASE = [0.2, 0, 0, 1] as const;
+
+const OFFER = "bg-[#E8F5EC] text-[#0F7B2E] ring-1 ring-inset ring-[#0F7B2E]/15";
 
 const STAGE_LABEL: Record<Stage, string> = {
   phone: "entering a mobile number",
@@ -107,7 +109,6 @@ export function MockCheckoutUI() {
   const [codeTouched, setCodeTouched] = useState(false);
   const [seconds, setSeconds] = useState(RESEND_SECONDS);
   const [method, setMethod] = useState<PaymentId | null>(null);
-  const [qrRequested, setQrRequested] = useState(false);
   const [scrolledToPayments, setScrolledToPayments] = useState(false);
   // `auto` drives the demo until the visitor interacts; it resumes after BEAT.idleResume.
   const [auto, setAuto] = useState(true);
@@ -135,7 +136,6 @@ export function MockCheckoutUI() {
     setCodeTouched(false);
     setSeconds(RESEND_SECONDS);
     setMethod(null);
-    setQrRequested(false);
     setScrolledToPayments(false);
   }, []);
 
@@ -297,7 +297,7 @@ export function MockCheckoutUI() {
       aria-label={`RabbitPay checkout demo — ${STAGE_LABEL[stage]}`}
       onClickCapture={takeOver}
       onKeyDownCapture={takeOver}
-      className="flex h-full w-full flex-col bg-[#F4F6FA] font-sans text-ink antialiased"
+      className="flex h-full w-full flex-col bg-white font-sans text-neutral-900 antialiased"
     >
       <StatusBar />
       <CheckoutHeader
@@ -326,33 +326,33 @@ export function MockCheckoutUI() {
               <SectionLabel>Offers &amp; Rewards</SectionLabel>
               {couponApplied ? (
                 <div className={cn(CARD, "flex items-center gap-[10px] px-[12px] py-[9px]")}>
-                  <span className="grid h-[26px] w-[26px] shrink-0 place-items-center rounded-[8px] bg-brand-soft text-brand">
+                  <span className="grid h-[26px] w-[26px] shrink-0 place-items-center rounded-[8px] bg-[#F2F2F2] text-neutral-900">
                     <TicketPercent className="h-[14px] w-[14px]" strokeWidth={1.8} />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[12px] font-semibold leading-none text-ink">
+                    <span className="block text-[12px] font-semibold leading-none text-neutral-900">
                       {COUPON.code} applied
                     </span>
-                    <span className="mt-[4px] block text-[10.5px] leading-none text-brand-deep">
+                    <span className="mt-[4px] block text-[10.5px] leading-none text-neutral-900/60">
                       You saved {inr(COUPON.saving)}
                     </span>
                   </span>
                   <button
                     type="button"
                     onClick={() => setCouponApplied(false)}
-                    className={cn("rounded-[6px] px-[4px] text-[11px] font-semibold text-brand", PRESSABLE)}
+                    className={cn("rounded-[6px] px-[4px] text-[11px] font-semibold text-neutral-900 underline underline-offset-2", PRESSABLE)}
                   >
                     Remove
                   </button>
                 </div>
               ) : (
                 <div className={cn(CARD, "flex h-[42px] items-center gap-[10px] px-[12px]")}>
-                  <TicketPercent className="h-[15px] w-[15px] text-ink/40" strokeWidth={1.8} />
-                  <span className="flex-1 text-[11.5px] text-ink/40">Enter coupon code</span>
+                  <TicketPercent className="h-[15px] w-[15px] text-neutral-900/40" strokeWidth={1.8} />
+                  <span className="flex-1 text-[11.5px] text-neutral-900/40">Enter coupon code</span>
                   <button
                     type="button"
                     onClick={() => setCouponApplied(true)}
-                    className={cn("rounded-[6px] px-[4px] text-[11px] font-semibold text-brand", PRESSABLE)}
+                    className={cn("rounded-[6px] px-[4px] text-[11px] font-semibold text-neutral-900 underline underline-offset-2", PRESSABLE)}
                   >
                     Apply {COUPON.code}
                   </button>
@@ -361,24 +361,24 @@ export function MockCheckoutUI() {
 
               <div className={cn(CARD, "mt-[10px] px-[12px] pb-[10px] pt-[11px]")}>
                 <div className="flex items-center justify-between">
-                  <p className="flex items-center gap-[6px] text-[12.5px] font-semibold leading-none text-ink">
+                  <p className="flex items-center gap-[6px] text-[12.5px] font-semibold leading-none text-neutral-900">
                     <MapPin className="h-[14px] w-[14px]" strokeWidth={1.8} />
                     Delivery
                   </p>
-                  <span className="flex h-[24px] items-center gap-[2px] rounded-full border border-[#E1E6EE] bg-white pl-[10px] pr-[6px] text-[11px] font-medium text-ink">
+                  <span className="flex h-[24px] items-center gap-[2px] rounded-full border border-[#E3E3E3] bg-white pl-[10px] pr-[6px] text-[11px] font-medium text-neutral-900">
                     Edit
                     <ChevronRight className="h-[12px] w-[12px]" strokeWidth={2} />
                   </span>
                 </div>
                 <div className="mt-[9px] flex items-center gap-[7px]">
-                  <p className="text-[13px] font-semibold leading-none text-ink">{DEMO_CUSTOMER.name}</p>
-                  <span className="rounded-full border border-brand/25 bg-brand-soft px-[7px] py-[3px] text-[9.5px] font-medium leading-none text-brand-deep">
+                  <p className="text-[13px] font-semibold leading-none text-neutral-900">{DEMO_CUSTOMER.name}</p>
+                  <span className="rounded-full border border-[#E3E3E3] bg-[#F2F2F2] px-[7px] py-[3px] text-[9.5px] font-medium leading-none text-neutral-900">
                     {DEMO_CUSTOMER.tag}
                   </span>
                 </div>
-                <div className="mt-[9px] rounded-[10px] bg-[#F5F7FA] px-[10px] py-[9px]">
-                  <p className="text-[10.5px] leading-[1.55] text-ink/55">{DEMO_CUSTOMER.address}</p>
-                  <div className="mt-[6px] flex flex-wrap items-center gap-x-[12px] gap-y-[4px] text-[10.5px] leading-none text-ink/60">
+                <div className="mt-[9px] rounded-[10px] bg-[#F6F6F6] px-[10px] py-[9px]">
+                  <p className="text-[10.5px] leading-[1.55] text-neutral-900/55">{DEMO_CUSTOMER.address}</p>
+                  <div className="mt-[6px] flex flex-wrap items-center gap-x-[12px] gap-y-[4px] text-[10.5px] leading-none text-neutral-900/60">
                     <span className="flex items-center gap-[5px] tabular-nums">
                       <Phone className="h-[11px] w-[11px]" strokeWidth={1.8} />
                       {prettyPhone(digits || DEMO_PHONE)}
@@ -389,76 +389,69 @@ export function MockCheckoutUI() {
                     </span>
                   </div>
                 </div>
-                <span aria-hidden="true" className="mt-[10px] block h-px bg-[#EEF1F5]" />
+                <span aria-hidden="true" className="mt-[10px] block h-px bg-[#EFEFEF]" />
                 <div className="mt-[9px] flex items-center gap-[8px] text-[11px] leading-none">
-                  <span className="shrink-0 font-medium text-ink">Shipping Method</span>
-                  <span className="min-w-0 flex-1 truncate text-ink/50">Standard Delivery (3-5 days)</span>
-                  <span className="shrink-0 font-semibold text-brand">Free</span>
+                  <span className="shrink-0 font-medium text-neutral-900">Shipping Method</span>
+                  <span className="min-w-0 flex-1 truncate text-neutral-900/50">Standard Delivery (3-5 days)</span>
+                  <span className="shrink-0 font-semibold text-neutral-900">Free</span>
                 </div>
               </div>
 
               <div ref={paymentsRef} className="mt-[16px] flex items-center gap-[10px] px-[2px]">
-                <span className="h-px flex-1 bg-ink/10" />
-                <span className="text-[10.5px] font-medium uppercase leading-none tracking-[0.12em] text-ink/40">
-                  Payment methods
+                <span className="h-px flex-1 bg-neutral-900/10" />
+                <span className="text-[10.5px] font-medium uppercase leading-none tracking-[0.12em] text-neutral-900/40">
+                  Recommended
                 </span>
-                <span className="h-px flex-1 bg-ink/10" />
+                <span className="h-px flex-1 bg-neutral-900/10" />
               </div>
 
-              <div className="mt-[10px] rounded-[18px] bg-brand px-[5px] pb-[5px] shadow-[0_10px_24px_-14px_rgba(25,107,245,0.7)]">
-                <p className="py-[6px] text-center text-[10.5px] font-semibold leading-none text-white">
-                  Most people use this!
-                </p>
-                <div className="rounded-[14px] bg-white px-[12px] pb-[14px] pt-[11px]">
-                  <div className="flex items-start gap-[10px]">
-                    <QrCode className="mt-[1px] h-[18px] w-[18px] shrink-0 text-ink/60" strokeWidth={1.7} />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[13px] font-semibold leading-none text-ink">Pay via UPI</p>
-                      <p className="mt-[5px] text-[10.5px] leading-none text-ink/50">Scan &amp; pay instantly</p>
-                    </div>
-                    <div className="flex flex-col items-end gap-[6px]">
-                      <span className="text-[13px] font-semibold leading-none tabular-nums text-ink">
-                        {inr(prepaidTotal)}
-                      </span>
-                      <OfferPill>
-                        <BadgePercent className="h-[10px] w-[10px]" strokeWidth={2} />
-                        Flat {inr(PREPAID_OFF)} Off
-                      </OfferPill>
-                    </div>
-                  </div>
-                  <div className="mt-[12px] flex items-center gap-[12px]">
-                    <div className="relative h-[80px] w-[80px] shrink-0">
-                      <DemoQr />
-                      <button
-                        type="button"
-                        onClick={() => setQrRequested(true)}
-                        className={cn(
-                          "absolute -bottom-[8px] left-1/2 flex h-[24px] -translate-x-1/2 items-center gap-[4px] whitespace-nowrap rounded-full border border-[#E1E6EE] bg-white px-[9px] text-[10.5px] font-semibold text-ink shadow-[0_2px_6px_rgba(15,23,42,0.12)]",
-                          PRESSABLE,
-                        )}
-                      >
-                        <Eye className="h-[12px] w-[12px]" strokeWidth={2} />
-                        Show QR
-                      </button>
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[10.5px] leading-[1.45] text-ink/60">
-                        {qrRequested
-                          ? "Demo checkout: no payment code is generated."
-                          : "Tap Show QR to generate your payment code"}
-                      </p>
-                      <div className="mt-[8px]">
-                        <UpiApps />
-                      </div>
-                    </div>
-                  </div>
+              <div className="mt-[10px] rounded-[16px] border border-[#DADADA] bg-white p-[12px] shadow-[0_6px_18px_-12px_rgba(0,0,0,0.25)]">
+                <div className="flex flex-wrap items-center gap-x-[8px] gap-y-[4px]">
+                  <span className="text-[11.5px] leading-none tabular-nums text-neutral-900/35 line-through">
+                    {inr(total)}
+                  </span>
+                  <span className="text-[15px] font-semibold leading-none tabular-nums text-neutral-900">
+                    {inr(prepaidTotal)}
+                  </span>
+                  <OfferPill className={OFFER}>
+                    <BadgePercent className="h-[10px] w-[10px]" strokeWidth={2} />
+                    Flat {inr(PREPAID_OFF)} Off
+                  </OfferPill>
                 </div>
+                <p className="mt-[8px] text-[11px] leading-none text-neutral-900/50">
+                  Pay by any UPI app &amp; save instantly
+                </p>
+                <div className="mt-[11px] grid grid-cols-4 gap-[7px]">
+                  {UPI_APPS.map((app) => (
+                    <div
+                      key={app.name}
+                      className={cn(
+                        "flex h-[68px] flex-col items-center justify-center gap-[7px] rounded-[12px] border",
+                        app.tile,
+                      )}
+                    >
+                      <span className="flex h-[28px] items-center justify-center">
+                        <UpiAppMark app={app} size="mark" />
+                      </span>
+                      <span className="text-[10.5px] font-medium leading-none text-neutral-900/80">{app.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-[16px] flex items-center gap-[10px] px-[2px]">
+                <span className="h-px flex-1 bg-neutral-900/10" />
+                <span className="text-[10.5px] font-medium uppercase leading-none tracking-[0.12em] text-neutral-900/40">
+                  Payment methods
+                </span>
+                <span className="h-px flex-1 bg-neutral-900/10" />
               </div>
 
               <div className="mt-[10px] space-y-[8px]">
                 {PAYMENT_METHODS.map(({ id, title, icon: Icon, prepaid }) => {
                   const selected = method === id;
-                  return (
+                  const filled = selected && id === "cod";
+                  const row = (
                     <button
                       key={id}
                       type="button"
@@ -466,51 +459,76 @@ export function MockCheckoutUI() {
                       aria-pressed={selected}
                       className={cn(
                         CARD,
-                        "flex w-full items-center gap-[10px] px-[12px] py-[11px] text-left",
+                        "flex w-full items-center gap-[12px] px-[13px] py-[12px] text-left",
                         PRESSABLE,
-                        selected
-                          ? "border-brand bg-[#F5F9FF] ring-1 ring-brand/30"
-                          : "hover:border-[#D5DCE6]",
+                        filled
+                          ? "border-[#0F7B2E] bg-[#0F7B2E] shadow-[0_8px_18px_-10px_rgba(15,123,46,0.7)]"
+                          : selected
+                            ? "border-neutral-900 ring-1 ring-neutral-900"
+                            : "hover:border-[#C8C8C8]",
                       )}
                     >
                       <Icon
-                        className={cn("h-[18px] w-[18px] shrink-0", selected ? "text-brand" : "text-ink/55")}
+                        className={cn("h-[18px] w-[18px] shrink-0", filled ? "text-white" : "text-neutral-900/75")}
                         strokeWidth={1.7}
                       />
                       <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-center gap-x-[6px] gap-y-[3px] text-[12.5px] font-medium leading-tight text-ink">
+                        <span
+                          className={cn(
+                            "flex flex-wrap items-center gap-x-[7px] gap-y-[4px] text-[12.5px] font-medium leading-tight",
+                            filled ? "text-white" : "text-neutral-900",
+                          )}
+                        >
                           {title}
                           {id === "upi" ? <UpiApps /> : null}
                           {id === "card" ? <CardNetworks /> : null}
                         </span>
                         {prepaid ? (
-                          <OfferPill className="mt-[5px]">
+                          <OfferPill className={cn("mt-[6px]", OFFER)}>
                             <BadgePercent className="h-[10px] w-[10px]" strokeWidth={2} />
                             Flat {inr(PREPAID_OFF)} Off
                           </OfferPill>
                         ) : null}
                       </span>
-                      <span className="text-[12.5px] font-semibold tabular-nums text-ink">
+                      <span
+                        className={cn(
+                          "shrink-0 text-[12.5px] font-semibold tabular-nums",
+                          filled ? "text-white" : "text-neutral-900",
+                        )}
+                      >
                         {inr(prepaid ? prepaidTotal : total)}
                       </span>
                       <ChevronRight
-                        className={cn("h-[14px] w-[14px] shrink-0", selected ? "text-brand" : "text-ink/35")}
+                        className={cn(
+                          "h-[14px] w-[14px] shrink-0",
+                          filled ? "text-white" : selected ? "text-neutral-900" : "text-neutral-900/35",
+                        )}
                         strokeWidth={2}
                       />
                     </button>
                   );
+                  return id === "upi" ? (
+                    <div key={id} className="rounded-[17px] bg-neutral-900 px-[3px] pb-[3px]">
+                      <p className="py-[6px] text-center text-[10.5px] font-semibold leading-none text-white">
+                        Most people use this!
+                      </p>
+                      {row}
+                    </div>
+                  ) : (
+                    row
+                  );
                 })}
               </div>
               {method ? (
-                <p className="mt-[8px] text-center text-[10px] leading-none text-ink/45">
+                <p className="mt-[8px] text-center text-[10px] leading-none text-neutral-900/45">
                   Demo checkout: no payment is initiated.
                 </p>
               ) : null}
 
               <div className={cn(CARD, "mt-[10px] flex items-center justify-between px-[12px] py-[9px]")}>
                 <div>
-                  <p className="text-[10px] leading-none text-ink/50">Logged in with</p>
-                  <p className="mt-[4px] text-[12px] leading-none tabular-nums text-ink">
+                  <p className="text-[10px] leading-none text-neutral-900/50">Logged in with</p>
+                  <p className="mt-[4px] text-[12px] leading-none tabular-nums text-neutral-900">
                     +91{digits || DEMO_PHONE}
                   </p>
                 </div>
@@ -518,7 +536,7 @@ export function MockCheckoutUI() {
                   type="button"
                   onClick={restart}
                   className={cn(
-                    "flex h-[28px] items-center gap-[5px] rounded-[8px] border border-[#D5DCE6] bg-white px-[9px] text-[11px] font-medium text-ink hover:bg-black/[0.02]",
+                    "flex h-[28px] items-center gap-[5px] rounded-[8px] border border-[#D4D4D4] bg-white px-[9px] text-[11px] font-medium text-neutral-900 hover:bg-black/[0.02]",
                     PRESSABLE,
                   )}
                 >
@@ -548,7 +566,7 @@ export function MockCheckoutUI() {
               <CouponCard applied={couponApplied} onToggle={() => setCouponApplied((applied) => !applied)} />
 
               <div className={cn(CARD, "mt-[10px] px-[12px] pb-[14px] pt-[12px]")}>
-                <p className="flex items-center gap-[6px] text-[10.5px] font-semibold uppercase leading-none tracking-[0.06em] text-ink/40">
+                <p className="flex items-center gap-[6px] text-[10.5px] font-semibold uppercase leading-none tracking-[0.06em] text-neutral-900/40">
                   <Phone className="h-[12px] w-[12px]" strokeWidth={1.8} />
                   Enter mobile
                 </p>
@@ -556,13 +574,13 @@ export function MockCheckoutUI() {
                 <div
                   className={cn(
                     "mt-[9px] flex h-[44px] items-center rounded-[11px] border bg-white px-[11px] transition-[border-color,box-shadow] duration-200",
-                    phoneFocused ? "border-brand shadow-[0_0_0_3px_rgba(25,107,245,0.12)]" : "border-[#E1E6EE]",
+                    phoneFocused ? "border-neutral-900 shadow-[0_0_0_3px_rgba(0,0,0,0.06)]" : "border-[#E3E3E3]",
                   )}
                 >
                   <span className="flex shrink-0 items-center gap-[6px]">
                     <IndiaFlag />
-                    <span className="text-[14px] font-medium leading-none text-ink">+91</span>
-                    <ChevronDown className="h-[13px] w-[13px] text-ink/45" strokeWidth={2} />
+                    <span className="text-[14px] font-medium leading-none text-neutral-900">+91</span>
+                    <ChevronDown className="h-[13px] w-[13px] text-neutral-900/45" strokeWidth={2} />
                   </span>
                   <span aria-hidden="true" className="mx-[10px] h-[24px] w-px shrink-0 bg-black/[0.09]" />
                   <span className="relative min-w-0 flex-1 text-[16px]">
@@ -576,13 +594,13 @@ export function MockCheckoutUI() {
                       autoComplete="off"
                       aria-label="Mobile number (demo)"
                       placeholder="Phone"
-                      className="w-full cursor-text bg-transparent text-[16px] font-medium leading-none tabular-nums text-ink outline-none placeholder:font-normal placeholder:text-ink/35"
+                      className="w-full cursor-text bg-transparent text-[16px] font-medium leading-none tabular-nums text-neutral-900 outline-none placeholder:font-normal placeholder:text-neutral-900/35"
                     />
                     {phoneFocused ? (
                       <span
                         aria-hidden="true"
                         style={{ left: `${digits.length}ch` }}
-                        className="pointer-events-none absolute top-1/2 h-[18px] w-[1.5px] -translate-y-1/2 animate-blink bg-ink/80"
+                        className="pointer-events-none absolute top-1/2 h-[18px] w-[1.5px] -translate-y-1/2 animate-blink bg-neutral-900/80"
                       />
                     ) : null}
                   </span>
@@ -598,8 +616,8 @@ export function MockCheckoutUI() {
                       transition={fade}
                       className="overflow-hidden"
                     >
-                      <div className="mt-[10px] rounded-[11px] border border-[#E6EAF0] bg-[#F7F9FC] px-[11px] pb-[10px] pt-[11px]">
-                        <p className="text-[11.5px] font-medium leading-none text-ink">Recently used numbers</p>
+                      <div className="mt-[10px] rounded-[11px] border border-[#E8E8E8] bg-[#F8F8F8] px-[11px] pb-[10px] pt-[11px]">
+                        <p className="text-[11.5px] font-medium leading-none text-neutral-900">Recently used numbers</p>
                         <button
                           type="button"
                           onClick={() => {
@@ -607,7 +625,7 @@ export function MockCheckoutUI() {
                             setFieldActive(false);
                           }}
                           className={cn(
-                            "mt-[9px] flex h-[36px] w-full items-center gap-[5px] rounded-[9px] border border-[#E1E6EE] bg-white px-[10px] text-[12.5px] tabular-nums text-ink hover:border-brand/40",
+                            "mt-[9px] flex h-[36px] w-full items-center gap-[5px] rounded-[9px] border border-[#E3E3E3] bg-white px-[10px] text-[12.5px] tabular-nums text-neutral-900 hover:border-neutral-900/40",
                             PRESSABLE,
                           )}
                         >
@@ -618,7 +636,7 @@ export function MockCheckoutUI() {
                           type="button"
                           onClick={() => setHistoryCleared(true)}
                           className={cn(
-                            "mt-[9px] rounded-[4px] text-[10.5px] leading-none text-ink/50 underline underline-offset-2",
+                            "mt-[9px] rounded-[4px] text-[10.5px] leading-none text-neutral-900/50 underline underline-offset-2",
                             PRESSABLE,
                           )}
                         >
@@ -633,7 +651,7 @@ export function MockCheckoutUI() {
                   type="button"
                   onClick={sendCode}
                   className={cn(
-                    "mt-[12px] flex h-[42px] w-full items-center justify-center gap-[8px] rounded-[10px] bg-brand text-[13px] font-semibold text-white shadow-[0_8px_18px_-10px_rgba(25,107,245,0.8)] hover:bg-brand-deep",
+                    "mt-[12px] flex h-[42px] w-full items-center justify-center gap-[8px] rounded-[10px] bg-neutral-900 text-[13px] font-semibold text-white shadow-[0_8px_18px_-10px_rgba(0,0,0,0.6)] hover:bg-neutral-800",
                     PRESSABLE,
                   )}
                 >
@@ -656,7 +674,7 @@ export function MockCheckoutUI() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={fade}
-              className="absolute inset-0 bg-ink/10"
+              className="absolute inset-0 bg-neutral-900/10"
             />
           ) : null}
           {sheetOpen ? (
@@ -666,7 +684,7 @@ export function MockCheckoutUI() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: reduceMotion ? 0 : "100%", opacity: reduceMotion ? 0 : 1 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.42, ease: EASE }}
-              className="absolute inset-x-0 bottom-0 top-[64px] flex flex-col rounded-t-[24px] bg-[#F4F6FA] shadow-[0_-12px_30px_-14px_rgba(15,23,42,0.35)]"
+              className="absolute inset-x-0 bottom-0 top-[64px] flex flex-col rounded-t-[24px] bg-white shadow-[0_-12px_30px_-14px_rgba(0,0,0,0.35)]"
             >
               <div className="relative min-h-0 flex-1">
                 <AnimatePresence initial={false} mode="wait">
@@ -678,22 +696,22 @@ export function MockCheckoutUI() {
                       className="flex h-full flex-col items-center px-[20px] pt-[24px] text-center"
                     >
                       <LockGlyph />
-                      <p className="mt-[12px] text-[17px] font-semibold leading-none text-ink">
+                      <p className="mt-[12px] text-[17px] font-semibold leading-none text-neutral-900">
                         Verify Mobile Number
                       </p>
-                      <p className="mt-[8px] text-[10.5px] leading-none text-ink/45">
+                      <p className="mt-[8px] text-[10.5px] leading-none text-neutral-900/45">
                         For a secure and faster checkout
                       </p>
-                      <p className="mt-[18px] flex items-center justify-center gap-[6px] text-[11.5px] leading-none text-ink/70">
+                      <p className="mt-[18px] flex items-center justify-center gap-[6px] text-[11.5px] leading-none text-neutral-900/70">
                         Enter the code sent to
-                        <span className="font-medium tabular-nums text-ink underline underline-offset-2">
+                        <span className="font-medium tabular-nums text-neutral-900 underline underline-offset-2">
                           +91{digits}
                         </span>
                         <button
                           type="button"
                           onClick={() => setStage("phone")}
                           className={cn(
-                            "flex items-center gap-[3px] rounded-[5px] bg-brand-soft px-[5px] py-[3px] text-[11px] font-medium leading-none text-brand",
+                            "flex items-center gap-[3px] rounded-[5px] bg-[#F2F2F2] px-[5px] py-[3px] text-[11px] font-medium leading-none text-neutral-900",
                             PRESSABLE,
                           )}
                         >
@@ -719,34 +737,34 @@ export function MockCheckoutUI() {
                               maxLength={1}
                               aria-label={`Digit ${index + 1} of ${CODE_LENGTH}`}
                               className={cn(
-                                "h-[48px] w-[46px] rounded-[10px] border text-center text-[18px] font-semibold tabular-nums text-ink outline-none transition-[border-color,box-shadow,background-color] duration-200 focus:border-brand focus:bg-white focus:shadow-[0_0_0_3px_rgba(25,107,245,0.15)]",
-                                digit ? "border-ink/25 bg-brand-soft" : "border-[#D5DCE6] bg-white",
+                                "h-[48px] w-[46px] rounded-[10px] border text-center text-[18px] font-semibold tabular-nums text-neutral-900 outline-none transition-[border-color,box-shadow,background-color] duration-200 focus:border-neutral-900 focus:bg-white focus:shadow-[0_0_0_3px_rgba(0,0,0,0.08)]",
+                                digit ? "border-neutral-900/30 bg-[#F5F5F5]" : "border-[#D4D4D4] bg-white",
                                 index === activeBox &&
                                   !codeTouched &&
-                                  "border-brand shadow-[0_0_0_3px_rgba(25,107,245,0.15)]",
+                                  "border-neutral-900 shadow-[0_0_0_3px_rgba(0,0,0,0.08)]",
                               )}
                             />
                             {index === activeBox && !codeTouched ? (
                               <span
                                 aria-hidden="true"
-                                className="pointer-events-none absolute left-1/2 top-1/2 h-[20px] w-[1.5px] -translate-x-1/2 -translate-y-1/2 animate-blink bg-ink/80"
+                                className="pointer-events-none absolute left-1/2 top-1/2 h-[20px] w-[1.5px] -translate-x-1/2 -translate-y-1/2 animate-blink bg-neutral-900/80"
                               />
                             ) : null}
                           </span>
                         ))}
                       </div>
 
-                      <p className="mt-[18px] text-[10.5px] leading-none text-ink/45">
+                      <p className="mt-[18px] text-[10.5px] leading-none text-neutral-900/45">
                         Didn&apos;t receive the code?{" "}
                         {seconds > 0 ? (
-                          <span className="font-medium tabular-nums text-ink/75">
+                          <span className="font-medium tabular-nums text-neutral-900/75">
                             Retry in 00:{String(seconds).padStart(2, "0")}
                           </span>
                         ) : (
-                          <span className="font-medium text-brand">Resend below</span>
+                          <span className="font-medium text-neutral-900 underline underline-offset-2">Resend below</span>
                         )}
                       </p>
-                      <div className="mt-[12px] flex items-center gap-[8px] text-[10.5px] leading-none text-ink/45">
+                      <div className="mt-[12px] flex items-center gap-[8px] text-[10.5px] leading-none text-neutral-900/45">
                         Re-send via:
                         {(
                           [
@@ -760,7 +778,7 @@ export function MockCheckoutUI() {
                             disabled={seconds > 0}
                             onClick={resend}
                             className={cn(
-                              "flex h-[22px] items-center gap-[4px] rounded-[5px] border border-[#D5DCE6] bg-white px-[6px] text-[10.5px] text-ink/70 disabled:opacity-60",
+                              "flex h-[22px] items-center gap-[4px] rounded-[5px] border border-[#D4D4D4] bg-white px-[6px] text-[10.5px] text-neutral-900/70 disabled:opacity-60",
                               PRESSABLE,
                             )}
                           >
@@ -801,14 +819,14 @@ function LockGlyph() {
     <svg viewBox="0 0 48 48" aria-hidden="true" className="h-[52px] w-[52px]">
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#4A8CFA" />
-          <stop offset="1" stopColor="#0D4CB3" />
+          <stop offset="0" stopColor="#3F3F3F" />
+          <stop offset="1" stopColor="#0A0A0A" />
         </linearGradient>
       </defs>
       <path
         d="M15 21v-6a9 9 0 0 1 18 0v6"
         fill="none"
-        stroke="#0D4CB3"
+        stroke="#171717"
         strokeWidth="4"
         strokeLinecap="round"
       />
@@ -819,25 +837,3 @@ function LockGlyph() {
   );
 }
 
-/** Blurred placeholder in the shape of a QR code; intentionally not a scannable code. */
-function DemoQr() {
-  const size = 11;
-  const inFinder = (row: number, col: number) =>
-    (row < 3 && col < 3) || (row < 3 && col >= size - 3) || (row >= size - 3 && col < 3);
-
-  return (
-    <svg
-      viewBox={`0 0 ${size} ${size}`}
-      aria-hidden="true"
-      className="h-full w-full rounded-[8px] bg-white p-[6px] opacity-70 blur-[2.5px] ring-1 ring-[#E6EAF0]"
-      shapeRendering="crispEdges"
-    >
-      {Array.from({ length: size * size }, (_, i) => {
-        const row = Math.floor(i / size);
-        const col = i % size;
-        const on = inFinder(row, col) ? row % 2 === 0 || col % 2 === 0 : (row * 7 + col * 13) % 3 === 0;
-        return on ? <rect key={i} x={col} y={row} width={1} height={1} fill="#0F172A" /> : null;
-      })}
-    </svg>
-  );
-}

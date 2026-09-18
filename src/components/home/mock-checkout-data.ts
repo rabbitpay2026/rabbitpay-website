@@ -1,4 +1,4 @@
-import { Banknote, CreditCard, Landmark, QrCode, Wallet, type LucideIcon } from "lucide-react";
+import { Banknote, CreditCard, Landmark, Smartphone, Wallet, type LucideIcon } from "lucide-react";
 
 /** Logical width the checkout screen is laid out at before it is scaled to the device glass. */
 export const SCREEN_WIDTH = 390;
@@ -29,7 +29,7 @@ export const PAYMENT_METHODS: readonly {
   icon: LucideIcon;
   prepaid: boolean;
 }[] = [
-  { id: "upi", title: "Pay via UPI", icon: QrCode, prepaid: true },
+  { id: "upi", title: "Pay via UPI", icon: Smartphone, prepaid: true },
   { id: "card", title: "Pay via Debit/Credit cards", icon: CreditCard, prepaid: true },
   { id: "wallet", title: "Pay via Wallets", icon: Wallet, prepaid: true },
   { id: "netbanking", title: "Pay via NetBanking", icon: Landmark, prepaid: true },
