@@ -26,13 +26,13 @@ export function DemoCTA() {
           <div className="relative z-10 mx-auto max-w-3xl text-center text-white">
             <BlurFade>
               <h2 className="text-3xl font-semibold leading-[1.02] tracking-tighter sm:text-4xl md:text-5xl">
-                Want to see RabbitPay in action?
+                Ready to improve your checkout
               </h2>
             </BlurFade>
             <BlurFade delay={0.12}>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
-                Get a personalized walkthrough of RabbitPay and discover how leading D2C brands
-                increase conversions and reduce RTO.
+                Leave your details and the team will walk you through the checkout on your own
+                store — address autofill, the UPI-first payment step, and what setup involves.
               </p>
               <p
                 data-testid="demo-cta-response-time"
@@ -44,7 +44,14 @@ export function DemoCTA() {
 
             <BlurFade delay={0.22}>
               <div className="mt-8 flex justify-center">
-                <LeadCaptureCard source="demo_cta" testPrefix="demo-lead" showHeading={false} />
+                {/* The same form, endpoint, validation and states as before —
+                    only the button says what it does: the team follows up. */}
+                <LeadCaptureCard
+                  source="demo_cta"
+                  testPrefix="demo-lead"
+                  showHeading={false}
+                  submitLabel="Book a Demo"
+                />
               </div>
             </BlurFade>
 

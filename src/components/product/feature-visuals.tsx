@@ -19,9 +19,12 @@ function PrefillVisual() {
       {PREFILL_FIELDS.map((field) => (
         <FieldRow key={field.label} {...field} />
       ))}
+      {/* "3 fields - 220 ms" was a field count and a latency the site never
+          measured. Replaced with what the FAQ and llms.txt already state about
+          prefilled details: they are editable. */}
       <div className="mt-3 flex items-center justify-between rounded-xl border border-brand/20 bg-brand/5 px-4 py-3 text-sm">
         <span className="font-medium text-brand">Address prefilled</span>
-        <span className="font-mono text-xs text-muted-foreground">3 fields - 220 ms</span>
+        <span className="text-xs text-muted-foreground">Editable before payment</span>
       </div>
     </div>
   );
@@ -64,7 +67,7 @@ function UpiVisual() {
   );
 }
 
-function FieldRow({ label, value, fill }: { label: string; value: string; fill: number }) {
+function FieldRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-border bg-background/75 p-4 dark:bg-white/[0.03]">
       <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-muted-foreground">
@@ -72,11 +75,11 @@ function FieldRow({ label, value, fill }: { label: string; value: string; fill: 
         <span className="text-success">Auto-filled</span>
       </div>
       <p className="mt-1 text-sm font-semibold text-ink dark:text-white">{value}</p>
+      {/* A complete bar, not a percentage: the row is showing a field that came
+          back filled in, and the old partial widths implied a measured fill
+          rate per field that nothing on this site supports. */}
       <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-muted">
-        <div
-          className="h-full rounded-full bg-brand transition-all duration-1000"
-          style={{ width: `${fill}%` }}
-        />
+        <div className="h-full w-full rounded-full bg-brand" />
       </div>
     </div>
   );

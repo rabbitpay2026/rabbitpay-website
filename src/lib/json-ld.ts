@@ -73,10 +73,11 @@ function pageTitle(path: PublicRoute): string {
  *
  * Also deliberately absent, because the site does not state them: `legalName`,
  * `address`, `foundingDate`, `founder`, `numberOfEmployees`, `vatID`/`taxID`
- * and `aggregateRating`. In particular the pricing page's "Rated 4.9/5 by 100+
- * merchants" line is NOT marked up: Google requires aggregate ratings to come
- * from genuinely collected, inspectable reviews, and self-asserted ratings in
- * structured data are a manual-action risk.
+ * and `aggregateRating`. The pricing section used to carry a "Rated 4.9/5 by
+ * 100+ merchants" line, which was never marked up here — Google requires
+ * aggregate ratings to come from genuinely collected, inspectable reviews, and
+ * self-asserted ratings in structured data are a manual-action risk. That line
+ * has since been removed from the page as well, for the same lack of evidence.
  */
 function organizationNode(): JsonLdNode {
   const home = getPage("/");
@@ -177,9 +178,10 @@ function websiteNode(): JsonLdNode {
  *
  * Deliberately absent: `offers` and `aggregateRating`. RabbitPay's published
  * price is a percentage of order value (1% prepaid, 0.3% COD), which an `Offer`
- * cannot express honestly, and the "4.9/5 by 100+ merchants" line on the
- * pricing page is self-asserted rather than drawn from inspectable reviews —
- * marking either up would be a rich-result violation, not an optimisation.
+ * cannot express honestly, and there is no rating to mark up — the site
+ * publishes no reviews, and the one self-asserted rating line it used to carry
+ * has been removed. Marking either up would be a rich-result violation, not an
+ * optimisation.
  * Without them Google will not show a software rich result, which is fine: the
  * node is here to identify the entity, not to win a snippet.
  */

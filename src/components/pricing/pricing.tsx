@@ -1,4 +1,5 @@
-import { ArrowRight, Check, Minus, Sparkles, Star } from "lucide-react";
+import { ArrowRight, Check, Minus, Sparkles } from "lucide-react";
+import type { ReactNode } from "react";
 import { BookDemoButton } from "@/components/cta/book-demo-button";
 import { TalkToSalesButton } from "@/components/cta/talk-to-sales-button";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
@@ -16,7 +17,18 @@ import type { PricingCellValue } from "@/types";
  * Stays a Server Component — only the two CTAs are interactive, and each is its
  * own small client component.
  */
-export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {}) {
+/**
+ * `heading` and `lead` let a host page state the fees in its own words without
+ * a second pricing component existing. The homepage passes the action plan's
+ * "Clear pricing" heading and one explanation of every fee the site publishes;
+ * /pricing keeps the copy it has always had by leaving both out.
+ */
+export function Pricing({
+  asPage,
+  headingLevel = "h2",
+  heading,
+  lead,
+}: SectionShellProps & { heading?: string; lead?: ReactNode } = {}) {
   const Heading = headingLevel;
   const CtaHeading = headingLevel === "h1" ? "h2" : "h3";
   return (
@@ -36,12 +48,16 @@ export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {})
         <BlurFade>
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-brand">Pricing</p>
           <Heading className="mt-3 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tighter text-ink dark:text-white sm:text-4xl md:text-5xl">
-            Simple pricing that feels premium, not punitive.
+            {heading ?? "Simple pricing that feels premium, not punitive."}
           </Heading>
           <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            Two clear rates: 1% on successful prepaid orders and 0.3% on successful COD orders. One
-            plan for growing brands, with an enterprise path for higher volume merchants that need
-            bespoke rollout support.
+            {lead ?? (
+              <>
+                Two clear rates: 1% on successful prepaid orders and 0.3% on successful COD orders.
+                One plan for growing brands, with an enterprise path for higher volume merchants
+                that need bespoke rollout support.
+              </>
+            )}
           </p>
         </BlurFade>
 
@@ -62,7 +78,16 @@ export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {})
         {/* Comparison table */}
         <BlurFade delay={0.12}>
           <div className="mt-10 overflow-hidden rounded-3xl border border-border bg-card shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
-            <div className="overflow-x-auto">
+            {/*
+              `contain:paint` alongside the scroller: without it the 560px
+              min-width of the table below propagated out past both this
+              scroll container and the rounded `overflow-hidden` wrapper, and
+              made the whole document 93px wider than a 390px phone viewport —
+              the page panned sideways on mobile, here and on /pricing. The
+              table still lays out at 560px and still scrolls horizontally
+              inside this box; nothing about it looks different.
+            */}
+            <div className="overflow-x-auto [contain:paint]">
               <table className="w-full min-w-[560px] border-collapse text-left">
                 <thead>
                   <tr className="border-b border-border bg-[linear-gradient(180deg,rgba(25,107,245,0.06),transparent)]">
@@ -160,13 +185,19 @@ export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {})
               Ready to start accepting payments faster?
             </CtaHeading>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              {/*
+                Labelled "Book a Demo", not "Start Free": it opens the lead form
+                and the team follows up — there is no instant self-serve
+                activation to promise. `location` and `intent` are unchanged, so
+                the analytics event this has always sent is unchanged too.
+              */}
               <BookDemoButton
                 location="pricing_start_free"
                 intent="start_free"
                 testId="pricing-primary-cta"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-7 py-3.5 text-base font-semibold text-white shadow-[0_18px_40px_rgba(25,107,245,0.28)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_22px_46px_rgba(25,107,245,0.36)] active:translate-y-0 sm:w-auto"
               >
-                Start Free
+                Book a Demo
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </BookDemoButton>
               <TalkToSalesButton
@@ -181,10 +212,15 @@ export function Pricing({ asPage, headingLevel = "h2" }: SectionShellProps = {})
         </BlurFade>
 
         <BlurFade delay={0.24}>
+          {/*
+            "Rated 4.9/5 by 100+ merchants" used to lead this row. Nothing in
+            this repository records a rating, a review count or where either
+            came from, and `lib/json-ld.ts` already refuses to mark it up for
+            exactly that reason — a self-asserted aggregate rating is a
+            manual-action risk. Removed rather than restated with a different
+            number. The remaining trust points are unchanged.
+          */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
-              <Star className="h-3.5 w-3.5 fill-brand text-brand" /> Rated 4.9/5 by 100+ merchants
-            </span>
             {PRICING_TRUST_POINTS.map((point) => (
               <span key={point}>{point}</span>
             ))}

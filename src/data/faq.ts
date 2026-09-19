@@ -57,16 +57,15 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         answer:
           "Three costs that sit at the same point in an Indian D2C funnel: shoppers dropping off during a slow checkout, unverified COD orders that ship and come back undelivered, and payment friction on mobile. RabbitPay addresses all three at the checkout step itself — address prefill to cut typing, verified COD and risk checks to cut RTO, and a UPI-first payment step for mobile-heavy traffic.",
       },
-      {
-        // DERIVED — source: `data/metrics.ts`, rendered in the homepage "Merchant
-        // impact" band. Reported as RabbitPay's published figures, which is what
-        // they are; no independent benchmark is claimed.
-        id: "what-results-do-merchants-see",
-        question: "What results does RabbitPay report?",
-        answer:
-          "RabbitPay publishes four merchant-impact figures on its homepage: a 35% conversion uplift, a 28% reduction in return-to-origin, checkout completed in under 3 seconds, and a 92% address prefill rate. These are the figures RabbitPay publishes; what an individual store sees depends on its catalogue, traffic mix and current checkout.",
-        link: { href: "/#metrics", label: "See the merchant-impact figures" },
-      },
+      /*
+        Removed: "What results does RabbitPay report?". It existed only to
+        report the four merchant-impact counters the homepage used to carry
+        (35% conversion uplift, 28% RTO reduction, sub-3s checkout, 92% prefill
+        rate). Those counters are gone — no merchant data in this repository
+        supports them — so the question had nothing left to point at, and
+        leaving it would have kept the figures in the FAQ schema after they
+        stopped being published.
+      */
       {
         // ORIGINAL
         id: "powered-by-cod-king",
@@ -91,11 +90,18 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         link: { href: "/product", label: "See the checkout in detail" },
       },
       {
-        // ORIGINAL
+        /*
+          ORIGINAL, with one edit: the "up to a 95% fill rate" figure has been
+          dropped. It is a performance claim with no supporting merchant data in
+          this repository, it sat on the homepage FAQ preview next to a 92%
+          prefill counter that said something different, and that counter has
+          now been removed for the same reason. Everything else the answer said
+          is unchanged.
+        */
         id: "address-prefill",
         question: "Can my customers get their address pre-filled during checkout?",
         answer:
-          "Yes. RabbitPay intelligently pre-fills customer addresses with up to a 95% fill rate, enabling faster checkouts, fewer address errors, and higher conversion rates.",
+          "Yes. RabbitPay pre-fills the customer's saved address at checkout, so shoppers type less, make fewer address errors, and move through checkout faster.",
       },
       {
         // DERIVED — source: `data/features.ts` UPI-first feature and bullets,

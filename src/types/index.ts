@@ -115,12 +115,12 @@ export type PricingRow = {
   enterprise: PricingCellValue;
 };
 
-/* -------------------------------- metrics -------------------------------- */
+/* --------------------------- hero highlights ----------------------------- */
 
-export type MetricItem = {
-  value: number;
-  prefix?: string;
-  suffix?: string;
+/** One capability callout in the hero, beside the checkout demo. */
+export type HeroHighlight = {
+  title: string;
+  /** One short supporting line — kept under ~30 characters so the card stays compact. */
   label: string;
   /** Component reference, not an element — keeps the data module JSX-free. */
   Icon: LucideIcon;

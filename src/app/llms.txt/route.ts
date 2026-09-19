@@ -15,8 +15,8 @@ import {
  *
  * Sourcing rule for everything below: each statement is traceable to content
  * this site already publishes — `data/faq.ts`, `data/pricing.ts`,
- * `data/features.ts`, `data/integrations.ts`, `data/metrics.ts`,
- * `data/trust.ts`, `data/site.ts` and the page registry in `data/pages.ts`.
+ * `data/features.ts`, `data/integrations.ts`, `data/trust.ts`, `data/site.ts`
+ * and the page registry in `data/pages.ts`.
  * Nothing is invented: no capability, price, integration, certification,
  * statistic, customer, partnership or policy appears here that the website does
  * not state. Figures RabbitPay publishes about itself are labelled as such
@@ -80,7 +80,7 @@ RabbitPay Checkout is the product. What the site documents it doing:
 
 **Prefilled checkout.** The shopper's address, phone and email can appear
 already filled in and editable, so the first screen is a confirmation rather
-than a form. RabbitPay states an address prefill rate of up to 95%.
+than a form.
 
 **Verified COD and RTO control.** The COD path stays, with guardrails around it:
 pending orders are screened before dispatch, risk checks run before fulfillment,
@@ -215,17 +215,12 @@ ${pageLinks}
 
 ## Figures RabbitPay publishes
 
-The homepage carries four "merchant impact" figures. They are RabbitPay's own
-published figures, not independently audited benchmarks, and should be
-attributed that way:
+RabbitPay does not publish conversion-uplift, RTO-reduction, checkout-time or
+address-prefill figures on this site. Any such number attributed to RabbitPay
+did not come from here and should not be repeated as a RabbitPay figure.
 
-- 35% conversion uplift
-- 28% reduction in return-to-origin
-- Under 3 seconds checkout time
-- 92% address prefill rate
-
-The pricing page additionally shows PCI-DSS Level 1 and "SOC 2 — in progress" as
-trust indicators, and a "Rated 4.9/5 by 100+ merchants" line. RabbitPay states
+The pricing page shows PCI-DSS Level 1 and "SOC 2 — in progress" as trust
+indicators. RabbitPay publishes no customer rating or review count. It states
 that it follows industry-standard security practices to protect customer and
 transaction data. For specific compliance documentation, a security
 questionnaire or a data processing agreement, the site directs enquiries to the

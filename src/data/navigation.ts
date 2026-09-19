@@ -94,7 +94,6 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "What is RabbitPay?", href: "/what-is-rabbitpay" },
       { label: "1-Click Checkout", href: "/product" },
-      { label: "Conversion Metrics", href: "/#metrics" },
       { label: "Pricing", href: "/pricing" },
       { label: "Calculator", href: "/calculator" },
       { label: "Support", href: "/support" },

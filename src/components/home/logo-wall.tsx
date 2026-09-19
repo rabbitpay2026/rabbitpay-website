@@ -15,12 +15,12 @@ export function LogoWall() {
               Trusted by D2C brands
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tighter text-ink dark:text-white">
-              Built for brands that care about conversion.
+              Brands running RabbitPay checkout.
             </h2>
           </div>
           <p className="max-w-xl text-sm text-muted-foreground">
-            RabbitPay fits naturally into premium D2C funnels, whether the goal is higher
-            conversion, lower RTO, or a more polished checkout experience.
+            Indian D2C brands selling on Shopify, using RabbitPay for address autofill, UPI-first
+            payments and verified cash on delivery at the checkout step.
           </p>
         </div>
 
