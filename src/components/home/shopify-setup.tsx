@@ -1,4 +1,5 @@
 import { CreditCard, FileCheck2, Palette, ShoppingBag, Timer } from "lucide-react";
+import Link from "next/link";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { Integrations } from "@/components/product/integrations";
 import { SHOPIFY_ID } from "@/data/anchors";
@@ -67,7 +68,13 @@ export function ShopifySetup() {
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
             RabbitPay replaces the checkout step on a Shopify store. The team installs and
             configures it, and the rest of the stack — gateway, settlements, branding — stays where
-            it is.
+            it is.{" "}
+            <Link
+              href="/integrations"
+              className="font-medium text-brand underline-offset-4 hover:underline"
+            >
+              See what each integration does
+            </Link>
           </p>
         </BlurFade>
 

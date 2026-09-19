@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { CHECKOUT_DEMO_ID } from "@/data/anchors";
+import { CHECKOUT_JOURNEY as STEPS } from "@/data/checkout-journey";
 import { DEMO_STORE_URL } from "@/data/site";
 
 /**
@@ -15,29 +16,9 @@ import { DEMO_STORE_URL } from "@/data/site";
  * Every step describes what the demo actually does, ending at the order
  * confirmation screen. The note says plainly that it is a simulation: no code
  * is sent and no payment is processed.
+ *
+ * The steps live in `data/checkout-journey.ts`, shared with the feature pages.
  */
-const STEPS = [
-  {
-    title: "Customer details",
-    body: "The shopper enters their mobile number on the first screen — no long form to start with.",
-  },
-  {
-    title: "Mobile verification",
-    body: "A one-time code confirms the number, which is what lets the saved details come back.",
-  },
-  {
-    title: "Delivery details prefilled",
-    body: "Name, address, phone and email appear already filled in and editable, next to the order summary.",
-  },
-  {
-    title: "Payment",
-    body: "UPI sits first, with cards, netbanking, wallets and cash on delivery alongside it.",
-  },
-  {
-    title: "Order confirmed",
-    body: "The shopper places the order and lands on the confirmation — the end of the journey.",
-  },
-];
 
 export function CheckoutWalkthrough() {
   return (

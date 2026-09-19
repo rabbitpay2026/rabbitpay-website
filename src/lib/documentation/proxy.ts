@@ -23,7 +23,7 @@ import type { NextRequest } from "next/server";
  * thing that cannot work. The documentation is published at the root of its own
  * host, so its links and its React payload are full of root-relative paths;
  * handed to a browser sitting on `/documentation` they point at pages this site
- * does not have — or, for `/product` and `/support`, at marketing pages that
+ * does not have — or, for `/integrations` and `/support`, at marketing pages that
  * are not the documentation at all. The body has to be translated, which means
  * it has to be read. `./upstream.ts` holds the translation.
  *

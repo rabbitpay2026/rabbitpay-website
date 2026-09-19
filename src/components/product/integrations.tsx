@@ -17,7 +17,8 @@ export function Integrations({ headless }: { headless?: boolean } = {}) {
         {/*
           `headless` drops the badge, heading and subtext so the strip can sit
           under a heading that already introduces it — the homepage's "Built for
-          your Shopify store". The logo rows, and /product, are untouched.
+          your Shopify store". The logo rows are untouched. `/integrations`
+          renders its own per-partner detail from the same `data/integrations.ts`.
         */}
         {headless ? null : (
           <BlurFade>

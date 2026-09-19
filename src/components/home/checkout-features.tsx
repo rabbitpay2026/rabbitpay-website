@@ -14,7 +14,7 @@ import type { FeatureVisualKey } from "@/types";
  * for: "Less typing at checkout" and "An easier way to pay".
  *
  * Both reuse what already exists — the bullets come from `data/features.ts`
- * (the same copy /product renders) and the illustrations are the same
+ * (the same module the Features pages read) and the illustrations are the same
  * `FeatureVisual` components inside the same `MagicCard`, so nothing about the
  * look or the spacing is new. What changes is the heading each one sits under
  * and a lead line that says what the shopper gets, rather than how premium it
@@ -51,7 +51,17 @@ export function LessTypingSection() {
          exists, this stays the existing UI illustration and says so, rather
          than passing a mockup off as a screenshot. */
       caption="Illustration of the prefilled checkout step, shown with sample details."
-    />
+    >
+      <p className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground">
+        Every prefilled field stays editable before payment.{" "}
+        <Link
+          href="/features/address-autofill"
+          className="font-medium text-brand underline-offset-4 hover:underline"
+        >
+          How address autofill works
+        </Link>
+      </p>
+    </CheckoutFeatureSection>
   );
 }
 
@@ -69,7 +79,10 @@ export function EasierWayToPaySection() {
       <p className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground">
         RabbitPay works with the payment gateway a store already uses, and supports running more
         than one.{" "}
-        <Link href="/product" className="font-medium text-brand underline-offset-4 hover:underline">
+        <Link
+          href="/features/upi-checkout"
+          className="font-medium text-brand underline-offset-4 hover:underline"
+        >
           See the payment experience
         </Link>
       </p>
@@ -80,7 +93,7 @@ export function EasierWayToPaySection() {
 /**
  * COD verification, mentioned briefly below the two main features rather than
  * carried as the headline message — one row, no figures. The full explanation
- * stays on /product and in the FAQ.
+ * is in the FAQ, which is where the link goes: there is no dedicated COD page.
  */
 export function CodVerificationNote() {
   return (
@@ -99,7 +112,7 @@ export function CodVerificationNote() {
                 {COD.body} Pending orders are screened before dispatch and risk checks run before
                 fulfillment.{" "}
                 <Link
-                  href="/product"
+                  href="/faq#checkout"
                   className="font-medium text-brand underline-offset-4 hover:underline"
                 >
                   How verified COD works

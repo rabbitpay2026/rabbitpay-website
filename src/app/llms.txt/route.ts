@@ -144,21 +144,56 @@ Both rates apply to *successful* orders. Enterprise pricing is quoted rather
 than published, so it begins with a conversation through Talk to Sales or any
 support channel.
 
+## Features
+
+${url("/features")} is the feature catalogue. It groups RabbitPay's
+capabilities into checkout experience, payments and cash on delivery, and links
+to a dedicated page for each of the main ones:
+
+- One-click checkout: ${url("/features/one-click-checkout")} — the five-step
+  journey for returning and first-time shoppers, an interactive simulation
+  (sample data; nothing is sent or charged), and setup requirements.
+- Address autofill: ${url("/features/address-autofill")} — which details are
+  prefilled (name, address, phone, email), the conditions (a mobile number
+  confirmed by one-time code, with details saved against it), editing, and the
+  manual-entry fallback.
+- UPI checkout: ${url("/features/upi-checkout")} — the UPI-first payment step,
+  the other methods alongside it, and UPI QR payments inside the checkout for
+  stores on Razorpay.
+
+Two further pages sit in the same section:
+
+- Improve checkout conversion: ${url("/solutions/checkout-conversion")} — common
+  checkout friction points, the feature that addresses each, and how a merchant
+  can measure completed checkouts on their own data. It publishes no uplift
+  figure.
+- Integrations: ${url("/integrations")} — see below.
+
+Part payment, verified COD, the COD convenience fee and brand customisation are
+described on ${url("/features")} and answered in the FAQ; they have no pages of
+their own.
+
 ## Integrations
 
-Payment partners shown on the product page: Razorpay, PhonePe, PayU, Paytm,
-Cashfree, Juspay, Decentro.
+Documented at ${url("/integrations")}.
 
-Marketing and analytics partners shown on the product page: Meta, Google Ads,
-Google Analytics.
+- Platform: Shopify. The RabbitPay team sets the store up through Shopify
+  collaborator access; merchants never share their Shopify password.
+- Payment partners: Razorpay, PhonePe, PayU, Paytm, Cashfree, Juspay, Decentro.
+  Razorpay's setup is documented (API keys, a webhook for RabbitPay, and an
+  optional QR code for UPI QR at checkout). The others are listed without a
+  public setup guide and are configured with the team during onboarding.
+- Marketing and analytics partners: Meta, Google Ads, Google Analytics. For
+  Meta, RabbitPay sends purchase and checkout events server-side through the
+  Conversions API, using the merchant's Dataset (Pixel) ID and a Conversions API
+  access token. What Google Ads and Google Analytics receive is not published.
 
-The site presents these as the platforms RabbitPay connects with. Integration
-documentation for them is published under ${url("/documentation")} — see below.
+Integration documentation is published under ${url("/documentation")} — see below.
 
 ## Getting started
 
 - Leave an email address and mobile number in the short form on the home or
-  contact page ("Request a Demo" leads to the same form); the team contacts the
+  contact page ("Book a Demo" leads to the same form); the team contacts the
   merchant within 12–24 hours for a walkthrough of the checkout, features and
   pricing.
 - See the checkout live on the demo store: ${DEMO_STORE_URL}

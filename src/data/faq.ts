@@ -39,7 +39,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "What is RabbitPay Checkout and how does it help my business?",
         answer:
           "RabbitPay Checkout is a fast one-click checkout built for Shopify brands. It helps improve conversions, reduce checkout abandonment, lower payment costs, and deliver a smoother buying experience.",
-        link: { href: "/product", label: "See what the product does" },
+        link: { href: "/features", label: "See all features" },
       },
       {
         // DERIVED — source: hero eyebrow "Built for Indian D2C brands", the logo
@@ -87,7 +87,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "What does the RabbitPay checkout look like for a shopper?",
         answer:
           "The shopper opens a checkout with their delivery address already filled in and editable, sees the order summary and total, then picks how to pay — UPI, cards or netbanking, or verified cash on delivery — and confirms. It is designed to read as one screen on mobile rather than a multi-step form.",
-        link: { href: "/product", label: "See the checkout in detail" },
+        link: { href: "/features/one-click-checkout", label: "See the checkout in detail" },
       },
       {
         /*
@@ -102,6 +102,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "Can my customers get their address pre-filled during checkout?",
         answer:
           "Yes. RabbitPay pre-fills the customer's saved address at checkout, so shoppers type less, make fewer address errors, and move through checkout faster.",
+        link: { href: "/features/address-autofill", label: "How address autofill works" },
       },
       {
         // DERIVED — source: `data/features.ts` UPI-first feature and bullets,
@@ -110,7 +111,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "Which payment methods can my shoppers use?",
         answer:
           "UPI takes the primary position in the payment step, with cards and netbanking as fallbacks, and verified cash on delivery alongside them. The UPI experience covers the apps Indian shoppers already use — Google Pay, PhonePe, Paytm, BHIM UPI, Amazon Pay and CRED.",
-        link: { href: "/product", label: "See the UPI-first experience" },
+        link: { href: "/features/upi-checkout", label: "See the UPI-first experience" },
       },
       {
         // DERIVED — source: `data/features.ts` RTO-control feature bullets and
@@ -278,20 +279,20 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     items: [
       {
         // DERIVED — source: `data/integrations.ts` PAYMENT_PARTNERS, the logos
-        // shown in the Integrations strip on / and /product.
+        // shown in the Integrations strip on / and /integrations.
         id: "which-gateways-supported",
         question: "Which payment gateways and providers does RabbitPay work with?",
         answer:
-          "The payment partners shown on the product page are Razorpay, PhonePe, PayU, Paytm, Cashfree, Juspay and Decentro. RabbitPay works alongside the gateway you already use rather than replacing it, and supports running more than one.",
-        link: { href: "/product", label: "See the integrations" },
+          "The payment partners shown on the integrations page are Razorpay, PhonePe, PayU, Paytm, Cashfree, Juspay and Decentro. RabbitPay works alongside the gateway you already use rather than replacing it, and supports running more than one.",
+        link: { href: "/integrations", label: "See the integrations" },
       },
       {
         // DERIVED — source: `data/integrations.ts` MARKETING_PARTNERS.
         id: "marketing-analytics-integrations",
         question: "Does RabbitPay work with my marketing and analytics tools?",
         answer:
-          "The marketing and analytics partners shown on the product page are Meta, Google Ads and Google Analytics, so checkout activity can reach the platforms most D2C brands already run acquisition and reporting on.",
-        link: { href: "/product", label: "See the integrations" },
+          "The marketing and analytics partners shown on the integrations page are Meta, Google Ads and Google Analytics, so checkout activity can reach the platforms most D2C brands already run acquisition and reporting on.",
+        link: { href: "/integrations", label: "See the integrations" },
       },
     ],
   },

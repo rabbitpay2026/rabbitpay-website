@@ -13,7 +13,7 @@ import { RABBITPAY_FEE_RATES } from "@/data/pricing";
  * fare app, a Thai wallet, a crypto processor), the site had no page that
  * defines the product in plain language, and Google's Organization guidance
  * asks for "a single page that describes your organization" as the place to
- * anchor that entity. `/product` sells the features, `/faq` answers narrow
+ * anchor that entity. `/features` sells the features, `/faq` answers narrow
  * questions, and neither states what RabbitPay *is* end to end. This does.
  *
  * Sourcing rule, identical to `data/faq.ts` and `app/llms.txt/route.ts`: every
@@ -119,9 +119,10 @@ export function WhatIsRabbitPay() {
           ))}
         </ol>
         <p className="mt-6 text-sm text-muted-foreground">
-          The full breakdown of each capability, with the payment, marketing and analytics partners
-          RabbitPay connects to, is on the{" "}
-          <TextLink href="/product">RabbitPay Checkout product page</TextLink>. Setup and
+          The full breakdown of each capability is on the{" "}
+          <TextLink href="/features">RabbitPay features page</TextLink>, and the payment, marketing
+          and analytics partners RabbitPay connects to are on the{" "}
+          <TextLink href="/integrations">integrations page</TextLink>. Setup and
           configuration steps are in the{" "}
           {/*
             An <a>, not a <Link>, and deliberately so: /documentation is served

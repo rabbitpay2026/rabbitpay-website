@@ -14,8 +14,8 @@ import { DOCS_PATH, SHARED_ROOT_NAMESPACES } from "@/lib/documentation/paths";
  * documentation's own address space — `/product/checkout-flow`,
  * `/getting-started/one-click-checkout` — and they never pass through this
  * origin, so nothing on the server ever sees them. Left alone, a click on a
- * search result leaves `/documentation` entirely: `/product` and `/support` are
- * real marketing pages on this domain, so the visitor lands silently on the
+ * search result leaves `/documentation` entirely: `/integrations` and `/support`
+ * are real marketing pages on this domain, so the visitor lands silently on the
  * wrong content rather than on a 404.
  *
  * The same is true of any other address the documentation computes in the

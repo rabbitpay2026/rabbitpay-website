@@ -6,12 +6,18 @@ import { useEffect, useState } from "react";
 import { BookDemoButton } from "@/components/cta/book-demo-button";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { BrandLockup } from "@/components/layout/brand-lockup";
-import { ResourceRow, ResourcesMenu } from "@/components/navigation/resources-menu";
+import {
+  MenuRow,
+  MenuSection,
+  NavMenu,
+  OverviewRow,
+  slugify,
+} from "@/components/navigation/nav-menu";
 import { getAnnouncement } from "@/data/announcement";
-import { PRIMARY_NAV, RESOURCES_ROUTES } from "@/data/navigation";
+import { PRIMARY_NAV, menuRoutes } from "@/data/navigation";
 import { DEMO_STORE_URL } from "@/data/site";
 import { cn } from "@/lib/utils";
-import type { ResourceLink } from "@/types";
+import type { NavMenuItem } from "@/types";
 
 /**
  * Site header. Ported from the React `sections/Header.jsx` — same height, blur,
@@ -19,17 +25,19 @@ import type { ResourceLink } from "@/types";
  *
  * Navbar order comes from `PRIMARY_NAV` in `data/navigation.ts`:
  *
- *   Product | Pricing | Calculator | Resources ▾ | Partner With Us | Contact | View Demo Store | Request a Demo
+ *   Features ▾ | Pricing | Calculator | Resources ▾ | Partner With Us | Contact | View Demo Store | Book a Demo
  *
- * Desktop and mobile iterate that same array — Resources is a floating dropdown
- * on desktop and a collapsible submenu on mobile, both fed by `RESOURCES_NAV`.
+ * Desktop and mobile iterate that same array — each dropdown is a floating
+ * panel on desktop (`NavMenu`) and a collapsible submenu on mobile
+ * (`MobileNavMenu`), both fed by the same `NavMenuItem`.
  *
  * Client-side for the scroll listener and the menu toggles.
  */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
+  // Which mobile submenu is expanded, by label — one at a time.
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -46,16 +54,16 @@ export function Header() {
   if (lastPathname !== pathname) {
     setLastPathname(pathname);
     setOpen(false);
-    setMobileResourcesOpen(false);
+    setMobileMenuOpen(null);
   }
 
   const announcement = getAnnouncement(pathname);
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
-  const resourcesActive = RESOURCES_ROUTES.some((href) => isActive(href));
+  const menuActive = (menu: NavMenuItem) => menuRoutes(menu).some((href) => isActive(href));
 
   const closeMobileMenu = () => {
     setOpen(false);
-    setMobileResourcesOpen(false);
+    setMobileMenuOpen(null);
   };
 
   return (
@@ -78,7 +86,7 @@ export function Header() {
         <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
           {PRIMARY_NAV.map((item) =>
             item.kind === "menu" ? (
-              <ResourcesMenu key={item.label} isActive={resourcesActive} />
+              <NavMenu key={item.label} menu={item} isActive={menuActive(item)} />
             ) : (
               <Link
                 key={item.href}
@@ -122,7 +130,11 @@ export function Header() {
             testId="header-cta"
             className="group hidden items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(25,107,245,0.22)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_18px_34px_rgba(25,107,245,0.3)] active:translate-y-0 sm:inline-flex"
           >
-            Request a Demo
+            {/* "Book a Demo" — the one wording used for every CTA that opens
+                the lead form and ends with the team getting in touch. Label
+                only: destination, scroll behaviour, analytics `location` and
+                `intent`, and styling are all unchanged. */}
+            Book a Demo
           </BookDemoButton>
           <button
             type="button"
@@ -150,13 +162,14 @@ export function Header() {
           <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
             {PRIMARY_NAV.map((item) =>
               item.kind === "menu" ? (
-                <MobileResources
+                <MobileNavMenu
                   key={item.label}
-                  label={item.label}
-                  items={item.items}
-                  isActive={resourcesActive}
-                  open={mobileResourcesOpen}
-                  onToggle={() => setMobileResourcesOpen((value) => !value)}
+                  menu={item}
+                  isActive={menuActive(item)}
+                  open={mobileMenuOpen === item.label}
+                  onToggle={() =>
+                    setMobileMenuOpen((value) => (value === item.label ? null : item.label))
+                  }
                   onNavigate={closeMobileMenu}
                 />
               ) : (
@@ -185,7 +198,7 @@ export function Header() {
               onNavigate={closeMobileMenu}
               className="mt-2 inline-flex items-center justify-center rounded-full bg-brand px-3 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-deep"
             >
-              Request a Demo
+              Book a Demo
             </BookDemoButton>
             <a
               href={DEMO_STORE_URL}
@@ -206,41 +219,41 @@ export function Header() {
 }
 
 /**
- * Resources inside the mobile menu: a collapsible submenu rather than the
- * desktop floating dropdown, so it never overflows a narrow viewport. It reuses
- * `ResourceRow`, so the icons, titles and descriptions are defined once.
+ * A dropdown inside the mobile menu: a collapsible submenu rather than the
+ * desktop floating panel, so nothing depends on hover and nothing overflows a
+ * narrow viewport. Sections stack, each under its own small heading, and the
+ * rows are the same `MenuRow` / `OverviewRow` the desktop panel renders.
  */
-function MobileResources({
-  label,
-  items,
+function MobileNavMenu({
+  menu,
   isActive,
   open,
   onToggle,
   onNavigate,
 }: {
-  label: string;
-  items: ResourceLink[];
+  menu: NavMenuItem;
   isActive: boolean;
   open: boolean;
   onToggle: () => void;
   onNavigate: () => void;
 }) {
-  const panelId = "mobile-resources-panel";
+  const slug = slugify(menu.label);
+  const panelId = `mobile-${slug}-panel`;
 
   return (
-    <div data-testid="mobile-resources-group">
+    <div data-testid={`mobile-${slug}-group`}>
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={panelId}
-        data-testid="mobile-resources-trigger"
+        data-testid={`mobile-${slug}-trigger`}
         className={cn(
           "flex w-full items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium hover:bg-secondary hover:text-brand",
           isActive || open ? "text-brand" : "text-ink/80 dark:text-white/80",
         )}
       >
-        {label}
+        {menu.label}
         <ChevronDown
           aria-hidden="true"
           className={cn("h-4 w-4 transition-transform duration-200", open && "rotate-180")}
@@ -250,11 +263,27 @@ function MobileResources({
       {open ? (
         <div
           id={panelId}
-          data-testid="mobile-resources-panel"
-          className="mt-1 animate-in fade-in-0 slide-in-from-top-1 duration-200 space-y-0.5 border-l border-border pl-2"
+          data-testid={`mobile-${slug}-panel`}
+          className="mt-1 min-w-0 animate-in fade-in-0 slide-in-from-top-1 space-y-0.5 border-l border-border pl-2 duration-200"
         >
-          {items.map((item) => (
-            <ResourceRow key={item.label} item={item} onNavigate={onNavigate} />
+          {menu.overview ? (
+            <OverviewRow
+              item={menu.overview}
+              onNavigate={onNavigate}
+              testId={`mobile-${slug}-${slugify(menu.overview.label)}`}
+            />
+          ) : null}
+          {menu.sections.map((section, index) => (
+            <MenuSection key={section.title ?? index} title={section.title}>
+              {section.items.map((item) => (
+                <MenuRow
+                  key={item.label}
+                  item={item}
+                  onNavigate={onNavigate}
+                  testId={`mobile-${slug}-${slugify(item.label)}`}
+                />
+              ))}
+            </MenuSection>
           ))}
         </div>
       ) : null}
