@@ -60,7 +60,7 @@ export const RESOURCES_LABEL = "Resources";
 /**
  * The primary navbar, in render order:
  *
- *   Product | Pricing | Calculator | Resources | Contact
+ *   Product | Pricing | Calculator | Resources | Partner With Us | Contact
  *
  * Order lives here rather than in the Header so there is one place to change it,
  * and the desktop nav and the mobile menu iterate this same array. `kind`
@@ -71,6 +71,7 @@ export const PRIMARY_NAV: PrimaryNavItem[] = [
   { kind: "link", label: "Pricing", href: "/pricing" },
   { kind: "link", label: "Calculator", href: "/calculator" },
   { kind: "menu", label: RESOURCES_LABEL, items: RESOURCES_NAV },
+  { kind: "link", label: "Partner With Us", shortLabel: "Partners", href: "/partners" },
   { kind: "link", label: "Contact", href: "/contact" },
 ];
 
@@ -105,6 +106,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     title: "Company",
     links: [
       { label: "About RabbitPay", href: "/what-is-rabbitpay" },
+      { label: "Partner With Us", href: "/partners" },
       { label: "Careers", href: `mailto:${SUPPORT_EMAIL}?subject=Careers`, external: true },
       { label: "Press", href: `mailto:${SUPPORT_EMAIL}?subject=Press`, external: true },
     ],

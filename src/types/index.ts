@@ -32,7 +32,13 @@ export type NavLink = {
  * knowing which position Resources occupies.
  */
 export type PrimaryNavItem =
-  | { kind: "link"; label: string; href: string }
+  | {
+      kind: "link";
+      label: string;
+      href: string;
+      /** Shorter text for the desktop nav below `lg`, where the full label would wrap. */
+      shortLabel?: string;
+    }
   | { kind: "menu"; label: string; items: ResourceLink[] };
 
 /** An entry in the Resources dropdown. */

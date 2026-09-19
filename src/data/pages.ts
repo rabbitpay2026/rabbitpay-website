@@ -111,6 +111,16 @@ export const PUBLIC_PAGES = [
       "Every way to reach RabbitPay — phone, WhatsApp, email, support hours, and a short form that takes an email address and mobile number for a callback.",
   },
   {
+    path: "/partners",
+    name: "Partner With Us",
+    title: "Partner With Us",
+    description:
+      "Partner with RabbitPay to bring 1-click checkout to Indian D2C brands. For agencies, technology partners and affiliates — apply in a couple of minutes.",
+    ogTitle: "Partner With RabbitPay",
+    summary:
+      "The RabbitPay partner program: who it is for (agencies, technology partners and affiliates), what partners get, what the team looks for, how an application is reviewed, and the application form itself.",
+  },
+  {
     path: "/faq",
     name: "FAQ",
     title: "FAQ — Frequently Asked Questions",

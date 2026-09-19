@@ -19,7 +19,7 @@ import type { ResourceLink } from "@/types";
  *
  * Navbar order comes from `PRIMARY_NAV` in `data/navigation.ts`:
  *
- *   Product | Pricing | Calculator | Resources ▾ | Contact | View Demo Store | Request a Demo
+ *   Product | Pricing | Calculator | Resources ▾ | Partner With Us | Contact | View Demo Store | Request a Demo
  *
  * Desktop and mobile iterate that same array — Resources is a floating dropdown
  * on desktop and a collapsible submenu on mobile, both fed by `RESOURCES_NAV`.
@@ -92,7 +92,14 @@ export function Header() {
                     : "text-ink/70 hover:text-brand dark:text-white/70",
                 )}
               >
-                {item.label}
+                {item.shortLabel ? (
+                  <>
+                    <span className="lg:hidden">{item.shortLabel}</span>
+                    <span className="hidden lg:inline">{item.label}</span>
+                  </>
+                ) : (
+                  item.label
+                )}
               </Link>
             ),
           )}
