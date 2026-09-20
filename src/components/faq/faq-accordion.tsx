@@ -72,7 +72,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
  *
  * Deliberately NOT part of `faq.answer`: the answer string is what the FAQPage
  * JSON-LD reports, and that should stay plain prose. This is navigation, and it
- * is what gives the FAQ real internal linking into /product, /pricing and
+ * is what gives the FAQ real internal linking into the Features pages, /pricing and
  * /support rather than leaving every answer as a dead end.
  *
  * Internal hrefs use `next/link` for client navigation; the one external link

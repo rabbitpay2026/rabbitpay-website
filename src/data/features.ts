@@ -45,12 +45,22 @@ export const FEATURES: FeatureItem[] = [
   },
 ];
 
-/** Prefill visual field rows. */
+/**
+ * Prefill visual field rows — sample details for the illustration, not real
+ * customer data.
+ *
+ * The per-field `fill` percentages (92 / 98 / 88 / 100) that used to sit here
+ * were removed. They drew part-filled progress bars that read as measured
+ * per-field fill rates, and no such measurement exists anywhere in this
+ * repository or on the site; the one published prefill-rate figure was itself
+ * withdrawn for the same reason. Each row now shows a complete bar, which says
+ * only what the row already says: this field came back filled in.
+ */
 export const PREFILL_FIELDS = [
-  { label: "Name", value: "Ananya Sharma", fill: 92 },
-  { label: "Phone", value: "+91 98••••••420", fill: 98 },
-  { label: "Address", value: "A-14, HSR Layout, Bengaluru", fill: 88 },
-  { label: "Pincode", value: "560102", fill: 100 },
+  { label: "Name", value: "Ananya Sharma" },
+  { label: "Phone", value: "+91 98••••••420" },
+  { label: "Address", value: "A-14, HSR Layout, Bengaluru" },
+  { label: "Pincode", value: "560102" },
 ];
 
 /** RTO-control visual cards. */

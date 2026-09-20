@@ -73,10 +73,11 @@ function pageTitle(path: PublicRoute): string {
  *
  * Also deliberately absent, because the site does not state them: `legalName`,
  * `address`, `foundingDate`, `founder`, `numberOfEmployees`, `vatID`/`taxID`
- * and `aggregateRating`. In particular the pricing page's "Rated 4.9/5 by 100+
- * merchants" line is NOT marked up: Google requires aggregate ratings to come
- * from genuinely collected, inspectable reviews, and self-asserted ratings in
- * structured data are a manual-action risk.
+ * and `aggregateRating`. The pricing section used to carry a "Rated 4.9/5 by
+ * 100+ merchants" line, which was never marked up here — Google requires
+ * aggregate ratings to come from genuinely collected, inspectable reviews, and
+ * self-asserted ratings in structured data are a manual-action risk. That line
+ * has since been removed from the page as well, for the same lack of evidence.
  */
 function organizationNode(): JsonLdNode {
   const home = getPage("/");
@@ -172,14 +173,16 @@ function websiteNode(): JsonLdNode {
  * subcategory, running on Shopify, sold in India.
  *
  * Every property is something the site puts on screen. `featureList` is the
- * three product pillars from `data/features.ts` plus the two capabilities the
- * FAQ documents; `description` is the /product page's own meta description.
+ * three product pillars from `data/features.ts` plus the capabilities the FAQ
+ * documents; `url` and `description` are the /features page's, the catalogue
+ * that replaced /product.
  *
  * Deliberately absent: `offers` and `aggregateRating`. RabbitPay's published
  * price is a percentage of order value (1% prepaid, 0.3% COD), which an `Offer`
- * cannot express honestly, and the "4.9/5 by 100+ merchants" line on the
- * pricing page is self-asserted rather than drawn from inspectable reviews —
- * marking either up would be a rich-result violation, not an optimisation.
+ * cannot express honestly, and there is no rating to mark up — the site
+ * publishes no reviews, and the one self-asserted rating line it used to carry
+ * has been removed. Marking either up would be a rich-result violation, not an
+ * optimisation.
  * Without them Google will not show a software rich result, which is fine: the
  * node is here to identify the entity, not to win a snippet.
  */
@@ -188,11 +191,11 @@ function softwareApplicationNode(): JsonLdNode {
     "@type": "SoftwareApplication",
     "@id": SOFTWARE_ID,
     name: "RabbitPay Checkout",
-    url: absolute("/product"),
+    url: absolute("/features"),
     applicationCategory: "BusinessApplication",
     applicationSubCategory: "Ecommerce checkout",
     operatingSystem: "Web",
-    description: getPage("/product").description,
+    description: getPage("/features").description,
     inLanguage: "en-IN",
     areaServed: { "@type": "Country", name: "India" },
     provider: { "@id": ORGANIZATION_ID },
@@ -222,30 +225,39 @@ export function buildSiteJsonLd(): JsonLdDocument {
 }
 
 /**
- * BreadcrumbList for a sub-page: Home → the page, with the parent section in
- * between where the URL has one (each calculator sits under /calculator).
+ * The breadcrumb trail for a sub-page: Home → the page, with the parent section
+ * in between where the URL has one that is itself a page (each calculator sits
+ * under /calculator, each feature under /features).
  *
- * Mirrors the real URL hierarchy. The homepage gets no breadcrumb, since a
- * single-item trail describes nothing.
+ * Mirrors the real URL hierarchy, and skips a parent segment that is not a
+ * page: `/solutions` has no page of its own, so `/solutions/checkout-conversion`
+ * is Home → Improve Checkout Conversion rather than a crumb to nowhere.
+ *
+ * Exported because the visible breadcrumb (`components/features/breadcrumbs`)
+ * renders this same trail, so the markup and the page cannot disagree.
+ */
+export function breadcrumbTrail(path: PublicRoute): { name: string; path: string }[] {
+  const parent = path.slice(0, path.lastIndexOf("/"));
+  return [
+    { name: "Home", path: "/" },
+    ...(parent && isPublicRoute(parent) ? [{ name: getPage(parent).name, path: parent }] : []),
+    { name: getPage(path).name, path },
+  ];
+}
+
+/**
+ * BreadcrumbList for a sub-page, from `breadcrumbTrail`. The homepage gets no
+ * breadcrumb, since a single-item trail describes nothing.
  */
 function breadcrumbNode(path: PublicRoute): JsonLdNode {
-  const parent = path.slice(0, path.lastIndexOf("/"));
-  const trail = [
-    { name: "Home", item: `${SITE_URL}/` },
-    ...(parent && isPublicRoute(parent)
-      ? [{ name: getPage(parent).name, item: absolute(parent) }]
-      : []),
-    { name: getPage(path).name, item: absolute(path) },
-  ];
-
   return {
     "@type": "BreadcrumbList",
     "@id": `${absolute(path)}#breadcrumb`,
-    itemListElement: trail.map((step, index) => ({
+    itemListElement: breadcrumbTrail(path).map((step, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: step.name,
-      item: step.item,
+      item: step.path === "/" ? `${SITE_URL}/` : absolute(step.path),
     })),
   };
 }
@@ -275,20 +287,31 @@ function faqMainEntity() {
   }));
 }
 
+/** The Features section — the pages that describe the product itself. */
+const PRODUCT_PAGES = new Set<PublicRoute>([
+  "/features",
+  "/features/one-click-checkout",
+  "/features/address-autofill",
+  "/features/upi-checkout",
+  "/solutions/checkout-conversion",
+  "/integrations",
+]);
+
 /**
  * What a page is *about*, by reference rather than by repeating the entity.
  *
- * Most pages are about the company. The two that describe the product itself
- * point at the SoftwareApplication node instead, and `/what-is-rabbitpay` — the
- * page that answers the entity question directly — is about both. This is what
- * lets a crawler see which URL to treat as the definition of each entity rather
- * than inferring it from the copy.
+ * Most pages are about the company. The pages that describe the product itself
+ * — the Features section: `/features`, each page under it, the checkout
+ * conversion guide and `/integrations` — point at the SoftwareApplication node
+ * instead, and `/what-is-rabbitpay` — the page that answers the entity question
+ * directly — is about both. This is what lets a crawler see which URL to treat
+ * as the definition of each entity rather than inferring it from the copy.
  */
 function pageSubject(path: PublicRoute): JsonLdRef | JsonLdRef[] {
   if (path === "/what-is-rabbitpay") {
     return [{ "@id": ORGANIZATION_ID }, { "@id": SOFTWARE_ID }];
   }
-  if (path === "/product") return { "@id": SOFTWARE_ID };
+  if (PRODUCT_PAGES.has(path)) return { "@id": SOFTWARE_ID };
   return { "@id": ORGANIZATION_ID };
 }
 

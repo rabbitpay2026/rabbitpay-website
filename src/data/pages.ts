@@ -52,13 +52,12 @@ export const PUBLIC_PAGES = [
   {
     path: "/",
     name: "Home",
-    // Preserved verbatim from the production React site — see `lib/seo.ts`.
-    title: "RabbitPay - 1-Click Checkout for Shopify & D2C, made in India",
+    title: "Shopify Checkout Built for Conversion | RabbitPay",
     description:
-      "RabbitPay is a 1-click checkout for Shopify stores run by Indian D2C brands, with prefilled addresses, UPI-first payments and verified COD to lift conversion and cut RTO.",
+      "Help more shoppers complete checkout with RabbitPay for Indian Shopify stores. Explore address autofill, UPI-first payments, and a simpler buying journey.",
     ogTitle: "RabbitPay - 1-Click Checkout, built in India",
     summary:
-      "Product overview, the merchant-impact figures RabbitPay publishes, pricing, features, integrations, support and a short FAQ.",
+      "Product overview: address autofill, UPI-first payments, the checkout walkthrough, Shopify setup and integrations, pricing, support and a short FAQ.",
   },
   {
     path: "/what-is-rabbitpay",
@@ -70,15 +69,67 @@ export const PUBLIC_PAGES = [
     summary:
       "The plain-language definition of RabbitPay: the product category it belongs to, the platform it runs on, the market it serves, how a merchant goes live, and the COD King infrastructure behind it.",
   },
+  /*
+    The Features section. `/features` replaced `/product`, which carried the
+    same three product pillars and the integrations strip; `/product` now
+    permanently redirects here (see `next.config.ts`).
+
+    Titles are the segment before the root layout's " | RabbitPay" template.
+  */
   {
-    path: "/product",
-    name: "Product",
-    title: "Product",
+    path: "/features",
+    name: "Features",
+    title: "Checkout Features for Shopify Stores",
     description:
-      "Inside RabbitPay Checkout: address prefill, verified COD and RTO control, UPI-first payments with card and netbanking fallback, and supported payment partners.",
-    ogTitle: "RabbitPay Product - prefilled checkout, verified COD, UPI-first",
+      "Explore RabbitPay's checkout features for Indian Shopify stores: one-click checkout, address autofill, UPI-first payments, part payment and verified COD.",
+    ogTitle: "RabbitPay Features - one-click checkout, address autofill, UPI",
     summary:
-      "The three product pillars in detail — prefilled checkout, RTO control through verified COD, and a UPI-first payment experience — plus the payment, marketing and analytics partners RabbitPay integrates with.",
+      "The feature catalogue, grouped into checkout experience, payments and cash on delivery, linking to each feature page, the checkout-conversion guide and the integrations page.",
+  },
+  {
+    path: "/features/one-click-checkout",
+    name: "One-Click Checkout",
+    title: "One-Click Checkout for Shopify",
+    description:
+      "How RabbitPay's one-click checkout works on Shopify: mobile number, one-time code, prefilled details, UPI-first payment. Try the demo and see setup needs.",
+    summary:
+      "The shopper journey step by step for returning and first-time shoppers, an interactive checkout simulation, setup requirements and FAQs.",
+  },
+  {
+    path: "/features/address-autofill",
+    name: "Address Autofill",
+    title: "Address Autofill for Shopify Checkout",
+    description:
+      "Which details RabbitPay prefills at checkout, when autofill applies, how shoppers edit prefilled details, and what happens when nothing is saved.",
+    summary:
+      "Which fields are prefilled (name, address, phone, email), the condition for autofill (a verified mobile number with saved details), editing, the manual-entry fallback, and FAQs.",
+  },
+  {
+    path: "/features/upi-checkout",
+    name: "UPI Checkout",
+    title: "UPI Checkout for Shopify Stores",
+    description:
+      "UPI-first payments in RabbitPay's Shopify checkout: the UPI apps covered, other payment methods alongside, Razorpay UPI QR in checkout, and your gateway.",
+    summary:
+      "The UPI-first payment step, the UPI apps and other methods it offers, UPI QR payments through Razorpay, gateway and settlement behaviour, what is published about unsuccessful payments, and FAQs.",
+  },
+  {
+    path: "/solutions/checkout-conversion",
+    name: "Improve Checkout Conversion",
+    title: "Improve Shopify Checkout Conversion",
+    description:
+      "Checkout friction points for Indian Shopify stores, the RabbitPay feature that addresses each, and how to measure completed checkouts with your own data.",
+    summary:
+      "Checkout friction points (typing, multi-step forms, card-first payment, unverified COD), the RabbitPay feature for each, the intended shopper journey, and a method for measuring completed checkouts. No uplift figures.",
+  },
+  {
+    path: "/integrations",
+    name: "Integrations",
+    title: "Shopify Checkout Integrations",
+    description:
+      "Integrations for RabbitPay's Shopify checkout: Shopify, payment partners such as Razorpay, PayU and Cashfree, plus Meta, Google Ads and Google Analytics.",
+    summary:
+      "Shopify setup through collaborator access, the payment partners and Razorpay's documented setup, Meta Conversions API credentials, Google Ads and Google Analytics, known limitations, and FAQs.",
   },
   {
     path: "/pricing",

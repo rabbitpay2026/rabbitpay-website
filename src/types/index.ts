@@ -26,10 +26,36 @@ export type NavLink = {
   proxied?: boolean;
 };
 
+/** A labelled group of rows inside a navbar dropdown. */
+export type NavMenuSection = {
+  /** Small heading above the group. Omit for a single ungrouped list. */
+  title?: string;
+  items: ResourceLink[];
+};
+
+/** A navbar dropdown — Features or Resources. */
+export type NavMenuItem = {
+  kind: "menu";
+  label: string;
+  sections: NavMenuSection[];
+  /**
+   * The "see everything" entry, rendered above the sections and styled apart
+   * from them — "All Features" in the Features menu.
+   */
+  overview?: ResourceLink;
+  /** Lay the sections out side by side from `lg` up, rather than stacked. */
+  columns?: boolean;
+  /**
+   * Which edge of the trigger the panel lines up with. `start` for a menu near
+   * the left of the nav, where a centred panel would run off the viewport.
+   */
+  align?: "start" | "center";
+};
+
 /**
- * A primary navbar entry: either a plain route or the Resources dropdown.
- * Discriminated on `kind` so the Header can render an ordered list without
- * knowing which position Resources occupies.
+ * A primary navbar entry: either a plain route or a dropdown. Discriminated on
+ * `kind` so the Header can render an ordered list without knowing which
+ * positions the dropdowns occupy.
  */
 export type PrimaryNavItem =
   | {
@@ -39,9 +65,9 @@ export type PrimaryNavItem =
       /** Shorter text for the desktop nav below `lg`, where the full label would wrap. */
       shortLabel?: string;
     }
-  | { kind: "menu"; label: string; items: ResourceLink[] };
+  | NavMenuItem;
 
-/** An entry in the Resources dropdown. */
+/** An entry in a navbar dropdown. */
 export type ResourceLink = {
   label: string;
   description: string;
@@ -115,12 +141,12 @@ export type PricingRow = {
   enterprise: PricingCellValue;
 };
 
-/* -------------------------------- metrics -------------------------------- */
+/* --------------------------- hero highlights ----------------------------- */
 
-export type MetricItem = {
-  value: number;
-  prefix?: string;
-  suffix?: string;
+/** One capability callout in the hero, beside the checkout demo. */
+export type HeroHighlight = {
+  title: string;
+  /** One short supporting line — kept under ~30 characters so the card stays compact. */
   label: string;
   /** Component reference, not an element — keeps the data module JSX-free. */
   Icon: LucideIcon;

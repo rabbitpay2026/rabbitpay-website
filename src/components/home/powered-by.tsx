@@ -18,12 +18,16 @@ export function PoweredBy() {
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-brand">
               Powered by
             </p>
+            {/* "thousands of Indian merchants" was a count nothing on this site
+                or in this repository supports; the FAQ says "trusted by Indian
+                merchants", which is what this now says. */}
             <h2 className="mt-3 text-3xl font-semibold leading-[1.1] tracking-tighter text-[#111827] sm:text-4xl">
-              Built on the infrastructure trusted by thousands of Indian merchants.
+              Built on infrastructure trusted by Indian merchants.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#6B7280]">
-              RabbitPay leverages the technology and operational expertise of COD King to deliver
-              faster checkouts, lower RTO, and higher conversion rates for modern D2C brands.
+              RabbitPay is built on COD King&apos;s checkout and COD verification infrastructure —
+              the technology and operational experience behind the address autofill, UPI-first
+              payment step and verified COD in the checkout.
             </p>
           </div>
         </BlurFade>

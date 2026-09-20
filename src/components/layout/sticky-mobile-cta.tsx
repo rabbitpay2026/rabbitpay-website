@@ -12,7 +12,9 @@ import { cn } from "@/lib/utils";
  * - Auto-hides when the Demo CTA section or footer enters the viewport, so it
  *   never competes with the on-screen closing CTA.
  * - Safe-area padded for iOS home indicator.
- * - "Start Free" takes the visitor to the lead form.
+ * - "Book a Demo" takes the visitor to the lead form. The label says what
+ *   actually happens next (a form, then the team gets in touch); the analytics
+ *   `location` and `intent` are unchanged.
  */
 export function StickyMobileCTA() {
   const [scrolled, setScrolled] = useState(false);
@@ -65,7 +67,7 @@ export function StickyMobileCTA() {
           tabIndex={visible ? 0 : -1}
           className="group inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-brand px-4 py-3 text-sm font-semibold text-white shadow-sm transition-transform active:translate-y-[1px]"
         >
-          Start Free
+          Book a Demo
           <ArrowRight className="h-4 w-4 transition-transform group-active:translate-x-0.5" />
         </BookDemoButton>
       </div>

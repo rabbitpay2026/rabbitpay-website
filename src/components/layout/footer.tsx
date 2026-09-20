@@ -25,9 +25,17 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <BrandLockup variant="footer" />
+            {/*
+              Was "A premium 1-Click Checkout ... designed to improve
+              conversions, reduce RTO, and deliver a faster checkout
+              experience." Replaced because "premium" says nothing a merchant
+              can act on, and the three outcomes it promised are results this
+              site has no merchant data for. This names what the product does
+              instead. Copy only — the footer's layout is untouched.
+            */}
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-              A premium 1-Click Checkout for Indian D2C brands, designed to improve conversions,
-              reduce RTO, and deliver a faster checkout experience.
+              One-click checkout for Indian Shopify brands: address autofill, UPI-first payments
+              and verified cash on delivery, in fewer steps than the default checkout.
             </p>
 
             <div className="mt-5 space-y-2">
@@ -54,7 +62,9 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8">
+          {/* Four columns — Features, Product, Company, Legal — as two rows
+              of two on phones. */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
             {FOOTER_COLUMNS.map((col) => (
               <div key={col.title}>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink dark:text-white">

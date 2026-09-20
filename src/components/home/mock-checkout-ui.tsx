@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import {
   BadgePercent,
+  Check,
   ChevronDown,
   ChevronRight,
   LogOut,
@@ -11,6 +12,7 @@ import {
   MessageSquareText,
   Pencil,
   Phone,
+  RotateCcw,
   TicketPercent,
 } from "lucide-react";
 import {
@@ -59,7 +61,7 @@ import {
 } from "@/components/home/mock-checkout-parts";
 import { cn } from "@/lib/utils";
 
-type Stage = "phone" | "otp" | "verifying" | "checkout";
+type Stage = "phone" | "otp" | "verifying" | "checkout" | "confirmed";
 
 /** Demo pacing in ms, taken from the COD King hero checkout demo. */
 const BEAT = {
@@ -74,7 +76,10 @@ const BEAT = {
   // COD King's 4200ms delivery + payment read, split around the scroll.
   readDelivery: 2100,
   readPayments: 2100,
-  afterChoice: 3200,
+  afterChoice: 1800,
+  // How long the order confirmation holds before the demo loops back to the
+  // start, so the journey visibly ends where a real one does.
+  readConfirmation: 4200,
   idleResume: 20000,
 } as const;
 
@@ -87,6 +92,7 @@ const STAGE_LABEL: Record<Stage, string> = {
   otp: "verifying the one-time code",
   verifying: "verifying",
   checkout: "choosing a payment method",
+  confirmed: "order confirmation",
 };
 
 const emptyCode = () => Array.from({ length: CODE_LENGTH }, () => "");
@@ -119,6 +125,8 @@ export function MockCheckoutUI() {
   const total = CART_TOTAL - saved;
   const prepaidTotal = total - PREPAID_OFF;
   const sheetOpen = stage === "otp" || stage === "verifying";
+  const selectedMethod = PAYMENT_METHODS.find((entry) => entry.id === method) ?? null;
+  const payable = selectedMethod?.prepaid ? prepaidTotal : total;
   const phoneComplete = digits.length === DEMO_PHONE.length;
   // While the demo drives, the typed state holds until Send instead of collapsing on the last digit.
   const phoneTyping = stage === "phone" && (!phoneComplete || driving) && (fieldActive || digits.length > 0);
@@ -221,10 +229,18 @@ export function MockCheckoutUI() {
     } else if (!method) {
       id = window.setTimeout(() => setMethod("upi"), BEAT.readPayments);
     } else {
-      id = window.setTimeout(restart, BEAT.afterChoice);
+      // Places the order the way a shopper would, so the demo runs all the way
+      // to the confirmation screen instead of looping at the payment step.
+      id = window.setTimeout(() => setStage("confirmed"), BEAT.afterChoice);
     }
     return () => window.clearTimeout(id);
   }, [driving, method, restart, scrolledToPayments, stage]);
+
+  useEffect(() => {
+    if (!driving || stage !== "confirmed") return;
+    const id = window.setTimeout(restart, BEAT.readConfirmation);
+    return () => window.clearTimeout(id);
+  }, [driving, restart, stage]);
 
   useEffect(() => {
     if (auto || reduceMotion || !inView) return;
@@ -237,6 +253,7 @@ export function MockCheckoutUI() {
 
   const goBack = () => {
     if (stage === "otp") setStage("phone");
+    else if (stage === "confirmed") setStage("checkout");
     else if (stage === "checkout") restart();
   };
 
@@ -305,11 +322,29 @@ export function MockCheckoutUI() {
         original={couponApplied ? CART_TOTAL : undefined}
         onBack={goBack}
       />
-      <StepBanner />
+      {/* The banner prompts the shopper through the steps, so it has no place
+          on the screen that tells them there are none left. */}
+      {stage === "confirmed" ? null : <StepBanner />}
 
       <div className="relative min-h-0 flex-1 overflow-hidden">
         <AnimatePresence initial={false} mode="wait">
-          {stage === "checkout" ? (
+          {stage === "confirmed" ? (
+            <motion.div
+              key="confirmed"
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={fade}
+              className="absolute inset-0 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              <OrderConfirmed
+                amount={payable}
+                methodTitle={selectedMethod?.title.replace(/^Pay via /, "") ?? "UPI"}
+                prepaid={selectedMethod?.prepaid ?? true}
+                onRestart={restart}
+              />
+            </motion.div>
+          ) : stage === "checkout" ? (
             <motion.div
               key="checkout"
               ref={scrollRef}
@@ -520,9 +555,24 @@ export function MockCheckoutUI() {
                 })}
               </div>
               {method ? (
-                <p className="mt-[8px] text-center text-[10px] leading-none text-neutral-900/45">
-                  Demo checkout: no payment is initiated.
-                </p>
+                <>
+                  {/* The step a shopper takes last. Without it the demo stopped
+                      at the payment choice and never showed the confirmation. */}
+                  <button
+                    type="button"
+                    onClick={() => setStage("confirmed")}
+                    className={cn(
+                      "mt-[10px] flex h-[42px] w-full items-center justify-center gap-[8px] rounded-[10px] bg-neutral-900 text-[13px] font-semibold text-white shadow-[0_8px_18px_-10px_rgba(0,0,0,0.6)] hover:bg-neutral-800",
+                      PRESSABLE,
+                    )}
+                  >
+                    Place Order
+                    <span className="tabular-nums">{inr(payable)}</span>
+                  </button>
+                  <p className="mt-[8px] text-center text-[10px] leading-none text-neutral-900/45">
+                    Demo checkout: no payment is initiated.
+                  </p>
+                </>
               ) : null}
 
               <div className={cn(CARD, "mt-[10px] flex items-center justify-between px-[12px] py-[9px]")}>
@@ -809,6 +859,77 @@ export function MockCheckoutUI() {
       </div>
 
       <HomeIndicator />
+    </div>
+  );
+}
+
+/**
+ * The last screen of the journey: what a shopper sees once the order is placed.
+ * Everything on it comes from the demo's own state, and the footnote says
+ * plainly that nothing was charged — the demo simulates the flow and does not
+ * process a payment or create an order.
+ */
+function OrderConfirmed({
+  amount,
+  methodTitle,
+  prepaid,
+  onRestart,
+}: {
+  amount: number;
+  methodTitle: string;
+  prepaid: boolean;
+  onRestart: () => void;
+}) {
+  return (
+    <div className="flex h-full flex-col px-[10px] pt-[10px]">
+      <div className="flex flex-1 flex-col items-center justify-center text-center">
+        <span className="grid h-[56px] w-[56px] place-items-center rounded-full bg-[#E8F5EC] text-[#0F7B2E] ring-1 ring-inset ring-[#0F7B2E]/15">
+          <Check className="h-[28px] w-[28px]" strokeWidth={2.4} />
+        </span>
+        <p className="mt-[13px] text-[17px] font-semibold leading-none text-neutral-900">
+          Order confirmed
+        </p>
+        <p className="mt-[8px] text-[11px] leading-none text-neutral-900/50">
+          Where the shopper lands after placing the order.
+        </p>
+
+        <div className={cn(CARD, "mt-[16px] w-full px-[12px] py-[4px] text-left")}>
+          {[
+            ["Payment", methodTitle],
+            [prepaid ? "Paid" : "Pay on delivery", inr(amount)],
+            ["Delivering to", DEMO_CUSTOMER.name],
+          ].map(([label, value], index) => (
+            <div
+              key={label}
+              className={cn(
+                "flex items-center justify-between gap-[10px] py-[9px] text-[11.5px] leading-none",
+                index > 0 && "border-t border-[#EFEFEF]",
+              )}
+            >
+              <span className="text-neutral-900/50">{label}</span>
+              <span className="truncate font-semibold tabular-nums text-neutral-900">{value}</span>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-[12px] px-[6px] text-[10px] leading-[1.5] text-neutral-900/45">
+          Demo checkout — no payment was processed and no order was created.
+        </p>
+
+        <button
+          type="button"
+          onClick={onRestart}
+          className={cn(
+            "mt-[12px] flex h-[34px] items-center gap-[6px] rounded-[9px] border border-[#D4D4D4] bg-white px-[12px] text-[12px] font-medium text-neutral-900 hover:bg-black/[0.02]",
+            PRESSABLE,
+          )}
+        >
+          <RotateCcw className="h-[13px] w-[13px]" strokeWidth={2} />
+          Replay the demo
+        </button>
+      </div>
+
+      <CheckoutFooter />
     </div>
   );
 }
