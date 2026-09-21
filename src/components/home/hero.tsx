@@ -10,7 +10,7 @@ import { MockCheckoutUI } from "@/components/home/mock-checkout-ui";
 import { SCREEN_WIDTH } from "@/components/home/mock-checkout-data";
 import { CHECKOUT_DEMO_ID, HERO_ID } from "@/data/anchors";
 import { HERO_BADGES } from "@/data/trust";
-import { COD_KING_ICON, DEMO_STORE_URL } from "@/data/site";
+import { COD_KING_ICON, COD_KING_URL, DEMO_STORE_URL } from "@/data/site";
 
 /**
  * Homepage hero. Ported from the React `sections/Hero.jsx`.
@@ -120,7 +120,13 @@ export function Hero() {
             */}
             <div>
               <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
-                <span className="inline-flex items-center gap-2.5 rounded-2xl border border-border bg-white px-3.5 py-2 shadow-sm dark:bg-white/10">
+                <a
+                  href={COD_KING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="hero-cod-king"
+                  className="inline-flex items-center gap-2.5 rounded-2xl border border-border bg-white px-3.5 py-2 shadow-sm transition-colors hover:border-brand/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 dark:bg-white/10"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={COD_KING_ICON}
@@ -136,7 +142,7 @@ export function Hero() {
                       COD King
                     </span>
                   </span>
-                </span>
+                </a>
                 <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                   <CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0 text-brand" />
                   Trusted by Indian Shopify merchants

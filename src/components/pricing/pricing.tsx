@@ -5,7 +5,7 @@ import { TalkToSalesButton } from "@/components/cta/talk-to-sales-button";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { PRICING_ID } from "@/data/anchors";
 import { PRICING_PLANS, PRICING_ROWS, PRICING_TRUST_POINTS } from "@/data/pricing";
-import { COD_KING_ICON } from "@/data/site";
+import { COD_KING_ICON, COD_KING_URL } from "@/data/site";
 import { sectionPadding, type SectionShellProps } from "@/components/layout/section-shell";
 import { cn } from "@/lib/utils";
 import type { PricingCellValue } from "@/types";
@@ -63,13 +63,24 @@ export function Pricing({
 
         <BlurFade delay={0.08}>
           <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] px-4 py-2 text-xs font-medium text-[#6B7280] dark:bg-white/5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={COD_KING_ICON}
-              alt=""
-              aria-hidden="true"
-              className="h-3.5 w-3.5 flex-shrink-0 rounded-[3px] object-contain"
-            />
+            {/* Negative margin cancels the padding, so the larger hit area does not
+                shift the pill's layout. */}
+            <a
+              href={COD_KING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="COD King"
+              data-testid="pricing-cod-king"
+              className="-m-1 inline-flex flex-shrink-0 rounded p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={COD_KING_ICON}
+                alt=""
+                aria-hidden="true"
+                className="h-3.5 w-3.5 flex-shrink-0 rounded-[3px] object-contain"
+              />
+            </a>
             Every RabbitPay plan is backed by COD King&apos;s verification and checkout optimization
             infrastructure.
           </p>

@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { POWERED_BY_ID } from "@/data/anchors";
-import { COD_KING_ICON, COD_KING_LOGO } from "@/data/site";
+import { COD_KING_ICON, COD_KING_LOGO, COD_KING_URL } from "@/data/site";
 import { TRUST_POINTS } from "@/data/trust";
 
 /**
@@ -35,7 +35,13 @@ export function PoweredBy() {
         {/* COD King logo — no card or border, just a soft premium glow. */}
         <BlurFade delay={0.12}>
           <div className="mt-12 flex justify-center">
-            <div className="group relative inline-flex items-center justify-center px-10 py-8">
+            <a
+              href={COD_KING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="powered-by-cod-king"
+              className="group relative inline-flex items-center justify-center rounded-3xl px-10 py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+            >
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(25,107,245,0.20),rgba(25,107,245,0.06)_55%,transparent_78%)] blur-2xl transition-transform duration-500 group-hover:scale-110 sm:w-[26rem]"
@@ -54,7 +60,7 @@ export function PoweredBy() {
                 loading="lazy"
                 className="relative hidden h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.04] sm:block"
               />
-            </div>
+            </a>
           </div>
         </BlurFade>
 
