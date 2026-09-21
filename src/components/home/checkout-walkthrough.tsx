@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { CHECKOUT_DEMO_ID } from "@/data/anchors";
 import { CHECKOUT_JOURNEY as STEPS } from "@/data/checkout-journey";
@@ -36,7 +37,13 @@ export function CheckoutWalkthrough() {
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
             A short mobile flow, from the shopper&apos;s details through to the order confirmation.
-            The demo at the top of this page runs the same five steps — open it and try it yourself.
+            The demo at the top of this page runs the same five steps — open it and try it yourself.{" "}
+            <Link
+              href="/features/one-click-checkout"
+              className="font-medium text-brand underline-offset-4 hover:underline"
+            >
+              See the full one-click checkout flow
+            </Link>
           </p>
         </BlurFade>
 
@@ -85,6 +92,17 @@ export function CheckoutWalkthrough() {
             &quot;Try the Checkout&quot; opens the live demo storefront in a new tab.
             &quot;Watch the demo&quot; plays the simulation at the top of this page — no
             verification code is sent and no payment is processed there.
+          </p>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            For the friction points a checkout loses orders to, and the feature that addresses each,
+            read the{" "}
+            <Link
+              href="/solutions/checkout-conversion"
+              className="font-medium text-brand underline-offset-4 hover:underline"
+            >
+              checkout conversion guide
+            </Link>
+            .
           </p>
         </BlurFade>
       </div>

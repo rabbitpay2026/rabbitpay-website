@@ -38,12 +38,10 @@ declare global {
  * conventions splits one interaction across two rows forever.
  */
 export const ANALYTICS_EVENTS = {
-  /** A "Start Free" CTA was clicked. Opens the scheduler. */
+  /** A "Start Free" CTA was clicked. Scrolls to the lead form. */
   START_FREE_CLICK: "start_free_click",
-  /** A "Book a Demo" CTA was clicked. Opens the scheduler. */
+  /** A "Book a Demo" CTA was clicked. Scrolls to the lead form. */
   DEMO_CLICK: "demo_click",
-  /** The Calendly overlay actually rendered — the click above succeeded. */
-  SCHEDULER_OPEN: "scheduler_open",
   /** The email + phone lead form was accepted by /api/leads. */
   DEMO_FORM_SUBMIT: "demo_form_submit",
   /** The pricing page's "Talk to Sales" CTA was clicked. */
