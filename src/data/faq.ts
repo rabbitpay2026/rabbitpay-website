@@ -39,7 +39,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "What is RabbitPay Checkout and how does it help my business?",
         answer:
           "RabbitPay Checkout is a fast one-click checkout built for Shopify brands. It helps improve conversions, reduce checkout abandonment, lower payment costs, and deliver a smoother buying experience.",
-        link: { href: "/product", label: "See what the product does" },
+        link: { href: "/features", label: "See all features" },
       },
       {
         // DERIVED — source: hero eyebrow "Built for Indian D2C brands", the logo
@@ -57,16 +57,15 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         answer:
           "Three costs that sit at the same point in an Indian D2C funnel: shoppers dropping off during a slow checkout, unverified COD orders that ship and come back undelivered, and payment friction on mobile. RabbitPay addresses all three at the checkout step itself — address prefill to cut typing, verified COD and risk checks to cut RTO, and a UPI-first payment step for mobile-heavy traffic.",
       },
-      {
-        // DERIVED — source: `data/metrics.ts`, rendered in the homepage "Merchant
-        // impact" band. Reported as RabbitPay's published figures, which is what
-        // they are; no independent benchmark is claimed.
-        id: "what-results-do-merchants-see",
-        question: "What results does RabbitPay report?",
-        answer:
-          "RabbitPay publishes four merchant-impact figures on its homepage: a 35% conversion uplift, a 28% reduction in return-to-origin, checkout completed in under 3 seconds, and a 92% address prefill rate. These are the figures RabbitPay publishes; what an individual store sees depends on its catalogue, traffic mix and current checkout.",
-        link: { href: "/#metrics", label: "See the merchant-impact figures" },
-      },
+      /*
+        Removed: "What results does RabbitPay report?". It existed only to
+        report the four merchant-impact counters the homepage used to carry
+        (35% conversion uplift, 28% RTO reduction, sub-3s checkout, 92% prefill
+        rate). Those counters are gone — no merchant data in this repository
+        supports them — so the question had nothing left to point at, and
+        leaving it would have kept the figures in the FAQ schema after they
+        stopped being published.
+      */
       {
         // ORIGINAL
         id: "powered-by-cod-king",
@@ -88,14 +87,22 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "What does the RabbitPay checkout look like for a shopper?",
         answer:
           "The shopper opens a checkout with their delivery address already filled in and editable, sees the order summary and total, then picks how to pay — UPI, cards or netbanking, or verified cash on delivery — and confirms. It is designed to read as one screen on mobile rather than a multi-step form.",
-        link: { href: "/product", label: "See the checkout in detail" },
+        link: { href: "/features/one-click-checkout", label: "See the checkout in detail" },
       },
       {
-        // ORIGINAL
+        /*
+          ORIGINAL, with one edit: the "up to a 95% fill rate" figure has been
+          dropped. It is a performance claim with no supporting merchant data in
+          this repository, it sat on the homepage FAQ preview next to a 92%
+          prefill counter that said something different, and that counter has
+          now been removed for the same reason. Everything else the answer said
+          is unchanged.
+        */
         id: "address-prefill",
         question: "Can my customers get their address pre-filled during checkout?",
         answer:
-          "Yes. RabbitPay intelligently pre-fills customer addresses with up to a 95% fill rate, enabling faster checkouts, fewer address errors, and higher conversion rates.",
+          "Yes. RabbitPay pre-fills the customer's saved address at checkout, so shoppers type less, make fewer address errors, and move through checkout faster.",
+        link: { href: "/features/address-autofill", label: "How address autofill works" },
       },
       {
         // DERIVED — source: `data/features.ts` UPI-first feature and bullets,
@@ -104,7 +111,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "Which payment methods can my shoppers use?",
         answer:
           "UPI takes the primary position in the payment step, with cards and netbanking as fallbacks, and verified cash on delivery alongside them. The UPI experience covers the apps Indian shoppers already use — Google Pay, PhonePe, Paytm, BHIM UPI, Amazon Pay and CRED.",
-        link: { href: "/product", label: "See the UPI-first experience" },
+        link: { href: "/features/upi-checkout", label: "See the UPI-first experience" },
       },
       {
         // DERIVED — source: `data/features.ts` RTO-control feature bullets and
@@ -272,20 +279,20 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     items: [
       {
         // DERIVED — source: `data/integrations.ts` PAYMENT_PARTNERS, the logos
-        // shown in the Integrations strip on / and /product.
+        // shown in the Integrations strip on / and /integrations.
         id: "which-gateways-supported",
         question: "Which payment gateways and providers does RabbitPay work with?",
         answer:
-          "The payment partners shown on the product page are Razorpay, PhonePe, PayU, Paytm, Cashfree, Juspay and Decentro. RabbitPay works alongside the gateway you already use rather than replacing it, and supports running more than one.",
-        link: { href: "/product", label: "See the integrations" },
+          "The payment partners shown on the integrations page are Razorpay, PhonePe, PayU, Paytm, Cashfree, Juspay and Decentro. RabbitPay works alongside the gateway you already use rather than replacing it, and supports running more than one.",
+        link: { href: "/integrations", label: "See the integrations" },
       },
       {
         // DERIVED — source: `data/integrations.ts` MARKETING_PARTNERS.
         id: "marketing-analytics-integrations",
         question: "Does RabbitPay work with my marketing and analytics tools?",
         answer:
-          "The marketing and analytics partners shown on the product page are Meta, Google Ads and Google Analytics, so checkout activity can reach the platforms most D2C brands already run acquisition and reporting on.",
-        link: { href: "/product", label: "See the integrations" },
+          "The marketing and analytics partners shown on the integrations page are Meta, Google Ads and Google Analytics, so checkout activity can reach the platforms most D2C brands already run acquisition and reporting on.",
+        link: { href: "/integrations", label: "See the integrations" },
       },
     ],
   },

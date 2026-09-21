@@ -27,7 +27,7 @@ export function CalculatorCTA() {
             </Link>{" "}
             built for Indian D2C brands &mdash; see{" "}
             <Link
-              href="/product"
+              href="/features"
               className="font-medium text-brand underline-offset-4 hover:underline"
             >
               what the checkout does

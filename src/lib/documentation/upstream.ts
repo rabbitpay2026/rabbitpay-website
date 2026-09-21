@@ -26,7 +26,7 @@ export { DOCS_PATH } from "@/lib/documentation/paths";
  * plain proxy hands those to the browser unchanged, and the first click leaves
  * `/documentation` for `rabbitpay.ai/getting-started/introduction` — a page
  * this site does not have. Worse, two of the documentation's own top-level
- * sections are `/product` and `/support`, which on this host *are* real pages —
+ * sections are `/integrations` and `/support`, which on this host *are* real pages —
  * marketing pages, not documentation — so an untranslated click would land
  * silently on the wrong content rather than on a 404. That is not a bug in the
  * proxy; it is the documentation correctly describing its own origin. So its

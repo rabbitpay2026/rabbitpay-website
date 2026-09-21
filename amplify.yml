@@ -43,13 +43,17 @@ frontend:
               printf '%s=%s\n' "$name" "$value" >> .env.production
             fi
           done
+          # Optional: a dedicated inbox for partner applications (defaults to EMAIL_TO).
+          if [ -n "${PARTNER_EMAIL_TO:-}" ]; then
+            printf '%s=%s\n' PARTNER_EMAIL_TO "$PARTNER_EMAIL_TO" >> .env.production
+          fi
           if [ -n "$missing" ]; then
             echo "FATAL: missing required environment variable(s):$missing" >&2
             echo "Set them in Amplify -> App settings -> Environment variables," >&2
             echo "make sure they apply to THIS branch, then redeploy." >&2
             exit 1
           fi
-          echo "Wrote .env.production for the server runtime (RESEND_API_KEY, EMAIL_TO, EMAIL_FROM; values not logged)."
+          echo "Wrote .env.production for the server runtime (RESEND_API_KEY, EMAIL_TO, EMAIL_FROM, PARTNER_EMAIL_TO if set; values not logged)."
         - npm run build
   artifacts:
     # Next.js on Amplify (SSR/"WEB_COMPUTE") builds into .next — Amplify's

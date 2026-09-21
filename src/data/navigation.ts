@@ -1,5 +1,10 @@
 import { BookOpen, FileText, HelpCircle } from "lucide-react";
-import type { FooterColumn, NavLink, PrimaryNavItem, ResourceLink } from "@/types";
+import type { FooterColumn, NavLink, NavMenuItem, PrimaryNavItem, ResourceLink } from "@/types";
+import {
+  ALL_FEATURES_LINK,
+  FEATURE_DESTINATIONS,
+  FEATURES_MENU_SECTIONS,
+} from "@/data/feature-pages";
 import { SUPPORT_EMAIL } from "@/data/site";
 
 /**
@@ -10,7 +15,7 @@ import { SUPPORT_EMAIL } from "@/data/site";
  * form, not a route. See `components/cta/book-demo-button.tsx`.
  */
 export const MAIN_NAV: NavLink[] = [
-  { label: "Product", href: "/product" },
+  { label: "Features", href: "/features" },
   { label: "Pricing", href: "/pricing" },
   { label: "Contact", href: "/contact" },
 ];
@@ -38,7 +43,7 @@ export const RESOURCES_NAV: ResourceLink[] = [
       this path straight to it — but the address is ours, so a click is an
       internal link: no `external` flag, no new tab, no `rel="noopener"`, and
       the row lights up as active like every other internal destination through
-      `RESOURCES_ROUTES` below.
+      `menuRoutes` below.
     */
     label: "Docs",
     description: "Set up and configure RabbitPay.",
@@ -58,26 +63,61 @@ export const RESOURCES_NAV: ResourceLink[] = [
 export const RESOURCES_LABEL = "Resources";
 
 /**
+ * The Features dropdown. "All Features" sits above the groups as the overview
+ * entry; the groups themselves come from `data/feature-pages.ts`, which the
+ * footer and the `/features` page read as well.
+ *
+ * Left-aligned to its trigger: Features is the first item in the nav, so a
+ * panel centred on it would run past the left edge of a laptop viewport.
+ */
+export const FEATURES_MENU: NavMenuItem = {
+  kind: "menu",
+  label: "Features",
+  overview: ALL_FEATURES_LINK,
+  sections: FEATURES_MENU_SECTIONS,
+  columns: true,
+  align: "start",
+};
+
+export const RESOURCES_MENU: NavMenuItem = {
+  kind: "menu",
+  label: RESOURCES_LABEL,
+  sections: [{ items: RESOURCES_NAV }],
+};
+
+/**
  * The primary navbar, in render order:
  *
- *   Product | Pricing | Calculator | Resources | Contact
+ *   Features ▾ | Pricing | Calculator | Resources ▾ | Partner With Us | Contact
  *
  * Order lives here rather than in the Header so there is one place to change it,
  * and the desktop nav and the mobile menu iterate this same array. `kind`
- * distinguishes a plain route from the Resources dropdown.
+ * distinguishes a plain route from a dropdown.
+ *
+ * Features replaced a plain "Product" link to `/product`, which now redirects
+ * to `/features` (see `next.config.ts`).
  */
 export const PRIMARY_NAV: PrimaryNavItem[] = [
-  { kind: "link", label: "Product", href: "/product" },
+  FEATURES_MENU,
   { kind: "link", label: "Pricing", href: "/pricing" },
   { kind: "link", label: "Calculator", href: "/calculator" },
-  { kind: "menu", label: RESOURCES_LABEL, items: RESOURCES_NAV },
+  RESOURCES_MENU,
+  { kind: "link", label: "Partner With Us", shortLabel: "Partners", href: "/partners" },
   { kind: "link", label: "Contact", href: "/contact" },
 ];
 
-/** Internal routes reachable from the Resources menu — used for active state. */
-export const RESOURCES_ROUTES = RESOURCES_NAV.filter(
-  (item) => item.href && !item.external,
-).map((item) => item.href as string);
+/**
+ * Internal routes reachable from a dropdown — used for its active state. The
+ * Features menu is active on `/features/*` because `/features` is one of its
+ * routes and the Header matches by prefix.
+ */
+export function menuRoutes(menu: NavMenuItem): string[] {
+  const rows = [
+    ...(menu.overview ? [menu.overview] : []),
+    ...menu.sections.flatMap((section) => section.items),
+  ];
+  return rows.filter((item) => item.href && !item.external).map((item) => item.href as string);
+}
 
 /*
  * The list of public routes used to live here. It now lives in `data/pages.ts`
@@ -87,13 +127,20 @@ export const RESOURCES_ROUTES = RESOURCES_NAV.filter(
 
 export const FOOTER_COLUMNS: FooterColumn[] = [
   {
-    // FAQ and Docs live here rather than in a fourth "Resources" column so the
-    // footer keeps its existing three-column geometry.
+    // The same destinations, in the same order, as the header's Features menu.
+    title: "Features",
+    links: [
+      { label: ALL_FEATURES_LINK.label, href: ALL_FEATURES_LINK.href },
+      ...FEATURE_DESTINATIONS.map((page) => ({ label: page.label, href: page.href })),
+    ],
+  },
+  {
+    // FAQ and Docs live here rather than in a separate "Resources" column.
+    // "1-Click Checkout" (which pointed at /product) moved to the Features
+    // column above as "One-Click Checkout".
     title: "Product",
     links: [
       { label: "What is RabbitPay?", href: "/what-is-rabbitpay" },
-      { label: "1-Click Checkout", href: "/product" },
-      { label: "Conversion Metrics", href: "/#metrics" },
       { label: "Pricing", href: "/pricing" },
       { label: "Calculator", href: "/calculator" },
       { label: "Support", href: "/support" },
@@ -105,6 +152,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     title: "Company",
     links: [
       { label: "About RabbitPay", href: "/what-is-rabbitpay" },
+      { label: "Partner With Us", href: "/partners" },
       { label: "Careers", href: `mailto:${SUPPORT_EMAIL}?subject=Careers`, external: true },
       { label: "Press", href: `mailto:${SUPPORT_EMAIL}?subject=Press`, external: true },
     ],

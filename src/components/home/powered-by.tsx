@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 import { BlurFade } from "@/components/magic-ui/blur-fade";
 import { POWERED_BY_ID } from "@/data/anchors";
-import { COD_KING_ICON, COD_KING_LOGO } from "@/data/site";
+import { COD_KING_ICON, COD_KING_LOGO, COD_KING_URL } from "@/data/site";
 import { TRUST_POINTS } from "@/data/trust";
 
 /**
@@ -18,12 +18,16 @@ export function PoweredBy() {
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-brand">
               Powered by
             </p>
+            {/* "thousands of Indian merchants" was a count nothing on this site
+                or in this repository supports; the FAQ says "trusted by Indian
+                merchants", which is what this now says. */}
             <h2 className="mt-3 text-3xl font-semibold leading-[1.1] tracking-tighter text-[#111827] sm:text-4xl">
-              Built on the infrastructure trusted by thousands of Indian merchants.
+              Built on infrastructure trusted by Indian merchants.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#6B7280]">
-              RabbitPay leverages the technology and operational expertise of COD King to deliver
-              faster checkouts, lower RTO, and higher conversion rates for modern D2C brands.
+              RabbitPay is built on COD King&apos;s checkout and COD verification infrastructure —
+              the technology and operational experience behind the address autofill, UPI-first
+              payment step and verified COD in the checkout.
             </p>
           </div>
         </BlurFade>
@@ -31,7 +35,13 @@ export function PoweredBy() {
         {/* COD King logo — no card or border, just a soft premium glow. */}
         <BlurFade delay={0.12}>
           <div className="mt-12 flex justify-center">
-            <div className="group relative inline-flex items-center justify-center px-10 py-8">
+            <a
+              href={COD_KING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="powered-by-cod-king"
+              className="group relative inline-flex items-center justify-center rounded-3xl px-10 py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+            >
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(25,107,245,0.20),rgba(25,107,245,0.06)_55%,transparent_78%)] blur-2xl transition-transform duration-500 group-hover:scale-110 sm:w-[26rem]"
@@ -50,7 +60,7 @@ export function PoweredBy() {
                 loading="lazy"
                 className="relative hidden h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.04] sm:block"
               />
-            </div>
+            </a>
           </div>
         </BlurFade>
 

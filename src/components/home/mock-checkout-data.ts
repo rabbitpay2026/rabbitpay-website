@@ -6,8 +6,10 @@ export const SCREEN_WIDTH = 390;
 /** Demo-only values. Nothing typed into the mock is sent or stored. */
 export const DEMO_PHONE = "9876543210";
 export const RECENT_PHONE = "9123456780";
-export const DEMO_CODE = "4729";
-export const CODE_LENGTH = 4;
+/* Six digits per RabbitPay's documentation, /documentation/product/checkout-flow:
+   "A 6-digit OTP is sent via SMS (with WhatsApp fallback)." */
+export const DEMO_CODE = "472913";
+export const CODE_LENGTH = 6;
 export const RESEND_SECONDS = 45;
 
 export const CART_TOTAL = 1499;

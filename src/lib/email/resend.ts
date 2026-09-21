@@ -36,6 +36,14 @@ export function getEmailFrom(): string | null {
   return process.env.EMAIL_FROM?.trim() || null;
 }
 
+/**
+ * Where partner applications are sent. Same inbox as lead notifications unless
+ * PARTNER_EMAIL_TO routes them to a dedicated address.
+ */
+export function getPartnerEmailTo(): string | null {
+  return process.env.PARTNER_EMAIL_TO?.trim() || getEmailTo();
+}
+
 /** True when every variable the lead email needs is present. */
 export function isEmailConfigured() {
   return Boolean(getResend() && getEmailTo() && getEmailFrom());

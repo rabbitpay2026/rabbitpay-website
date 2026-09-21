@@ -50,6 +50,17 @@ const nextConfig: NextConfig = {
   },
 
   /**
+   * `/product` was the product page — the three product pillars and the
+   * integrations strip — and was listed in the sitemap, the header and the
+   * footer. `/features` is its direct successor and carries the same content,
+   * so bookmarks, search results and external links land on the equivalent
+   * page rather than a 404. Exact match only: nothing lived under `/product/`.
+   */
+  async redirects() {
+    return [{ source: "/product", destination: "/features", permanent: true }];
+  },
+
+  /**
    * The two documentation namespaces that answer at the site root.
    *
    * The documentation pages themselves are not here. They are served by

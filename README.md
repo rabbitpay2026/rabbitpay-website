@@ -229,6 +229,7 @@ missing event.
   | `RESEND_API_KEY` | server | yes | Secret. Never `NEXT_PUBLIC_`, never in git. |
   | `EMAIL_TO` | server | yes | Inbox that receives lead notifications. |
   | `EMAIL_FROM` | server | yes | Must be on a **domain verified in Resend**, else sends are rejected. |
+  | `PARTNER_EMAIL_TO` | server | no | Inbox for partner applications from `/partners`. Defaults to `EMAIL_TO`. |
   | `CALENDLY_WEBHOOK_SIGNING_KEY` | server | no | Reserved; no webhook is implemented. |
   | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | public | for GA4 | `G-6RQ63F8KDN`. A public identifier, not a secret. **No default** — unset means no GA4 at all. |
   | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` / `NEXT_PUBLIC_POSTHOG_KEY` / `NEXT_PUBLIC_POSTHOG_HOST` | public | no | Analytics; have defaults. |

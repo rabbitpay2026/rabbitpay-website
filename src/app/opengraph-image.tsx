@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { SITE_NAME } from "@/data/site";
+import { HERO_BADGES } from "@/data/trust";
 
 /**
  * The site-wide Open Graph / Twitter card image.
@@ -107,7 +108,9 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          {["Zero setup fee", "Live in minutes", "Made in India"].map((chip) => (
+          {/* The hero's own chips, imported rather than copied, so the card and
+              the page can never state two different setup times. */}
+          {HERO_BADGES.map((chip) => (
             <div
               key={chip}
               style={{

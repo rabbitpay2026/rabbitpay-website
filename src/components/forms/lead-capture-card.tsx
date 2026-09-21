@@ -32,11 +32,18 @@ export function LeadCaptureCard({
   source = "hero_inline",
   testPrefix = "hero-lead",
   showHeading = true,
+  submitLabel = "Start Free",
   className,
 }: {
   source?: LeadSource;
   testPrefix?: string;
   showHeading?: boolean;
+  /**
+   * Submit button text. The homepage's closing section passes "Book a Demo",
+   * because there the form is the demo request and the team follows up; the
+   * default is left alone for /contact, which is a callback request.
+   */
+  submitLabel?: string;
   className?: string;
 }) {
   const [email, setEmail] = useState("");
@@ -240,7 +247,7 @@ export function LeadCaptureCard({
               </>
             ) : (
               <>
-                Start Free
+                {submitLabel}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </>
             )}
