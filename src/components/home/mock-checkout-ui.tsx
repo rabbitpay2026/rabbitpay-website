@@ -770,7 +770,7 @@ export function MockCheckoutUI() {
                         </button>
                       </p>
 
-                      <div className="mt-[18px] flex gap-[10px]">
+                      <div className="mt-[18px] flex gap-[8px]">
                         {code.map((digit, index) => (
                           <span key={index} className="relative">
                             <input
@@ -787,7 +787,7 @@ export function MockCheckoutUI() {
                               maxLength={1}
                               aria-label={`Digit ${index + 1} of ${CODE_LENGTH}`}
                               className={cn(
-                                "h-[48px] w-[46px] rounded-[10px] border text-center text-[18px] font-semibold tabular-nums text-neutral-900 outline-none transition-[border-color,box-shadow,background-color] duration-200 focus:border-neutral-900 focus:bg-white focus:shadow-[0_0_0_3px_rgba(0,0,0,0.08)]",
+                                "h-[48px] w-[44px] rounded-[10px] border text-center text-[18px] font-semibold tabular-nums text-neutral-900 outline-none transition-[border-color,box-shadow,background-color] duration-200 focus:border-neutral-900 focus:bg-white focus:shadow-[0_0_0_3px_rgba(0,0,0,0.08)]",
                                 digit ? "border-neutral-900/30 bg-[#F5F5F5]" : "border-[#D4D4D4] bg-white",
                                 index === activeBox &&
                                   !codeTouched &&
