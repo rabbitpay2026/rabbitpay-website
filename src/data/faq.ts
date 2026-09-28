@@ -5,10 +5,11 @@ import type { FaqCategory, FaqItem } from "@/types";
  *
  * Provenance matters here, so entries come in two clearly separable tiers:
  *
- *  1. ORIGINAL (16 questions, marked below). Carried over verbatim from the
- *     production React implementation (`src/components/sections/FAQ.jsx`). The
- *     copy is byte-identical to what https://rabbitpay.ai/ has always served.
- *     Do not reword these without a content decision.
+ *  1. ORIGINAL (marked below). Carried over verbatim from the production React
+ *     implementation (`src/components/sections/FAQ.jsx`). Do not reword these
+ *     without a content decision. The Pricing category is the exception: its
+ *     public-rate answers were replaced to match /pricing, which publishes no
+ *     price table.
  *
  *  2. DERIVED (marked below). Written during the SEO / AI-discoverability work
  *     to answer questions merchants and AI systems actually ask that the
@@ -185,46 +186,49 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
   {
     id: "pricing",
     title: "Pricing",
-    description: "What RabbitPay costs, how the plans differ, and fees you can pass on.",
+    description: "How RabbitPay pricing works, how to get pricing for your store, and fees you can pass on.",
     items: [
       {
-        // ORIGINAL
+        // DERIVED — source: the /pricing page and its PRICING_FAQS, which publish
+        // no price list.
         id: "how-much-does-it-cost",
         question: "How much does RabbitPay cost?",
         answer:
-          "Choose the pricing that suits your business. Pay 1% on successful prepaid orders and 0.3% on successful COD orders, with no setup fee or monthly commitment, or opt for our monthly plans starting at ₹999.",
+          "RabbitPay does not publish a price table. The team discusses pricing with you based on your store and requirements. Tell them about your store through the pricing enquiry form and they will contact you within 12–24 hours.",
         link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
       {
-        // ORIGINAL
-        id: "cod-order-charges",
-        question: "What does RabbitPay charge on COD orders?",
+        // DERIVED — source: PRICING_FAQS `fixed-or-customised`.
+        id: "fixed-or-customised",
+        question: "Is RabbitPay pricing fixed or customised?",
         answer:
-          "RabbitPay charges 0.3% on successful COD orders. This is separate from the 1% on successful prepaid orders, so you only pay the rate that matches how the order was actually paid.",
+          "The team discusses pricing with you based on your store and requirements rather than publishing a fixed price list. Ask them what applies to your store.",
+        link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
       {
-        // DERIVED — source: the pricing table, where both rates are stated as
-        // applying to *successful* orders.
+        // DERIVED — source: PRICING_FAQS `gateway-charges-included`.
+        id: "gateway-charges-included",
+        question: "Are payment gateway charges included?",
+        answer:
+          "RabbitPay works with the payment gateway you already use, and your gateway keeps handling settlements. Your gateway's charges come from your own arrangement with it. Ask the team to confirm exactly what RabbitPay's pricing covers for your store.",
+        link: { href: "/integrations", label: "See supported gateways" },
+      },
+      {
+        // DERIVED — source: the /pricing page. Rates and terms are agreed with
+        // the team, so no charge timing is stated here.
         id: "when-am-i-charged",
         question: "Am I charged on every order, or only successful ones?",
         answer:
-          "Both rates apply to successful orders: 1% on a successful prepaid order and 0.3% on a successful COD order. An order that does not complete does not attract the transaction fee.",
-      },
-      {
-        // DERIVED — source: the pricing table (Setup Fee "Free" on both plans)
-        // and the cost answer above ("no setup fee or monthly commitment").
-        id: "setup-fee",
-        question: "Is there a setup fee or a monthly commitment?",
-        answer:
-          "Setup is free on both plans, and the per-transaction option carries no monthly commitment. If a fixed monthly cost suits your volume better, monthly plans start at ₹999.",
+          "RabbitPay does not publish per-order rates or charging terms. They are discussed with the team for your store, so ask what applies to you, including when a charge is made.",
         link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
       {
-        // DERIVED — source: `data/pricing.ts` PRICING_PLANS and PRICING_ROWS.
-        id: "growth-vs-enterprise",
-        question: "What is the difference between the Growth and Enterprise plans?",
+        // DERIVED — source: the /pricing page ("The team installs and configures
+        // the checkout") and PRICING_FAQS.
+        id: "setup-fee",
+        question: "Is there a setup fee or a monthly commitment?",
         answer:
-          "Growth is the standard plan for growing D2C brands: 1% on successful prepaid orders, 0.3% on successful COD orders, free setup, unlimited monthly volume, COD verification included and standard support. Enterprise is for brands at 50k+ monthly orders and is priced on volume, adding an SLA, MDR discounts, a dedicated customer success manager and dedicated support.",
+          "RabbitPay does not publish a price table, so the team confirms any setup or recurring charges when they discuss pricing for your store. The team installs and configures the checkout on your Shopify store for you.",
         link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
       {
@@ -232,7 +236,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         id: "cod-transaction-fee",
         question: "Can I add a COD transaction fee?",
         answer:
-          "Yes. You can easily add a COD convenience fee for your customers to encourage prepaid orders and reduce unnecessary COD purchases. This is separate from RabbitPay's own pricing, which is 1% on successful prepaid orders and 0.3% on successful COD orders.",
+          "Yes. You can easily add a COD convenience fee for your customers to encourage prepaid orders and reduce unnecessary COD purchases. This is separate from RabbitPay's own pricing, which the team discusses with you.",
       },
     ],
   },
@@ -360,12 +364,12 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         link: { href: "/documentation", label: "Open the documentation", proxied: true },
       },
       {
-        // DERIVED — source: the Enterprise plan ("Custom", volume-based) and the
-        // pricing enquiry form on /pricing.
+        // DERIVED — source: the pricing enquiry form on /pricing and the support
+        // channels in `data/site.ts`.
         id: "talk-to-sales",
-        question: "How do I talk to sales about Enterprise pricing?",
+        question: "How do I talk to the team about pricing?",
         answer:
-          "Enterprise is priced on volume, so it starts with a conversation. Use the enquiry form on the pricing page, request a demo, or reach the team on any of the usual support channels — phone, WhatsApp or email.",
+          "Pricing starts with a conversation. Use the enquiry form on the pricing page, request a demo, or reach the team on any of the usual support channels — phone, WhatsApp or email. The team gets back to you within 12–24 hours.",
         link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
     ],
