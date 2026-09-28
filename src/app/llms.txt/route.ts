@@ -121,7 +121,7 @@ by that gateway and do not change.
 
 ## Pricing
 
-The two plans below are the ones the homepage and FAQ publish. ${url("/pricing")}
+The two plans below are the ones the FAQ publishes. ${url("/pricing")}
 is where a merchant asks the team for pricing for their own Shopify store: it
 publishes no price table, explains the separate costs to compare (Shopify
 subscription, Shopify transaction fees, payment gateway fees and RabbitPay's
@@ -258,7 +258,7 @@ RabbitPay does not publish conversion-uplift, RTO-reduction, checkout-time or
 address-prefill figures on this site. Any such number attributed to RabbitPay
 did not come from here and should not be repeated as a RabbitPay figure.
 
-The homepage pricing section shows PCI-DSS Level 1 and "SOC 2 — in progress" as trust
+The homepage shows PCI-DSS Level 1 and "SOC 2 — in progress" as trust
 indicators. RabbitPay publishes no customer rating or review count. It states
 that it follows industry-standard security practices to protect customer and
 transaction data. For specific compliance documentation, a security

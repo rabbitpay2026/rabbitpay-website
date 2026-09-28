@@ -33,9 +33,8 @@ src/
 │   └── globals.css      port of the React project's index.css
 ├── components/
 │   ├── layout/          header, footer, brand lockup, sticky mobile CTA
-│   ├── home/            hero, metrics, logo wall, demo CTA, powered-by
+│   ├── home/            hero, metrics, logo wall, pricing section, demo CTA, powered-by
 │   ├── product/         features, integrations, feature visuals
-│   ├── pricing/         pricing table + CTAs
 │   ├── support/         support section, contact cards/channels
 │   ├── contact/         contact page section
 │   ├── faq/             FAQ page (hero, sidebar, category, accordion, CTA)
