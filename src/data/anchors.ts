@@ -17,3 +17,4 @@ export const SUPPORT_ID = "support";
 export const DEMO_SECTION_ID = "demo-section";
 export const FAQ_ID = "faq";
 export const POWERED_BY_ID = "powered-by";
+export const AGENCY_PARTNERS_ID = "agency-partners";

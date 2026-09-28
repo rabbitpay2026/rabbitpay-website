@@ -11,6 +11,7 @@ import { LogoWall } from "@/components/home/logo-wall";
 import { PoweredBy } from "@/components/home/powered-by";
 import { HomePricingSection } from "@/components/home/pricing-section";
 import { ShopifySetup } from "@/components/home/shopify-setup";
+import { AgencyPartnersSection } from "@/components/partners/agency-partners-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CustomerSupport } from "@/components/support/customer-support";
 import { HOMEPAGE_FAQS } from "@/data/faq";
@@ -29,7 +30,7 @@ import { buildPageJsonLd } from "@/lib/json-ld";
  *   4. Built for your Shopify store   (setup facts + integrations strip)
  *   5. Pricing that fits your store (points to /pricing)
  *   6. Ready to improve your checkout (the lead form)
- *   -> Support -> FAQ -> Powered By
+ *   -> Support -> Agency Partners -> FAQ -> Powered By
  *
  * Header, Footer, ScrollProgress, StickyMobileCTA and Toaster live in the root
  * layout so every route gets them.
@@ -63,6 +64,7 @@ export default function HomePage() {
       <DemoCTA />
 
       <CustomerSupport />
+      <AgencyPartnersSection />
       <FaqSection items={HOMEPAGE_FAQS} showAllLink />
       <PoweredBy />
     </>
