@@ -134,3 +134,54 @@ export const INTEGRATIONS_FAQS: FaqItem[] = [
       "Collaborator access to your Shopify store. You copy the collaborator request code from Settings → Users and permissions in Shopify admin and share it with your store URL. You never need to share your Shopify password.",
   },
 ];
+
+export const SHOPIFY_PRICING_URL = "https://www.shopify.com/in/pricing";
+
+export const PRICING_FAQS: FaqItem[] = [
+  {
+    id: "how-does-pricing-work",
+    question: "How does RabbitPay pricing work?",
+    answer:
+      "This page does not list a price table. You tell the team about your store through the form on this page, and they contact you within 12–24 hours to discuss pricing for your requirements.",
+    link: { href: "#demo-section", label: "Ask about pricing" },
+  },
+  {
+    id: "fixed-or-customised",
+    question: "Is RabbitPay pricing fixed or customised?",
+    answer:
+      "The team discusses pricing with you based on your store and requirements rather than publishing a fixed price list here. Ask them what applies to your store.",
+  },
+  {
+    id: "what-pricing-depends-on",
+    question: "What does pricing depend on?",
+    answer:
+      "That is what the conversation is for. It starts from your store and requirements. Sharing your store URL and, if you can, your monthly GMV gives the team a starting point.",
+  },
+  {
+    id: "gateway-charges-included",
+    question: "Are payment gateway charges included?",
+    answer:
+      "RabbitPay works with the payment gateway you already use, and your gateway keeps handling settlements. Your gateway's charges come from your own arrangement with it. Ask the team to confirm exactly what RabbitPay's pricing covers for your store.",
+    link: { href: "/integrations", label: "See supported gateways" },
+  },
+  {
+    id: "compare-shopify-transaction-costs",
+    question: "How does RabbitPay compare with Shopify transaction costs?",
+    answer:
+      "Shopify's pricing page lists a transaction fee for orders paid through a third-party payment provider, and the rate varies by Shopify plan. RabbitPay does not claim to remove it or to guarantee a saving. The team can go through how your Shopify plan, your gateway and RabbitPay fit together for your store.",
+    link: { href: SHOPIFY_PRICING_URL, label: "See Shopify's pricing", external: true },
+  },
+  {
+    id: "what-to-share-for-pricing",
+    question: "What information should I provide to get pricing?",
+    answer:
+      "The form asks for your email address, mobile number and store URL. Monthly GMV is optional, but it helps the team understand your store's scale.",
+  },
+  {
+    id: "existing-shopify-store",
+    question: "Can I use RabbitPay with my existing Shopify store?",
+    answer:
+      "Yes. RabbitPay is built specifically for Shopify stores and integrates without disrupting your existing operations. You keep your current payment gateway, and the team handles the setup.",
+    link: { href: "/features/one-click-checkout", label: "How setup works" },
+  },
+];

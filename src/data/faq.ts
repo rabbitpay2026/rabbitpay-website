@@ -193,7 +193,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "How much does RabbitPay cost?",
         answer:
           "Choose the pricing that suits your business. Pay 1% on successful prepaid orders and 0.3% on successful COD orders, with no setup fee or monthly commitment, or opt for our monthly plans starting at ₹999.",
-        link: { href: "/pricing", label: "Compare the plans" },
+        link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
       {
         // ORIGINAL
@@ -217,16 +217,16 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         question: "Is there a setup fee or a monthly commitment?",
         answer:
           "Setup is free on both plans, and the per-transaction option carries no monthly commitment. If a fixed monthly cost suits your volume better, monthly plans start at ₹999.",
-        link: { href: "/pricing", label: "See what each plan includes" },
+        link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
       {
         // DERIVED — source: `data/pricing.ts` PRICING_PLANS and PRICING_ROWS,
-        // i.e. the comparison table rendered on /pricing.
+        // i.e. the comparison table rendered on the homepage.
         id: "growth-vs-enterprise",
         question: "What is the difference between the Growth and Enterprise plans?",
         answer:
           "Growth is the standard plan for growing D2C brands: 1% on successful prepaid orders, 0.3% on successful COD orders, free setup, unlimited monthly volume, COD verification included and standard support. Enterprise is for brands at 50k+ monthly orders and is priced on volume, adding an SLA, MDR discounts, a dedicated customer success manager and dedicated support.",
-        link: { href: "/pricing", label: "See the full comparison" },
+        link: { href: "/#pricing", label: "See the plan comparison" },
       },
       {
         // ORIGINAL
@@ -316,14 +316,14 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
           "Yes. RabbitPay follows industry-standard security practices to protect your customer and transaction data.",
       },
       {
-        // DERIVED — source: `data/pricing.ts` PRICING_TRUST_POINTS, shown on the
-        // pricing page, plus the data-security answer above. This reports exactly
+        // DERIVED — source: `data/pricing.ts` PRICING_TRUST_POINTS, shown in the
+        // homepage pricing section, plus the data-security answer above. This reports exactly
         // what the site states and routes anything further to the team; no
         // compliance status beyond what is published is asserted here.
         id: "security-compliance-information",
         question: "What security and compliance information does RabbitPay publish?",
         answer:
-          "The pricing page carries PCI-DSS Level 1 and SOC 2 (in progress) as trust indicators, and RabbitPay states that it follows industry-standard security practices to protect customer and transaction data. For anything more specific — a security questionnaire, data processing agreement or current compliance documentation — ask the team directly.",
+          "The homepage pricing section carries PCI-DSS Level 1 and SOC 2 (in progress) as trust indicators, and RabbitPay states that it follows industry-standard security practices to protect customer and transaction data. For anything more specific — a security questionnaire, data processing agreement or current compliance documentation — ask the team directly.",
         link: { href: "/contact", label: "Ask the team" },
       },
     ],
@@ -362,12 +362,12 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         // DERIVED — source: the Enterprise plan ("Custom", volume-based) and the
-        // "Talk to Sales" CTA rendered under the pricing table.
+        // pricing enquiry form on /pricing.
         id: "talk-to-sales",
         question: "How do I talk to sales about Enterprise pricing?",
         answer:
-          "Enterprise is priced on volume, so it starts with a conversation. Use Talk to Sales on the pricing page, request a demo, or reach the team on any of the usual support channels — phone, WhatsApp or email.",
-        link: { href: "/pricing", label: "See Enterprise on the pricing page" },
+          "Enterprise is priced on volume, so it starts with a conversation. Use the enquiry form on the pricing page, request a demo, or reach the team on any of the usual support channels — phone, WhatsApp or email.",
+        link: { href: "/pricing", label: "Talk to the team about pricing" },
       },
     ],
   },

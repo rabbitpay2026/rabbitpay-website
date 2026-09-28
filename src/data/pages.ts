@@ -134,12 +134,12 @@ export const PUBLIC_PAGES = [
   {
     path: "/pricing",
     name: "Pricing",
-    title: "Pricing",
+    title: "Shopify Checkout Pricing",
     description:
-      "1% on successful prepaid orders and 0.3% on successful COD orders. No setup fee, unlimited monthly volume, and an enterprise plan for 50k+ orders a month.",
-    ogTitle: "RabbitPay Pricing - 1% prepaid, 0.3% COD, zero setup fee",
+      "Talk to RabbitPay about pricing for your Shopify store. Compare your checkout costs, see how One-Click Checkout works, and get pricing for your requirements.",
+    ogTitle: "RabbitPay Pricing for Shopify Stores - talk to the team",
     summary:
-      "The Growth and Enterprise plans side by side: transaction rates, setup fee, COD verification, support level, SLA, monthly volume, MDR discounts and dedicated CSM.",
+      "How to get RabbitPay pricing for a Shopify store: the separate costs to compare (Shopify subscription, Shopify transaction fees, gateway fees, RabbitPay), One-Click Checkout, what the team covers, the enquiry form and FAQs. No price table and no savings claim.",
   },
   {
     path: "/support",

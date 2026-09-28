@@ -7,9 +7,8 @@ import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
  * "Talk to Sales" — ported from the React Pricing section, where it smooth-scrolled
  * to the `#demo-section` lead-capture block on the same (single) page.
  *
- * Now that Pricing also renders on its own route, the same intent is preserved:
- * scroll to the demo section if this page has one, otherwise navigate to the
- * homepage's demo section. The button still never opens a new page for itself.
+ * Scrolls to the demo section if this page has one, otherwise navigates to the
+ * homepage's demo section. The button never opens a new page for itself.
  */
 export function TalkToSalesButton({
   location,
