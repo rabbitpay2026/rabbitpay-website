@@ -8,7 +8,7 @@
  */
 
 /** Where a lead came from. The server rejects anything not in this list. */
-export const LEAD_SOURCES = ["hero_inline", "demo_cta", "contact_page"] as const;
+export const LEAD_SOURCES = ["hero_inline", "demo_cta", "contact_page", "pricing_page"] as const;
 
 export type LeadSource = (typeof LEAD_SOURCES)[number];
 
@@ -17,6 +17,7 @@ export const LEAD_SOURCE_LABELS: Record<LeadSource, string> = {
   hero_inline: "Homepage",
   demo_cta: "Homepage — Demo CTA",
   contact_page: "Contact page",
+  pricing_page: "Pricing page",
 };
 
 export function isLeadSource(value: unknown): value is LeadSource {

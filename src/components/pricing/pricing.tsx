@@ -12,16 +12,15 @@ import type { PricingCellValue } from "@/types";
 
 /**
  * Pricing comparison table + CTAs. Ported from the React `sections/Pricing.jsx`.
- * Rendered on both `/` and `/pricing` from this one component.
+ * Rendered on the homepage only — `/pricing` is a separate enquiry page.
  *
  * Stays a Server Component — only the two CTAs are interactive, and each is its
  * own small client component.
  */
 /**
- * `heading` and `lead` let a host page state the fees in its own words without
- * a second pricing component existing. The homepage passes the action plan's
- * "Clear pricing" heading and one explanation of every fee the site publishes;
- * /pricing keeps the copy it has always had by leaving both out.
+ * `heading` and `lead` let a host page state the fees in its own words. The
+ * homepage passes the "Clear pricing" heading and one explanation of every fee
+ * the site publishes.
  */
 export function Pricing({
   asPage,
