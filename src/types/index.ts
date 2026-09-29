@@ -62,6 +62,8 @@ export type PrimaryNavItem =
       kind: "link";
       label: string;
       href: string;
+      /** External links open in a new tab and are never marked active. */
+      external?: boolean;
       /** Shorter text for the desktop nav below `lg`, where the full label would wrap. */
       shortLabel?: string;
     }

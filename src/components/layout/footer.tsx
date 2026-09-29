@@ -78,6 +78,8 @@ export function Footer() {
                       {link.external || link.proxied ? (
                         <a
                           href={link.href}
+                          target={link.external ? "_blank" : undefined}
+                          rel={link.external ? "noopener noreferrer" : undefined}
                           className="text-sm text-muted-foreground transition-colors hover:text-brand"
                         >
                           {link.label}

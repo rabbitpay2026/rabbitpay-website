@@ -102,7 +102,13 @@ export const PRIMARY_NAV: PrimaryNavItem[] = [
   { kind: "link", label: "Pricing", href: "/pricing" },
   { kind: "link", label: "Calculator", href: "/calculator" },
   RESOURCES_MENU,
-  { kind: "link", label: "Partner With Us", shortLabel: "Partners", href: "/partners" },
+  {
+    kind: "link",
+    label: "Partner With Us",
+    shortLabel: "Partners",
+    href: "https://dashboard.rabbitpay.ai/rabbit-referral/",
+    external: true,
+  },
   { kind: "link", label: "Contact", href: "/contact" },
 ];
 
@@ -152,7 +158,11 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     title: "Company",
     links: [
       { label: "About RabbitPay", href: "/what-is-rabbitpay" },
-      { label: "Partner With Us", href: "/partners" },
+      {
+        label: "Partner With Us",
+        href: "https://dashboard.rabbitpay.ai/rabbit-referral/",
+        external: true,
+      },
       { label: "Careers", href: `mailto:${SUPPORT_EMAIL}?subject=Careers`, external: true },
       { label: "Press", href: `mailto:${SUPPORT_EMAIL}?subject=Press`, external: true },
     ],

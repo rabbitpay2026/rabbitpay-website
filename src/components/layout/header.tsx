@@ -88,27 +88,47 @@ export function Header() {
             item.kind === "menu" ? (
               <NavMenu key={item.label} menu={item} isActive={menuActive(item)} />
             ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isActive(item.href) ? "page" : undefined}
-                data-testid={`nav-link-${item.label.toLowerCase()}`}
-                className={cn(
-                  "rounded-full px-3 py-2 text-sm font-medium transition-colors",
-                  isActive(item.href)
-                    ? "text-brand"
-                    : "text-ink/70 hover:text-brand dark:text-white/70",
-                )}
-              >
-                {item.shortLabel ? (
-                  <>
-                    <span className="lg:hidden">{item.shortLabel}</span>
-                    <span className="hidden lg:inline">{item.label}</span>
-                  </>
-                ) : (
-                  item.label
-                )}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid={`nav-link-${item.label.toLowerCase()}`}
+                  className="rounded-full px-3 py-2 text-sm font-medium transition-colors text-ink/70 hover:text-brand dark:text-white/70"
+                >
+                  {item.shortLabel ? (
+                    <>
+                      <span className="lg:hidden">{item.shortLabel}</span>
+                      <span className="hidden lg:inline">{item.label}</span>
+                    </>
+                  ) : (
+                    item.label
+                  )}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  data-testid={`nav-link-${item.label.toLowerCase()}`}
+                  className={cn(
+                    "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                    isActive(item.href)
+                      ? "text-brand"
+                      : "text-ink/70 hover:text-brand dark:text-white/70",
+                  )}
+                >
+                  {item.shortLabel ? (
+                    <>
+                      <span className="lg:hidden">{item.shortLabel}</span>
+                      <span className="hidden lg:inline">{item.label}</span>
+                    </>
+                  ) : (
+                    item.label
+                  )}
+                </Link>
+              )
             ),
           )}
         </nav>
@@ -173,21 +193,35 @@ export function Header() {
                   onNavigate={closeMobileMenu}
                 />
               ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  data-testid={`mobile-nav-link-${item.label.toLowerCase()}`}
-                  className={cn(
-                    "rounded-md px-3 py-2.5 text-sm font-medium hover:bg-secondary hover:text-brand",
-                    isActive(item.href)
-                      ? "bg-secondary text-brand"
-                      : "text-ink/80 dark:text-white/80",
-                  )}
-                >
-                  {item.label}
-                </Link>
+                item.external ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
+                    data-testid={`mobile-nav-link-${item.label.toLowerCase()}`}
+                    className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-secondary hover:text-brand text-ink/80 dark:text-white/80"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMobileMenu}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                    data-testid={`mobile-nav-link-${item.label.toLowerCase()}`}
+                    className={cn(
+                      "rounded-md px-3 py-2.5 text-sm font-medium hover:bg-secondary hover:text-brand",
+                      isActive(item.href)
+                        ? "bg-secondary text-brand"
+                        : "text-ink/80 dark:text-white/80",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                )
               ),
             )}
 

@@ -57,7 +57,14 @@ const nextConfig: NextConfig = {
    * page rather than a 404. Exact match only: nothing lived under `/product/`.
    */
   async redirects() {
-    return [{ source: "/product", destination: "/features", permanent: true }];
+    return [
+      { source: "/product", destination: "/features", permanent: true },
+      {
+        source: "/partners",
+        destination: "https://dashboard.rabbitpay.ai/rabbit-referral/",
+        permanent: true,
+      },
+    ];
   },
 
   /**
