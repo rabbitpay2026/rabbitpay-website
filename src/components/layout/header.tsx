@@ -25,7 +25,7 @@ import type { NavMenuItem } from "@/types";
  *
  * Navbar order comes from `PRIMARY_NAV` in `data/navigation.ts`:
  *
- *   Features ▾ | Pricing | Calculator | Resources ▾ | Partner With Us | Contact | View Demo Store | Book a Demo
+ *   Features ▾ | Pricing | Calculator | Resources ▾ | Contact | Partner With Us | View Demo Store | Book a Demo
  *
  * Desktop and mobile iterate that same array — each dropdown is a floating
  * panel on desktop (`NavMenu`) and a collapsible submenu on mobile
@@ -79,11 +79,11 @@ export function Header() {
       {announcement ? (
         <AnnouncementBar announcement={announcement} collapsed={scrolled} />
       ) : null}
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <BrandLockup variant="header" />
 
         {/* Desktop navigation */}
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
           {PRIMARY_NAV.map((item) =>
             item.kind === "menu" ? (
               <NavMenu key={item.label} menu={item} isActive={menuActive(item)} />
@@ -95,7 +95,7 @@ export function Header() {
                   target="_blank"
                   rel="noopener noreferrer"
                   data-testid={`nav-link-${item.label.toLowerCase()}`}
-                  className="rounded-full px-3 py-2 text-sm font-medium transition-colors text-ink/70 hover:text-brand dark:text-white/70"
+                  className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-brand/30 bg-background px-4 py-2.5 text-sm font-semibold leading-5 text-brand transition-colors hover:border-brand hover:bg-brand/5"
                 >
                   {item.shortLabel ? (
                     <>
@@ -113,7 +113,7 @@ export function Header() {
                   aria-current={isActive(item.href) ? "page" : undefined}
                   data-testid={`nav-link-${item.label.toLowerCase()}`}
                   className={cn(
-                    "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                    "shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors",
                     isActive(item.href)
                       ? "text-brand"
                       : "text-ink/70 hover:text-brand dark:text-white/70",
@@ -133,13 +133,13 @@ export function Header() {
           )}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <a
             href={DEMO_STORE_URL}
             target="_blank"
             rel="noopener noreferrer"
             data-testid="header-demo-store"
-            className="hidden items-center justify-center gap-1.5 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand dark:text-white xl:inline-flex"
+            className="hidden items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-border bg-background px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand dark:text-white xl:inline-flex"
           >
             View Demo Store
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -148,7 +148,7 @@ export function Header() {
             location="header_book_demo"
             intent="demo"
             testId="header-cta"
-            className="group hidden items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(25,107,245,0.22)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_18px_34px_rgba(25,107,245,0.3)] active:translate-y-0 sm:inline-flex"
+            className="group hidden items-center justify-center whitespace-nowrap rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(25,107,245,0.22)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_18px_34px_rgba(25,107,245,0.3)] active:translate-y-0 sm:inline-flex"
           >
             {/* "Book a Demo" — the one wording used for every CTA that opens
                 the lead form and ends with the team getting in touch. Label
@@ -158,7 +158,7 @@ export function Header() {
           </BookDemoButton>
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-ink dark:text-white md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-ink dark:text-white lg:hidden"
             onClick={() => setOpen((value) => !value)}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -175,7 +175,7 @@ export function Header() {
         <div
           id="mobile-nav"
           className={cn(
-            "overflow-y-auto border-t border-border bg-background/95 backdrop-blur-xl md:hidden",
+            "overflow-y-auto border-t border-border bg-background/95 backdrop-blur-xl lg:hidden",
             announcement && !scrolled ? "max-h-[calc(100vh-6.25rem)]" : "max-h-[calc(100vh-4rem)]",
           )}
         >
@@ -225,15 +225,6 @@ export function Header() {
               ),
             )}
 
-            <BookDemoButton
-              location="header_book_demo"
-              intent="demo"
-              testId="mobile-header-cta"
-              onNavigate={closeMobileMenu}
-              className="mt-2 inline-flex items-center justify-center rounded-full bg-brand px-3 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-deep"
-            >
-              Book a Demo
-            </BookDemoButton>
             <a
               href={DEMO_STORE_URL}
               target="_blank"
@@ -245,6 +236,15 @@ export function Header() {
               View Demo Store
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
+            <BookDemoButton
+              location="header_book_demo"
+              intent="demo"
+              testId="mobile-header-cta"
+              onNavigate={closeMobileMenu}
+              className="mt-2 inline-flex items-center justify-center rounded-full bg-brand px-3 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-deep"
+            >
+              Book a Demo
+            </BookDemoButton>
           </div>
         </div>
       ) : null}

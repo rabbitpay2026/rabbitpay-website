@@ -88,7 +88,7 @@ export const RESOURCES_MENU: NavMenuItem = {
 /**
  * The primary navbar, in render order:
  *
- *   Features ▾ | Pricing | Calculator | Resources ▾ | Partner With Us | Contact
+ *   Features ▾ | Pricing | Calculator | Resources ▾ | Contact | Partner With Us
  *
  * Order lives here rather than in the Header so there is one place to change it,
  * and the desktop nav and the mobile menu iterate this same array. `kind`
@@ -102,6 +102,7 @@ export const PRIMARY_NAV: PrimaryNavItem[] = [
   { kind: "link", label: "Pricing", href: "/pricing" },
   { kind: "link", label: "Calculator", href: "/calculator" },
   RESOURCES_MENU,
+  { kind: "link", label: "Contact", href: "/contact" },
   {
     kind: "link",
     label: "Partner With Us",
@@ -109,7 +110,6 @@ export const PRIMARY_NAV: PrimaryNavItem[] = [
     href: "https://dashboard.rabbitpay.ai/rabbit-referral/",
     external: true,
   },
-  { kind: "link", label: "Contact", href: "/contact" },
 ];
 
 /**
