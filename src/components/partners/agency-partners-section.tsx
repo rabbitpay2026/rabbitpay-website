@@ -26,8 +26,8 @@ export function AgencyPartnersSection() {
               Agency Partners
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Working with Shopify-focused agencies to help merchants build better checkout
-              experiences.
+              Working with Shopify-focused agencies to help merchants build
+              better checkout experiences.
             </p>
           </div>
         </BlurFade>
@@ -36,8 +36,8 @@ export function AgencyPartnersSection() {
           <div
             className={
               AGENCY_PARTNERS.length > 1
-                ? "mt-10 grid gap-6 lg:grid-cols-2"
-                : "mx-auto mt-10 max-w-3xl"
+                ? "mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2"
+                : "mx-auto mt-8 max-w-sm"
             }
           >
             {AGENCY_PARTNERS.map((partner) => (
