@@ -9,12 +9,12 @@ import { DemoCTA } from "@/components/home/demo-cta";
 import { Hero } from "@/components/home/hero";
 import { LogoWall } from "@/components/home/logo-wall";
 import { PoweredBy } from "@/components/home/powered-by";
+import { HomePricingSection } from "@/components/home/pricing-section";
 import { ShopifySetup } from "@/components/home/shopify-setup";
-import { Pricing } from "@/components/pricing/pricing";
+import { AgencyPartnersSection } from "@/components/partners/agency-partners-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CustomerSupport } from "@/components/support/customer-support";
 import { HOMEPAGE_FAQS } from "@/data/faq";
-import { RABBITPAY_FEE_RATES } from "@/data/pricing";
 import { buildPageJsonLd } from "@/lib/json-ld";
 
 /**
@@ -28,9 +28,9 @@ import { buildPageJsonLd } from "@/lib/json-ld";
  *   2. An easier way to pay      (+ the brief COD verification note)
  *   3. See how RabbitPay checkout works
  *   4. Built for your Shopify store   (setup facts + integrations strip)
- *   5. Clear pricing
+ *   5. Pricing that fits your store (points to /pricing)
  *   6. Ready to improve your checkout (the lead form)
- *   -> Support -> FAQ -> Powered By
+ *   -> Support -> Agency Partners -> FAQ -> Powered By
  *
  * Header, Footer, ScrollProgress, StickyMobileCTA and Toaster live in the root
  * layout so every route gets them.
@@ -59,29 +59,12 @@ export default function HomePage() {
       <CheckoutWalkthrough />
       <ShopifySetup />
 
-      {/*
-        One explanation of the fees, covering every price the site publishes —
-        the two per-order rates from `data/pricing.ts`, the free setup in the
-        table below, and the monthly plans the FAQ (and llms.txt) state. Without
-        the last of those, the pricing section and the "How much does RabbitPay
-        cost?" question a few sections down would contradict each other.
-      */}
-      <Pricing
-        heading="Clear pricing"
-        lead={
-          <>
-            {RABBITPAY_FEE_RATES.prepaid}% on successful prepaid orders and{" "}
-            {RABBITPAY_FEE_RATES.cod}% on successful COD orders — an order that does not complete is
-            not charged. Setup is free and there is no monthly commitment; monthly plans start at
-            ₹999 if a fixed cost suits your volume better. Brands above 50k orders a month are
-            quoted on volume.
-          </>
-        }
-      />
+      <HomePricingSection />
 
       <DemoCTA />
 
       <CustomerSupport />
+      <AgencyPartnersSection />
       <FaqSection items={HOMEPAGE_FAQS} showAllLink />
       <PoweredBy />
     </>

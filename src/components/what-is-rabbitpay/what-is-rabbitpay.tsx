@@ -170,10 +170,9 @@ export function WhatIsRabbitPay() {
         lead={`RabbitPay charges ${RABBITPAY_FEE_RATES.prepaid}% on successful prepaid orders and ${RABBITPAY_FEE_RATES.cod}% on successful COD orders, with no setup fee and no monthly commitment on the Growth plan. Brands above 50,000 orders a month are quoted custom, volume-based pricing.`}
       >
         <p className="text-[15px] leading-relaxed text-muted-foreground">
-          Both rates apply to successful orders only. The full comparison of the Growth and
-          Enterprise plans — support level, SLA, COD verification, MDR discounts and dedicated
-          customer success — is on the <TextLink href="/pricing">pricing page</TextLink>. To see what
-          checkout fees do to your own margin alongside product cost, ads and shipping, the{" "}
+          Both rates apply to successful orders only. For pricing that fits your own store, talk to
+          the team on the <TextLink href="/pricing">pricing page</TextLink>. To see what checkout
+          fees do to your own margin alongside product cost, ads and shipping, the{" "}
           <TextLink href="/calculator/profit-margin">profit margin calculator</TextLink> runs the
           numbers in your browser.
         </p>

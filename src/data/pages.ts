@@ -134,12 +134,12 @@ export const PUBLIC_PAGES = [
   {
     path: "/pricing",
     name: "Pricing",
-    title: "Pricing",
+    title: "Shopify Checkout Pricing",
     description:
-      "1% on successful prepaid orders and 0.3% on successful COD orders. No setup fee, unlimited monthly volume, and an enterprise plan for 50k+ orders a month.",
-    ogTitle: "RabbitPay Pricing - 1% prepaid, 0.3% COD, zero setup fee",
+      "Talk to RabbitPay about pricing for your Shopify store. Compare your checkout costs, see how One-Click Checkout works, and get pricing for your requirements.",
+    ogTitle: "RabbitPay Pricing for Shopify Stores - talk to the team",
     summary:
-      "The Growth and Enterprise plans side by side: transaction rates, setup fee, COD verification, support level, SLA, monthly volume, MDR discounts and dedicated CSM.",
+      "How to get RabbitPay pricing for a Shopify store: the separate costs to compare (Shopify subscription, Shopify transaction fees, gateway fees, RabbitPay), One-Click Checkout, what the team covers, the enquiry form and FAQs. No price table and no savings claim.",
   },
   {
     path: "/support",
@@ -160,16 +160,6 @@ export const PUBLIC_PAGES = [
     ogTitle: "Contact RabbitPay",
     summary:
       "Every way to reach RabbitPay — phone, WhatsApp, email, support hours, and a short form that takes an email address and mobile number for a callback.",
-  },
-  {
-    path: "/partners",
-    name: "Partner With Us",
-    title: "Partner With Us",
-    description:
-      "Partner with RabbitPay to bring 1-click checkout to Indian D2C brands. For agencies, technology partners and affiliates — apply in a couple of minutes.",
-    ogTitle: "Partner With RabbitPay",
-    summary:
-      "The RabbitPay partner program: who it is for (agencies, technology partners and affiliates), what partners get, what the team looks for, how an application is reviewed, and the application form itself.",
   },
   {
     path: "/faq",

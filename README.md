@@ -23,7 +23,7 @@ src/
 ├── app/                 routes + metadata (page.tsx files stay composition-only)
 │   ├── page.tsx         /          full landing page
 │   ├── product/         /product
-│   ├── pricing/         /pricing
+│   ├── pricing/         /pricing   (pricing enquiry page)
 │   ├── support/         /support
 │   ├── contact/         /contact
 │   ├── faq/             /faq
@@ -33,9 +33,8 @@ src/
 │   └── globals.css      port of the React project's index.css
 ├── components/
 │   ├── layout/          header, footer, brand lockup, sticky mobile CTA
-│   ├── home/            hero, metrics, logo wall, demo CTA, powered-by
+│   ├── home/            hero, metrics, logo wall, pricing section, demo CTA, powered-by
 │   ├── product/         features, integrations, feature visuals
-│   ├── pricing/         pricing table + CTAs
 │   ├── support/         support section, contact cards/channels
 │   ├── contact/         contact page section
 │   ├── faq/             FAQ page (hero, sidebar, category, accordion, CTA)
@@ -105,7 +104,7 @@ POST { email, phone, source }
   so the form and the server can never drift. Phone accepts the formats merchants
   actually type (`9876543210`, `+91 98765 43210`, `09876543210`, `(+91) 98765-43210`)
   and normalises to 10 national digits beginning 6-9.
-- **`source`** is an allow-list (`hero_inline`, `demo_cta`, `contact_page`); anything
+- **`source`** is an allow-list (`hero_inline`, `demo_cta`, `contact_page`, `pricing_page`); anything
   else is rejected. It sets the email subject.
 - **Errors returned to the browser are generic.** Provider responses and stack
   traces are logged server-side only.
@@ -188,7 +187,7 @@ closed union so a typo is a build error rather than a silently missing report.
 | `start_free_click`    | a "Start Free" CTA is clicked                  | `location`         |
 | `demo_click`          | a "Request a Demo" CTA is clicked              | `location`         |
 | `demo_form_submit`    | `/api/leads` **accepted** a lead               | `source`           |
-| `talk_to_sales_click` | the pricing "Talk to Sales" CTA is clicked     | `location`         |
+| `talk_to_sales_click` | a "Talk to Sales" / "Talk to Our Team" CTA is clicked | `location`  |
 
 `scheduler_open` is still declared in `ANALYTICS_EVENTS` but is no longer fired,
 since the Calendly scheduler was removed. `demo_form_submit` fires *after* the

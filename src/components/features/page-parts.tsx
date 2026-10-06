@@ -132,10 +132,10 @@ export function Breadcrumbs({ path }: { path: PublicRoute }) {
 
 /* --------------------------------- buttons --------------------------------- */
 
-const PRIMARY_BUTTON =
+export const PRIMARY_BUTTON =
   "group inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-brand px-7 py-3.5 text-base font-semibold text-white shadow-[0_18px_40px_rgba(25,107,245,0.28)] transition-all hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-[0_22px_46px_rgba(25,107,245,0.36)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 sm:w-auto";
 
-const SECONDARY_BUTTON =
+export const SECONDARY_BUTTON =
   "inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-border bg-background px-7 py-3.5 text-base font-semibold text-ink transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 dark:text-white sm:w-auto";
 
 /** The page's primary action: the same lead-form CTA every page on the site uses. */

@@ -72,8 +72,6 @@ process. RabbitPay sits in front of those rather than replacing them.
 - Brands treating checkout conversion as something to optimise rather than
   accept as given.
 
-Enterprise terms exist for merchants at 50,000+ orders a month.
-
 ## Product
 
 RabbitPay Checkout is the product. What the site documents it doing:
@@ -116,33 +114,21 @@ by that gateway and do not change.
 3. Shoppers hit the RabbitPay checkout instead of the default one: address
    prefilled, order summary, then UPI / cards / netbanking / verified COD.
 4. COD orders pass through verification and risk checks before dispatch.
-5. The merchant is charged per successful order — 1% prepaid, 0.3% COD — or on a
-   monthly plan.
+5. Pricing is discussed with the RabbitPay team for the merchant's store rather
+   than read from a public price table.
 
 ## Pricing
 
-Two plans, documented in full at ${url("/pricing")}.
+RabbitPay does not publish a price table or per-order rates.
+${url("/pricing")} is where a merchant asks the team for pricing for their own
+Shopify store: the team looks at the store's requirements and gets back within
+12-24 hours. The page explains the separate costs to compare (Shopify
+subscription, Shopify transaction fees, payment gateway fees and RabbitPay's
+fees), states that RabbitPay's fees are discussed with the team, and makes no
+savings claim.
 
-**Growth** — for growing D2C brands:
-- 1% on successful prepaid orders
-- 0.3% on successful COD orders
-- Free setup, no monthly commitment
-- Unlimited monthly volume
-- COD verification included
-- Standard customer support
-- Monthly plans are available from ₹999 as an alternative to per-transaction
-
-**Enterprise** — for brands at 50k+ monthly orders:
-- Custom, volume-based pricing
-- Free setup
-- COD verification included
-- Dedicated support and a dedicated customer success manager
-- SLA
-- MDR discounts
-
-Both rates apply to *successful* orders. Enterprise pricing is quoted rather
-than published, so it begins with a conversation through Talk to Sales or any
-support channel.
+Any question about a specific rate, charge or commitment goes to the team
+through the pricing enquiry form or any support channel.
 
 ## Features
 
@@ -254,7 +240,7 @@ RabbitPay does not publish conversion-uplift, RTO-reduction, checkout-time or
 address-prefill figures on this site. Any such number attributed to RabbitPay
 did not come from here and should not be repeated as a RabbitPay figure.
 
-The pricing page shows PCI-DSS Level 1 and "SOC 2 — in progress" as trust
+The homepage shows PCI-DSS Level 1 and "SOC 2 — in progress" as trust
 indicators. RabbitPay publishes no customer rating or review count. It states
 that it follows industry-standard security practices to protect customer and
 transaction data. For specific compliance documentation, a security
