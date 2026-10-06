@@ -231,6 +231,16 @@ export const PUBLIC_PAGES = [
     summary:
       "Estimated orders, monthly revenue and annual revenue from monthly sessions, conversion rate and average order value, with an optional growth rate shown next to the current estimate.",
   },
+  {
+    path: "/privacy",
+    name: "Privacy Policy",
+    title: "Privacy Policy",
+    description:
+      "How RabbitPay collects, uses, shares and protects personal information from website visitors, merchants, partners and shoppers, and how to contact us about it.",
+    ogTitle: "RabbitPay Privacy Policy",
+    summary:
+      "What personal information RabbitPay collects from website visitors, merchant enquiries, partner applications and shoppers at checkout, how it is used and shared, retention, security, individual rights and contact details.",
+  },
 ] as const satisfies readonly PublicPage[];
 
 /** Union of every public route path — used to key route-specific records. */
