@@ -170,7 +170,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: `mailto:${SUPPORT_EMAIL}?subject=Privacy`, external: true },
+      { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: `mailto:${SUPPORT_EMAIL}?subject=Terms`, external: true },
       { label: "Security", href: `mailto:${SUPPORT_EMAIL}?subject=Security`, external: true },
     ],

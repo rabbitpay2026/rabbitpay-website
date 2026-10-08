@@ -1,5 +1,6 @@
 "use client";
 import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { PARTNER_TYPE_OPTIONS } from "@/data/partners";
 import { SUPPORT_EMAIL } from "@/data/site";
@@ -317,7 +318,11 @@ export function PartnerForm() {
           )}
         </button>
         <p className="text-xs text-muted-foreground">
-          We use these details only to review your application and get back to you.
+          We use these details only to review your application and get back to you. See our{" "}
+          <Link href="/privacy" className="font-medium text-brand underline-offset-4 hover:underline">
+            Privacy Policy
+          </Link>
+          .
         </p>
       </div>
     </form>

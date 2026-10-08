@@ -1,9 +1,11 @@
-import { Mail, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import { DotPattern } from "@/components/magic-ui/dot-pattern";
 import { BrandLockup } from "@/components/layout/brand-lockup";
 import { FOOTER_COLUMNS } from "@/data/navigation";
-import { SUPPORT_EMAIL, SUPPORT_PHONE, SUPPORT_PHONE_HREF } from "@/data/site";
+import { SOCIAL_PROFILES, SUPPORT_EMAIL, SUPPORT_PHONE, SUPPORT_PHONE_HREF } from "@/data/site";
+
+const SOCIAL_ICONS = { Facebook, Instagram } as const;
 
 /**
  * Site footer. Ported from the React `sections/Footer.jsx`.
@@ -56,6 +58,26 @@ export function Footer() {
                 {SUPPORT_EMAIL}
               </a>
             </div>
+
+            <ul className="mt-5 flex items-center gap-3" aria-label="RabbitPay on social media">
+              {SOCIAL_PROFILES.map((profile) => {
+                const Icon = SOCIAL_ICONS[profile.label];
+                return (
+                  <li key={profile.label}>
+                    <a
+                      href={profile.href}
+                      target="_blank"
+                      rel="noopener noreferrer me"
+                      aria-label={`RabbitPay on ${profile.label}`}
+                      data-testid={`footer-social-${profile.label.toLowerCase()}`}
+                      className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand hover:text-brand"
+                    >
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
 
             <p className="mt-6 text-xs uppercase tracking-[0.2em] text-muted-foreground">
               Zero setup fee - No hidden charges - 1:1 support

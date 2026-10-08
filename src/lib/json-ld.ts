@@ -3,6 +3,7 @@ import { getPage, isPublicRoute, type PublicRoute } from "@/data/pages";
 import {
   RABBITPAY_LOGO,
   SITE_NAME,
+  SOCIAL_PROFILES,
   SITE_URL,
   SUPPORT_EMAIL,
   SUPPORT_PHONE_HREF,
@@ -65,12 +66,6 @@ function pageTitle(path: PublicRoute): string {
  * and the support contact details and hours printed in the footer and on the
  * support page.
  *
- * `sameAs` is deliberately absent. The repository was searched for social and
- * company profile URLs (Instagram, LinkedIn, X, Facebook, YouTube, GitHub) and
- * there are none anywhere on the site — asserting handles we cannot verify
- * would be worse than omitting the property. Add the array here once official
- * profile URLs exist.
- *
  * Also deliberately absent, because the site does not state them: `legalName`,
  * `address`, `foundingDate`, `founder`, `numberOfEmployees`, `vatID`/`taxID`
  * and `aggregateRating`. The pricing section used to carry a "Rated 4.9/5 by
@@ -103,6 +98,7 @@ function organizationNode(): JsonLdNode {
     slogan: "1-Click Checkout, built in India.",
     email: SUPPORT_EMAIL,
     telephone: SUPPORT_PHONE_E164,
+    sameAs: SOCIAL_PROFILES.map((profile) => profile.href),
     areaServed: { "@type": "Country", name: "India" },
     // The subjects the site actually covers — this is what lets an AI system
     // place RabbitPay in the right category rather than guessing from copy.
