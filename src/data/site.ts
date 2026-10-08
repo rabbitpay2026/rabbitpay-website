@@ -16,6 +16,11 @@ export const SUPPORT_WHATSAPP_HREF =
 export const SUPPORT_EMAIL = "hello@rabbitpay.in";
 export const SUPPORT_HOURS = "Mon-Sat - 09:00 to 21:00 IST";
 
+export const SOCIAL_PROFILES = [
+  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61594073859014" },
+  { label: "Instagram", href: "https://www.instagram.com/rabbitpay.ai/" },
+] as const;
+
 /** Live RabbitPay demo storefront. */
 export const DEMO_STORE_URL = "https://store.rabbitpay.ai/";
 

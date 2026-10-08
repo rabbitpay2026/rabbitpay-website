@@ -1,5 +1,6 @@
 "use client";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SUPPORT_EMAIL } from "@/data/site";
@@ -252,6 +253,13 @@ export function LeadCaptureCard({
               </>
             )}
           </button>
+          <p className="mt-3 text-xs text-muted-foreground">
+            By submitting, you agree to our{" "}
+            <Link href="/privacy" className="font-medium text-brand underline-offset-4 hover:underline">
+              Privacy Policy
+            </Link>
+            .
+          </p>
         </form>
       )}
     </div>
